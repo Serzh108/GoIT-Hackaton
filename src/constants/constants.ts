@@ -1,26 +1,36 @@
 export const MENU_ARRAY = [
+  // {
+  //   title: 'Home',
+  //   link: '',
+  // },
   {
-    title: 'Home',
-    link: '',
+    title: 'Дашборд',
+    link: 'dashboard',
   },
   {
-    title: 'About Us',
-    link: 'about',
-  },
-  {
-    title: 'Donations',
+    title: 'Збори',
     link: 'donations',
   },
   {
-    title: 'Звіти',
+    title: 'Звітність',
     link: 'reporting',
   },
+  { title: 'Мерч', link: 'merch' },
   {
-    title: 'Link-button',
-    link:'link-button',
+    title: 'Про нас',
+    link: 'about',
+    children: [
+      { title: 'Партнери', link: 'about/partners' },
+      { title: 'Команда', link: 'about/team' },
+      { title: 'Досягнення', link: 'about/achievements' },
+    ],
   },
   {
     title: 'Адміністратор',
+    link: 'admin',
+  },
+  {
+    title: 'Редактори',
     link: 'admin',
   },
 ];
