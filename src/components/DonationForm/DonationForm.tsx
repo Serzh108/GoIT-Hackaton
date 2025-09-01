@@ -3,6 +3,7 @@ import React from 'react';
 import PhotoUploader from '../PhotoUploader/PhotoUploader';
 import InputField from '../InputField/InputField';
 import { useForm } from 'react-hook-form';
+import RadioGroup from '../RadioGroup/RadioGroup';
 
 type DonationFormValues = {
   image: FileList;
@@ -26,6 +27,8 @@ function DonationForm() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<DonationFormValues>();
   const onSubmit = (data: DonationFormValues) => {
@@ -83,6 +86,15 @@ function DonationForm() {
           required: 'Статус збору обов’язковий',
         })}
       />
+      <RadioGroup
+        name="status"
+        options={[
+          { label: 'active', value: 'active' },
+          { label: 'closed', value: 'closed' },
+        ]}
+        selectedValue={watch('status')}
+        onChange={value => setValue('status', value)}
+      />
       <InputField
         important={true}
         id="target"
@@ -113,7 +125,20 @@ function DonationForm() {
           required: 'Донори обов’язкові',
         })}
       />
-      {/*!! Зробити тут селект для peopleDonate_title */}
+
+      <RadioGroup
+        name="peopleDonate_title"
+        options={[
+          { label: 'донорів', value: 'донорів' },
+          { label: 'донор', value: 'донор' },
+          { label: 'донори', value: 'донори' },
+          { label: 'donor', value: 'donor' },
+          { label: 'donors', value: 'donors' },
+        ]}
+        selectedValue={watch('peopleDonate_title')}
+        onChange={value => setValue('peopleDonate_title', value)}
+      />
+
       <InputField
         id="days"
         type="text"
@@ -123,24 +148,28 @@ function DonationForm() {
           required: 'Кількість днів до завершення обов’язкова',
         })}
       />
-      {/*!! Зробити тут селект для period */}
+      <RadioGroup
+        name="period"
+        options={[
+          { label: 'day', value: 'day' },
+          { label: 'days', value: 'days' },
+          { label: 'день', value: 'день' },
+          { label: 'дні', value: 'дні' },
+          { label: 'днів', value: 'днів' },
+        ]}
+        selectedValue={watch('period')}
+        onChange={value => setValue('period', value)}
+      />
       <InputField
         id="quantity"
         type="text"
-        placeholder="Кількість днів"
+        placeholder="Кількість відгуків"
         label="Днів до завершення"
         registration={register('quantity', {
-          required: 'Кількість днів до завершення обов’язкова',
+          required: 'Кількість відгуків обов’язкова',
         })}
       />
-      <InputField
-        id="status"
-        type="radio"
-        label="Статус збору"
-        registration={register('status', {
-          required: 'Статус збору обов’язковий',
-        })}
-      />
+
       <InputField
         important={true}
         id="value"
@@ -151,24 +180,30 @@ function DonationForm() {
           required: 'Тег збору обов’язковий',
         })}
       />
-      <InputField
-        important={true}
-        id="importance"
-        type="text"
-        label="Важливість збору"
-        registration={register('importance', {
-          required: 'Статус збору обов’язковий',
-        })}
+
+      <RadioGroup
+        name="importance"
+        options={[
+          { label: 'Терміново', value: 'urgent' },
+          { label: 'Важливий', value: 'important' },
+          { label: 'Не терміново', value: 'non-urgent' },
+          { label: 'Постійний', value: 'permanent' },
+        ]}
+        selectedValue={watch('importance')}
+        onChange={value => setValue('importance', value)}
       />
+
       <InputField
         important={true}
-        id="status"
+        id="long_desc"
         type="text"
         label="Детальний опис збору"
         registration={register('long_desc', {
           required: 'Детальний опис збору обов’язковий',
         })}
       />
+
+      <input className="rounded-2xl border w-full" type="submit" />
     </form>
   );
 }
