@@ -13,11 +13,12 @@ function PhotoUploader({
   registration,
   id,
   error,
+
   ...rest
 }: PhotoUploaderProps) {
   return (
     // <div className="mb-4 flex flex-row-reverse gap-10 mr-auto ">
-    <div className="mb-4 flex flex-row-reverse gap-10 mr-auto ">
+    <div className=" flex flex-row-reverse gap-10 mr-auto ">
       {label && (
         <>
           {/* задати через svgr  */}

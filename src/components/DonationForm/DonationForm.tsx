@@ -14,6 +14,7 @@ type DonationFormValues = {
   peopleDonate: string;
   peopleDonate_title: string;
   days: string;
+  quantity: string;
   period: string;
   status: string;
   value: string;
@@ -34,7 +35,7 @@ function DonationForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-2.5 w-[948px] bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
+      className="flex flex-col gap-2.5 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
     >
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
@@ -43,19 +44,131 @@ function DonationForm() {
           error={errors.image}
           registration={register('image', { required: 'Фото обов’язкове' })}
         />
-        <InputField></InputField>
+        <InputField
+          important={true}
+          id="alt"
+          type="text"
+          placeholder="Текст має містити не більше 24 символів"
+          label="Alt текст для картинки"
+          className="w-[357px]"
+          registration={register('alt', {
+            required: 'Опис фото обов’язковий',
+          })}
+        />
       </div>
-
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
-      <InputField></InputField>
+      <InputField
+        important={true}
+        id="title"
+        type="text"
+        placeholder="Заголовок"
+        label="Заголовок"
+        registration={register('title', { required: 'Назва обов’язкова' })}
+      />
+      <InputField
+        important={true}
+        id="desc"
+        type="text"
+        placeholder="Опис"
+        label="Опис"
+        registration={register('desc', {
+          required: 'Короткий опис обов’язковий',
+        })}
+      />
+      <InputField
+        important={true}
+        id="status"
+        type="radio"
+        label="Статус збору"
+        registration={register('status', {
+          required: 'Статус збору обов’язковий',
+        })}
+      />
+      <InputField
+        important={true}
+        id="target"
+        type="text"
+        placeholder="Сума"
+        label="Ціль збору"
+        registration={register('target', {
+          required: 'Цільова сума збору обов’язкова',
+        })}
+      />
+      <InputField
+        important={true}
+        id="collected"
+        type="text"
+        placeholder="Зібрано"
+        label="Зібрано"
+        registration={register('collected', {
+          required: 'Зібрана сума обов’язкова',
+        })}
+      />
+      <InputField
+        important={true}
+        id="peopleDonate"
+        type="text"
+        placeholder="Кількість донорів"
+        label="Донори"
+        registration={register('peopleDonate', {
+          required: 'Донори обов’язкові',
+        })}
+      />
+      {/*!! Зробити тут селект для peopleDonate_title */}
+      <InputField
+        id="days"
+        type="text"
+        placeholder="Кількість днів"
+        label="Днів до завершення"
+        registration={register('days', {
+          required: 'Кількість днів до завершення обов’язкова',
+        })}
+      />
+      {/*!! Зробити тут селект для period */}
+      <InputField
+        id="quantity"
+        type="text"
+        placeholder="Кількість днів"
+        label="Днів до завершення"
+        registration={register('quantity', {
+          required: 'Кількість днів до завершення обов’язкова',
+        })}
+      />
+      <InputField
+        id="status"
+        type="radio"
+        label="Статус збору"
+        registration={register('status', {
+          required: 'Статус збору обов’язковий',
+        })}
+      />
+      <InputField
+        important={true}
+        id="value"
+        type="text"
+        label="Тег збору"
+        placeholder="Однаковий для зборів на обох мовах"
+        registration={register('value', {
+          required: 'Тег збору обов’язковий',
+        })}
+      />
+      <InputField
+        important={true}
+        id="importance"
+        type="text"
+        label="Важливість збору"
+        registration={register('importance', {
+          required: 'Статус збору обов’язковий',
+        })}
+      />
+      <InputField
+        important={true}
+        id="status"
+        type="text"
+        label="Детальний опис збору"
+        registration={register('long_desc', {
+          required: 'Детальний опис збору обов’язковий',
+        })}
+      />
     </form>
   );
 }
