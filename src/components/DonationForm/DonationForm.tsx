@@ -4,6 +4,7 @@ import PhotoUploader from '../PhotoUploader/PhotoUploader';
 import InputField from '../InputField/InputField';
 import { useForm } from 'react-hook-form';
 import RadioGroup from '../RadioGroup/RadioGroup';
+import Button from '../Button/Button';
 
 type DonationFormValues = {
   image: FileList;
@@ -54,6 +55,7 @@ function DonationForm() {
           placeholder="Текст має містити не більше 24 символів"
           label="Alt текст для картинки"
           className="w-[357px]"
+          error={errors.alt}
           registration={register('alt', {
             required: 'Опис фото обов’язковий',
           })}
@@ -65,6 +67,7 @@ function DonationForm() {
         type="text"
         placeholder="Заголовок"
         label="Заголовок"
+        error={errors.title}
         registration={register('title', { required: 'Назва обов’язкова' })}
       />
       <InputField
@@ -73,6 +76,7 @@ function DonationForm() {
         type="text"
         placeholder="Опис"
         label="Опис"
+        error={errors.desc}
         registration={register('desc', {
           required: 'Короткий опис обов’язковий',
         })}
@@ -94,6 +98,7 @@ function DonationForm() {
         type="text"
         placeholder="Сума"
         label="Ціль збору"
+        error={errors.target}
         registration={register('target', {
           required: 'Цільова сума збору обов’язкова',
         })}
@@ -104,6 +109,7 @@ function DonationForm() {
         type="text"
         placeholder="Зібрано"
         label="Зібрано"
+        error={errors.collected}
         registration={register('collected', {
           required: 'Зібрана сума обов’язкова',
         })}
@@ -114,6 +120,7 @@ function DonationForm() {
         type="text"
         placeholder="Кількість донорів"
         label="Донори"
+        error={errors.peopleDonate}
         registration={register('peopleDonate', {
           required: 'Донори обов’язкові',
         })}
@@ -139,6 +146,7 @@ function DonationForm() {
         type="text"
         placeholder="Кількість днів"
         label="Днів до завершення"
+        error={errors.days}
         registration={register('days', {
           required: 'Кількість днів до завершення обов’язкова',
         })}
@@ -162,6 +170,7 @@ function DonationForm() {
         type="text"
         placeholder="Кількість відгуків"
         label="Днів до завершення"
+        error={errors.quantity}
         registration={register('quantity', {
           required: 'Кількість відгуків обов’язкова',
         })}
@@ -173,6 +182,7 @@ function DonationForm() {
         type="text"
         label="Тег збору"
         placeholder="Однаковий для зборів на обох мовах"
+        error={errors.value}
         registration={register('value', {
           required: 'Тег збору обов’язковий',
         })}
@@ -197,24 +207,25 @@ function DonationForm() {
         id="long_desc"
         type="text"
         label="Детальний опис збору"
+        error={errors.long_desc}
         registration={register('long_desc', {
           required: 'Детальний опис збору обов’язковий',
         })}
       />
 
       <div className="flex flex-row gap-6 justify-center items-center mt-14">
-        <button
+        <Button
           type="submit"
-          className="rounded-3xl py-4 px-2 bg-amber-200 w-[288px]"
+          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
         >
           Надіслати
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          className="rounded-3xl py-4 px-2 bg-amber-200 w-[288px]"
+          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[288px]"
         >
           Відхилити
-        </button>
+        </Button>
       </div>
     </form>
   );

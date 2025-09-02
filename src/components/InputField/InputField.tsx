@@ -49,7 +49,11 @@ function InputField({
           rest.className || ''
         }`}
       />
-      {error && <span className="text-xs font-normal">{error.message}</span>}
+      {error && (
+        <span className="text-xs font-normal text-red-600">
+          {error?.message}
+        </span>
+      )}
     </div>
   );
 }
