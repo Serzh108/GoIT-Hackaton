@@ -51,7 +51,7 @@ function PhotoUploader({
       {preview && (
         <label
           htmlFor={id}
-          className="absolute top-0 right-[-82%]  font-semibold text-2xl leading-normal cursor-pointer flex flex-row gap-4 items-center justify-center "
+          className="absolute top-0 -right-83  font-semibold text-2xl leading-normal cursor-pointer flex flex-row gap-4 items-center justify-center "
         >
           <PenIcon /> Змінити зображення
         </label>

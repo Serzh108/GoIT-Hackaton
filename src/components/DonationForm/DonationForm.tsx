@@ -39,7 +39,7 @@ function DonationForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
+      className="flex flex-col gap-8 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
     >
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
@@ -54,7 +54,7 @@ function DonationForm() {
           type="text"
           placeholder="Текст має містити не більше 24 символів"
           label="Alt текст для картинки"
-          className="w-[357px]"
+          className="w-[444px]"
           error={errors.alt}
           registration={register('alt', {
             required: 'Опис фото обов’язковий',
