@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { logOut } from "@/services/auth";
+// import { logOut } from "@/services/auth";
 
 type State = {
   isAdmin: boolean;
