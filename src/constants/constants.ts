@@ -17,7 +17,7 @@ export const MENU_ARRAY = [
   },
   {
     title: 'Link-button',
-    link:'link-button',
+    link: 'link-button',
   },
   {
     title: 'Адміністратор',
