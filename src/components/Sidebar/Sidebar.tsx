@@ -4,14 +4,16 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/services/cn";
 import { getNormalizedPath } from "@/services/getNormalizedPath";
 import { MENU_ARRAY } from "@/constants/constants";
+import { logIn } from "@/services/auth";
+// import axios from "axios";
 
 const Sidebar = () => {
   const path = usePathname();
   const normalizePath = getNormalizedPath(path);
   const isAdmin = true; // TEMP!!!
   const outButtonHandler = async () => {
-console.log('outButtonHandler');
-  };
+    console.log('outButtonHandler');
+};
   return(
     <aside className="fixed flex flex-col left-0 top-0 bottom-0 w-[240px] pl-4 bg-blue-800">
       <div className="flex flex-col justify-center gap-4">

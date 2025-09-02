@@ -20,5 +20,5 @@ export const logInFormSchema = yup.object({
     .required(REGEXP.password.mes.required)
     .min(8, REGEXP.password.mes.mismatchLessSymbols)
     .max(32, REGEXP.password.mes.mismatchMoreSymbols)
-    .matches(REGEXP.password.reg, REGEXP.password.mes.mismatch),
+    // .matches(REGEXP.password.reg, REGEXP.password.mes.mismatch),
 });

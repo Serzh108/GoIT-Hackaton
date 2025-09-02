@@ -3,25 +3,76 @@ import { FC, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { cn } from "@/services/cn";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/store";
 import { logInFormSchema } from "@/constants/validationSchemas/validationSchemas";
-import { logInFormInputs } from "@/types/formDataTypes";
+import { logInFormData } from "@/types/formDataTypes";
 import { Eye, EyeSlash } from "../Eyes/Eyes";
+import { logIn } from "@/services/auth";
+import { createCookie, createCookieRefresh, getCookie } from "@/services/actions";
+import Link from "next/link";
+import { REGEXP } from "@/constants/regexp";
+import { COOKIES_VALUE } from "@/constants/constants";
 
 const LogIn: FC = () => {
     const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors },
-  } = useForm<logInFormInputs>({
+  } = useForm<logInFormData>({
     resolver: yupResolver(logInFormSchema),
     defaultValues: {},
   });
+  // --- - ---
+  // const cookieTest = async() => {
+  //   const a = await getCookie('accessToken');
+  //   return a;
+  // };
+  // console.log(' - cookieTest -> ', cookieTest());
+  // --- / - ---
+
+  const setIsAdmin = useUserStore(state => state.setIsAdmin);
+
+  const router = useRouter();
 
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<boolean>(false);
 
-  const onSubmitForm: SubmitHandler<logInFormInputs> = data => {
+    const logInRequest = async (data: logInFormData) => {
+    const emailSA = process.env.NEXT_PUBLIC_EMAIL_SA || '';
+    const result = await logIn(data);
+    if (result === 200) {
+      if (data.email.toLowerCase() === emailSA.toLowerCase()) {
+        setIsAdmin(true);
+        await createCookie(COOKIES_VALUE.super);
+        await createCookieRefresh(COOKIES_VALUE.super);
+      } else {
+        setIsAdmin(false);
+        await createCookie(COOKIES_VALUE.usual);
+        await createCookieRefresh(COOKIES_VALUE.usual);
+      }
+
+      reset();
+      setLoginError(false);
+      router.push('/about');
+    } else {
+      setLoginError(true);
+    }
+  };
+
+  const onSubmitForm: SubmitHandler<logInFormData> = async data => {
     console.log('data -> ', data);
+    logInRequest(data);
+    // const result = await logIn(data);
+        // const result = await axios.post("/api/auth/login", {email:'super_user@mail.com', password: 'xxxxTESTxxxx'});
+        // const result = await axios.post("/api/auth/login", data);
+          //  const result = await axios.get("auth/users");
+        // console.log(' - result -> ', result);
+        // const result1 = await axios.get("/api/auth/users");
+        // console.log(' - result1 -> ', result1);
+        //    const result2 = await axios.get("/api/collections/en?page=1&perPage=3");
+        // console.log(' - collections list -> ', result2);
   };
 
   const toggleVisibilityPassword = () => {
@@ -72,6 +123,17 @@ const LogIn: FC = () => {
 
         <button className="border py-2 px-4 rounded-md cursor-pointer">Увійти</button>
       </form>
+
+      <p className="input-error w-full mb-2 text-left h-4">
+        {loginError ? REGEXP.password.mes.wrongEmailOrPassword : ''}
+      </p>
+
+      <Link
+        href="/forget"
+        className="text-base font-medium underline hover:text-accent"
+      >
+        Забули пароль?
+      </Link>
       </div>
     );
 };

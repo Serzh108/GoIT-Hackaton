@@ -1,4 +1,4 @@
-export type logInFormInputs = {
+export type logInFormData = {
   email: string;
   password: string;
 };
