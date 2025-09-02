@@ -212,6 +212,8 @@ function DonationForm() {
           required: 'Детальний опис збору обов’язковий',
         })}
       />
+      <InputField />
+      <InputField />
 
       <div className="flex flex-row gap-6 justify-center items-center mt-14">
         <Button
