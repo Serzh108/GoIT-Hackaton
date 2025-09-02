@@ -9,7 +9,7 @@ import { logInFormSchema } from "@/constants/validationSchemas/validationSchemas
 import { logInFormData } from "@/types/formDataTypes";
 import { Eye, EyeSlash } from "../Eyes/Eyes";
 import { logIn } from "@/services/auth";
-import { createCookie, createCookieRefresh, getCookie } from "@/services/actions";
+import { createCookie, createCookieRefresh } from "@/services/actions";
 import Link from "next/link";
 import { REGEXP } from "@/constants/regexp";
 import { COOKIES_VALUE } from "@/constants/constants";
@@ -24,14 +24,7 @@ const LogIn: FC = () => {
     resolver: yupResolver(logInFormSchema),
     defaultValues: {},
   });
-  // --- - ---
-  // const cookieTest = async() => {
-  //   const a = await getCookie('accessToken');
-  //   return a;
-  // };
-  // console.log(' - cookieTest -> ', cookieTest());
-  // --- / - ---
-
+ 
   const setIsAdmin = useUserStore(state => state.setIsAdmin);
 
   const router = useRouter();
