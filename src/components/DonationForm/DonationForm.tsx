@@ -13,11 +13,11 @@ type DonationFormValues = {
   collected: string;
   target: string;
   peopleDonate: string;
-  peopleDonate_title: string;
+  peopleDonate_title: 'донор' | 'донори' | 'донорів' | 'donors' | 'donor';
   days: string;
   quantity: string;
-  period: string;
-  status: string;
+  period: 'день' | 'дні' | 'днів' | 'day' | 'days';
+  status: 'active' | 'closed';
   value: string;
   importance: string;
   long_desc: string;
@@ -27,10 +27,10 @@ function DonationForm() {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
+    control,
     formState: { errors },
   } = useForm<DonationFormValues>();
+
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
     console.log('Form values:', data);
@@ -38,7 +38,7 @@ function DonationForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-2.5 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
+      className="flex flex-col gap-5 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
     >
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
@@ -77,23 +77,16 @@ function DonationForm() {
           required: 'Короткий опис обов’язковий',
         })}
       />
-      <InputField
-        important={true}
-        id="status"
-        type="radio"
-        label="Статус збору"
-        registration={register('status', {
-          required: 'Статус збору обов’язковий',
-        })}
-      />
+
       <RadioGroup
+        label="Статус збору"
         name="status"
+        control={control}
+        rules={{ required: 'Оберіть статус' }}
         options={[
           { label: 'active', value: 'active' },
           { label: 'closed', value: 'closed' },
         ]}
-        selectedValue={watch('status')}
-        onChange={value => setValue('status', value)}
       />
       <InputField
         important={true}
@@ -127,7 +120,11 @@ function DonationForm() {
       />
 
       <RadioGroup
+        important={true}
+        label="Текст для кількості донорів"
         name="peopleDonate_title"
+        control={control}
+        rules={{ required: 'Оберіть текст для кількості донорів' }}
         options={[
           { label: 'донорів', value: 'донорів' },
           { label: 'донор', value: 'донор' },
@@ -135,8 +132,6 @@ function DonationForm() {
           { label: 'donor', value: 'donor' },
           { label: 'donors', value: 'donors' },
         ]}
-        selectedValue={watch('peopleDonate_title')}
-        onChange={value => setValue('peopleDonate_title', value)}
       />
 
       <InputField
@@ -149,7 +144,11 @@ function DonationForm() {
         })}
       />
       <RadioGroup
+        important={true}
+        label="Текст для кількості днів"
         name="period"
+        control={control}
+        rules={{ required: 'Оберіть текст для періоду' }}
         options={[
           { label: 'day', value: 'day' },
           { label: 'days', value: 'days' },
@@ -157,8 +156,6 @@ function DonationForm() {
           { label: 'дні', value: 'дні' },
           { label: 'днів', value: 'днів' },
         ]}
-        selectedValue={watch('period')}
-        onChange={value => setValue('period', value)}
       />
       <InputField
         id="quantity"
@@ -182,15 +179,17 @@ function DonationForm() {
       />
 
       <RadioGroup
+        important={true}
+        label="Значення типу важливості збору"
         name="importance"
+        control={control}
+        rules={{ required: 'Оберіть значення типу важливості збору' }}
         options={[
           { label: 'Терміново', value: 'urgent' },
           { label: 'Важливий', value: 'important' },
           { label: 'Не терміново', value: 'non-urgent' },
           { label: 'Постійний', value: 'permanent' },
         ]}
-        selectedValue={watch('importance')}
-        onChange={value => setValue('importance', value)}
       />
 
       <InputField
@@ -203,7 +202,20 @@ function DonationForm() {
         })}
       />
 
-      <input className="rounded-2xl border w-full" type="submit" />
+      <div className="flex flex-row gap-6 justify-center items-center mt-14">
+        <button
+          type="submit"
+          className="rounded-3xl py-4 px-2 bg-amber-200 w-[288px]"
+        >
+          Надіслати
+        </button>
+        <button
+          type="button"
+          className="rounded-3xl py-4 px-2 bg-amber-200 w-[288px]"
+        >
+          Відхилити
+        </button>
+      </div>
     </form>
   );
 }

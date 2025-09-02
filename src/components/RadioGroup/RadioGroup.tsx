@@ -1,39 +1,76 @@
 'use client';
 import React from 'react';
+import { Controller, FieldError } from 'react-hook-form';
 
 type RadioOptions = { label: string; value: string };
+
 type Props = {
   name: string;
+  control: any;
   options: RadioOptions[];
-  selectedValue?: string;
-  onChange: (value: string) => void;
+  rules?: object;
+  error?: FieldError;
+  label?: string;
+  important?: boolean;
 };
 
 const RadioGroup: React.FC<Props> = ({
   name,
   options,
-  selectedValue,
-  onChange,
+  control,
+  rules,
+  error,
+  label,
+  important,
 }: Props) => {
   return (
-    <div className="flex flex-wrap gap-4 ">
-      {options.map(option => {
-        const isSelected = option.value === selectedValue;
-        return (
-          <button
-            key={option.value}
-            type="button"
-            onClick={() => onChange(option.value)}
-            className={`px-6 py-3 rounded-3xl border ${
-              isSelected
-                ? 'border-black bg-black text-white border'
-                : 'border-black bg-white text-black border'
-            }`}
-          >
-            {option.label}
-          </button>
-        );
-      })}
+    <div className=" flex flex-col gap-4">
+      {label &&
+        (important ? (
+          <label className="block font-semibold text-base leading-[137%]">
+            <span className="after:content-['*'] after:ml-2 after:text-current block">
+              {label}
+            </span>
+          </label>
+        ) : (
+          <label className="font-semibold text-base leading-[137%]">
+            {label}
+          </label>
+        ))}
+      <Controller
+        name={name}
+        control={control}
+        rules={rules}
+        render={({ field, fieldState }) => (
+          <div className=" flex flex-wrap gap-4">
+            {options.map(option => {
+              const isSelected = field.value === option.value;
+              return (
+                <label
+                  key={option.value}
+                  className={`cursor-pointer px-4 py-2 rounded-full border 
+                    ${isSelected ? 'bg-black text-white ' : 'border-black'}
+                  `}
+                >
+                  <input
+                    type="radio"
+                    value={option.value}
+                    checked={isSelected}
+                    onChange={() => {
+                      field.onChange(option.value);
+                    }}
+                    className="hidden"
+                  />
+                  {option.label}
+                </label>
+              );
+            })}
+            {fieldState.error && (
+              <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+            )}
+          </div>
+        )}
+      />
     </div>
   );
 };
