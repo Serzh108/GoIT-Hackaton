@@ -31,7 +31,7 @@ function PhotoUploader({
     <div className=" relative mr-auto w-[408px] h-[212px]">
       <label
         htmlFor={id}
-        className="flex items-center justify-center w-full h-full bg-white border border-dashed border-black rounded-[22px] overflow-hidden cursor-pointer"
+        className="flex items-center justify-center w-full h-full border border-dashed border-black rounded-[22px] overflow-hidden cursor-pointer"
       >
         {preview ? (
           <img

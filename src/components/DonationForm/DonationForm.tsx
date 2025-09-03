@@ -2,9 +2,12 @@
 import React from 'react';
 import PhotoUploader from '../PhotoUploader/PhotoUploader';
 import InputField from '../InputField/InputField';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import Button from '../Button/Button';
+import { string } from 'yup';
+import CrossIcon from '@/icons/cross.svg';
+import EditPenIcon from '@/icons/edit_pen.svg';
 
 type DonationFormValues = {
   image: FileList;
@@ -21,7 +24,7 @@ type DonationFormValues = {
   status: 'active' | 'closed';
   value: string;
   importance: string;
-  long_desc: string;
+  long_desc: { text: string }[];
 };
 
 function DonationForm() {
@@ -30,12 +33,31 @@ function DonationForm() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<DonationFormValues>();
+  } = useForm<DonationFormValues>({
+    defaultValues: {
+      long_desc: [{ text: '' }, { text: '' }],
+    },
+  });
 
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
-    console.log('Form values:', data);
+
+    // Трансформація у потрібний формат
+    const transformed = {
+      ...data,
+      long_desc: data.long_desc.reduce((acc, item, idx) => {
+        acc[`section${idx + 1}`] = item.text;
+        return acc;
+      }, {} as Record<string, string>),
+    };
+
+    console.log('Form values:', transformed);
   };
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'long_desc',
+  });
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -81,6 +103,42 @@ function DonationForm() {
           required: 'Короткий опис обов’язковий',
         })}
       />
+      <div>
+        <p className="flex font-semibold text-base leading-[137%] mb-4">
+          Детальний опис збору
+          <span className="ml-2 text-current block ">*</span>
+        </p>
+        {fields.map((field, index) => (
+          <div key={field.id} className="flex  items-center gap-7 mb-8">
+            <label
+              htmlFor={`long_desc.${index}.text`}
+              className="font-semibold text-base leading-[22px]"
+            >{`Абзац ${index + 1}`}</label>
+            <div className="flex-1">
+              <InputField
+                id={`long_desc.${index}.text`}
+                type="text"
+                placeholder="Опис"
+                error={errors.long_desc?.[index]?.text}
+                registration={register(`long_desc.${index}.text`, {
+                  required: 'Це поле обовʼязкове',
+                })}
+              />
+            </div>
+            <Button type="button" onClick={() => remove(index)} className=" ">
+              <CrossIcon />
+            </Button>
+          </div>
+        ))}
+        <Button
+          type="button"
+          onClick={() => append({ text: '' })}
+          className="flex justify-center items-center gap-2 rounded-[48px] py-4 px-2 font-semibold text-lg text-black bg-zinc-50 border border-black w-[228px]"
+        >
+          Додати абзац
+          <EditPenIcon />
+        </Button>
+      </div>
 
       <RadioGroup
         label="Статус збору"
@@ -202,19 +260,6 @@ function DonationForm() {
         ]}
       />
 
-      <InputField
-        important={true}
-        id="long_desc"
-        type="text"
-        label="Детальний опис збору"
-        error={errors.long_desc}
-        registration={register('long_desc', {
-          required: 'Детальний опис збору обов’язковий',
-        })}
-      />
-      <InputField />
-      <InputField />
-
       <div className="flex flex-row gap-6 justify-center items-center mt-14">
         <Button
           type="submit"
@@ -223,7 +268,7 @@ function DonationForm() {
           Надіслати
         </Button>
         <Button
-          type="button"
+          type="reset"
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[288px]"
         >
           Відхилити

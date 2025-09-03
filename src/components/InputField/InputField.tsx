@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/services/cn';
 import React from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
@@ -42,9 +43,10 @@ function InputField({
           placeholder={placeholder}
           {...registration}
           id={id}
-          className={` outline-0 border rounded-md py-3 px-4 border-neutral-600 placeholder:text-base placeholder:leading-[137%] placeholder:font-normal ${
-            className ? className : ' w-full'
-          }`}
+          className={cn(
+            'outline-0 border rounded-md py-3 px-4 border-neutral-600 placeholder:text-base placeholder:leading-[137%] placeholder:font-normal',
+            className || 'w-full'
+          )}
         />
         {error && (
           <span className="absolute -bottom-6 left-1  text-xs font-normal text-red-600">
