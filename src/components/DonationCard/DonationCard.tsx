@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import EditIcon from '@/icons/edit.svg';
 import DeleteIcon from '@/icons/delete.svg';
-import { BASE_IMAGE_URL } from '@/constants/constants';
+// import { BASE_IMAGE_URL } from '@/constants/constants';
 
 type Props = {
   path: string;
@@ -9,6 +9,9 @@ type Props = {
   title: string;
   desc: string;
 };
+
+const BASE_IMAGE_URL = process.env.NEXT_PUBLIC_BASE_IMAGE_URL;
+
 function DonationCard({ path, alt, desc, title }: Props) {
   return (
     <div className="border-2 w-[305px] h-[440px] rounded-2xl p-6 flex flex-col gap-6">

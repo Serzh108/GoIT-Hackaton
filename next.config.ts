@@ -1,6 +1,30 @@
 import type { NextConfig } from 'next';
+// --- - --- origin: test?: RegExp; 
+type MinimalRuleSetRule = {
+  test: RegExp;
+  exclude?: RegExp | RegExp[];
+  [key: string]: unknown;
+};
 
+function isMinimalRule(rule: unknown): rule is MinimalRuleSetRule {
+  return (
+    typeof rule === 'object' &&
+    rule !== null &&
+    'test' in rule &&
+    rule.test instanceof RegExp
+  );
+}
+// --- / - ---
 const nextConfig: NextConfig = {
+  /* config options here */
+    async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://inharmony-v2.h.goit.study/api/:path*",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -13,9 +37,13 @@ const nextConfig: NextConfig = {
   },
   //! Webpack (build/prod) — увімкнути SVGR і прибрати svg з дефолтного лоадера картинок
   webpack(config) {
-    const fileLoaderRule = config.module.rules.find((rule: any) =>
-      rule.test?.test?.('.svg')
-    );
+    // const fileLoaderRule = config.module.rules.find((rule: any) =>
+      // rule.test?.test?.('.svg')
+      const fileLoaderRule = config.module.rules.find(
+        (rule: unknown): rule is MinimalRuleSetRule =>
+        isMinimalRule(rule) && rule.test.test('.svg')
+      );
+    // );
     if (fileLoaderRule) {
       fileLoaderRule.exclude = /\.svg$/i;
     }
