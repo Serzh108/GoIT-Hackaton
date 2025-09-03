@@ -1,8 +1,8 @@
 import { ENDPOINTS } from "@/constants/constants";
 // import { refreshMyCookie } from "./actions";
 // import { axiosPrivate, axiosPublic } from "./axios.api.config";
-import { logInFormData } from "@/types/formDataTypes";
-import axios from "axios";
+import { IAllUsersData, IRegisterFormData, logInFormData } from "@/types/formDataTypes";
+import axios, { AxiosResponse } from "axios";
 
 // export const refresh = async () => {
 //   try {
@@ -25,10 +25,36 @@ export const logIn = async (logInData: logInFormData) => {
 };
 
 export const logOut = async () => {
+  console.log(' logOut!!! ');
   try {
     const result = await axios.post(ENDPOINTS.LOGOUT);
+      console.log(' - result --> ', result);
     return result.status;
   } catch (error) {
     return { message: error };
+  }
+};
+
+export const userRegister = async (registerData: IRegisterFormData) => {
+  console.log(' userRegister registerData ->', registerData);
+  try {
+    const result = await axios.post(ENDPOINTS.REGISTER, registerData);
+      console.log(' - result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+
+export const usersList = async () => {
+  try {
+    const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_USERS);
+    return data;
+      // console.log(' - result --> ', result);
+      // if(result.status === 200) { return result.data; };
+      // return result;
+  } catch (error) {
+    console.error(error);
+      // return { message: error };
   }
 };

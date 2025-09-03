@@ -1,5 +1,6 @@
 'use server';
 import { COOKIES_VALUE } from "@/constants/constants";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 const maxAge = Number(process.env.NEXT_PUBLIC_MAX_AGE);
@@ -12,6 +13,11 @@ export async function createCookie(value: string) {
     sameSite: true,
     secure: false,
   });
+};
+
+export async function deleteCookie() {
+  (await cookies()).delete('accessToken');
+    // (await cookies()).delete('fec-rerb');
 };
 
 export async function getCookie(name: string) {
@@ -29,6 +35,15 @@ export async function createCookieRefresh(value: string) {
     sameSite: true,
     secure: false,
   });
+};
+
+export async function deleteCookieRefresh() {
+  // (await cookies()).delete('fec-refresh');
+  (await cookies()).delete('refreshToken');
+};
+
+export async function checkCookieRefresh() {
+  return (await cookies()).has('fec-refresh');
 }
 
 export const refreshMyCookie = async () => {
@@ -37,3 +52,7 @@ export const refreshMyCookie = async () => {
   await createCookie(myRefreshCookie?.value || COOKIES_VALUE.usual);
   await createCookieRefresh(myRefreshCookie?.value || COOKIES_VALUE.usual);
 };
+
+export async function refreshPath(path: string) {
+  revalidatePath(path);
+}
