@@ -1,27 +1,49 @@
 export const MENU_ARRAY = [
+  // {
+  //   title: 'Home',
+  //   link: '',
+  // },
   {
-    title: 'Home',
-    link: '',
+    title: 'Дашборд',
+    link: 'dashboard',
   },
   {
-    title: 'About Us',
-    link: 'about',
-  },
-  {
-    title: 'Donations',
+    title: 'Збори',
     link: 'donations',
   },
   {
-    title: 'Звіти',
+    title: 'Звітність',
     link: 'reporting',
   },
   {
-    title: 'Link-button',
-    link: 'link-button',
+    title: 'Звітність "ІнХармоні.Юа"',
+    link: 'reporting/reporting-in-harmony',
+    parent: 'reporting',
   },
+  {
+    title: 'Реалізовані проєкти',
+    link: 'reporting/projects',
+    parent: 'reporting',
+  },
+  { title: 'Відгуки ', link: 'reporting/reviews', parent: 'reporting' },
+  {
+    title: 'Мерч',
+    link: 'merch',
+  },
+  {
+    title: 'Про нас',
+    link: 'about',
+  },
+  { title: 'Партнери', link: 'about/partners', parent: 'about' },
+  { title: 'Команда', link: 'about/team', parent: 'about' },
+  { title: 'Досягнення', link: 'about/achievements', parent: 'about' },
   {
     title: 'Адміністратор',
     link: 'admin',
+  },
+  {
+    title: 'Редактори',
+    link: 'editor',
   },
 ];
 
