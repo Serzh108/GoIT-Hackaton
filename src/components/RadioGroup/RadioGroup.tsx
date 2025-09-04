@@ -49,7 +49,11 @@ const RadioGroup: React.FC<Props> = ({
                 <label
                   key={option.value}
                   className={`cursor-pointer px-4 py-2 rounded-full border 
-                    ${isSelected ? 'bg-black text-white ' : 'border-black'}
+                    ${
+                      isSelected
+                        ? 'bg-primary text-white '
+                        : 'border-gray-500 text-gray-500 hover:text-black hover:border-black'
+                    }
                   `}
                 >
                   <input
@@ -66,7 +70,9 @@ const RadioGroup: React.FC<Props> = ({
               );
             })}
             {fieldState.error && (
-              <p className="text-red-500 text-sm">{fieldState.error.message}</p>
+              <p className="text-xs font-normal text-error">
+                {fieldState.error.message}
+              </p>
             )}
           </div>
         )}
