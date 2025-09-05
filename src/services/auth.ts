@@ -46,6 +46,31 @@ export const userRegister = async (registerData: IRegisterFormData) => {
   }
 };
 
+export const updateUser = async (updateData: IRegisterFormData, id: string) => {
+  console.log(' updateRegister updateData ->', updateData);
+  console.log(' updateRegister id ->', id);
+  const url = `${ENDPOINTS.REFRESH_USER}${id}`;
+  console.log(' updateRegister url ->', url);
+  try {
+    const result = await axios.patch(url, updateData);
+      console.log(' - result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+
+export const deleteUser = async (id: string) => {
+  const url = `${ENDPOINTS.DELETE_USER}${id}`;
+  try {
+    const result = await axios.delete(url);
+      console.log(' - result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+
 export const usersList = async () => {
   try {
     const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_USERS);

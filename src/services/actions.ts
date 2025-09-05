@@ -2,6 +2,7 @@
 import { COOKIES_VALUE } from "@/constants/constants";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const maxAge = Number(process.env.NEXT_PUBLIC_MAX_AGE);
 const maxAgeRefresh = Number(process.env.NEXT_PUBLIC_MAX_AGE_REFRESH);
@@ -55,4 +56,22 @@ export const refreshMyCookie = async () => {
 
 export async function refreshPath(path: string) {
   revalidatePath(path);
+}
+
+export async function redirectWithUpdateServer(redirectPath: string) {
+  try {
+    await revalidatePath(redirectPath);
+  } catch (error) {
+    console.error('Failed to revalidate path:', error);
+  }
+
+  redirect(redirectPath);
+}
+
+export async function updateServer(revalidationPath: string) {
+  try {
+    await revalidatePath(revalidationPath);
+  } catch (error) {
+    console.error('Failed to revalidate path:', error);
+  }
 }

@@ -49,7 +49,7 @@ function InputField({
           )}
         />
         {error && (
-          <span className="absolute -bottom-6 left-1  text-xs font-normal text-red-600">
+          <span className="absolute -bottom-6 left-1  text-xs font-normal text-error">
             {error?.message}
           </span>
         )}
