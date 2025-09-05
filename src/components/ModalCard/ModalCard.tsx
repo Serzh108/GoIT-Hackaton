@@ -4,14 +4,16 @@ import CrossIcon from '@/icons/little_cross.svg';
 import Button from '../Button/Button';
 import { cn } from '@/services/cn';
 
+interface ModalBtn {
+  label: string;
+  onClick: () => void;
+  style: 'primary' | 'secondary';
+}
+
 type ModalCardProps = {
   title: string;
   variant: 'success' | 'delete';
-  buttons?: {
-    label: string;
-    onClick: () => void;
-    variatn: 'primary' | 'secondary';
-  };
+  buttons?: ModalBtn[];
   onClose: () => void;
 };
 
@@ -29,16 +31,16 @@ function ModalCard({ title, buttons, variant, onClose }: Props) {
       </h2>
       <div className="flex gap-6 items-center justify-center mt-9">
         {buttons &&
-          buttons.map((btn, index) => (
+          buttons.map((btn: ModalBtn, index: number) => (
             <Button
               key={index}
               onClick={() => {
                 btn.onClick?.();
-                if (btn.variant === 'secondary') onClose?.();
+                if (btn.style === 'secondary') onClose?.();
               }}
               className={cn(
                 'rounded-3xl py-4 px-2 text-xl font-semibold leading-8 w-50',
-                btn.variant === 'primary'
+                btn.style === 'primary'
                   ? 'bg-black text-white hover:bg-primary'
                   : 'text-black border-2 border-black hover:text-primary hover:border-primary'
               )}

@@ -38,8 +38,8 @@ const About = () => {
               variant="confirm"
               onClose={() => setOpen(false)} // передача функції закриття
               buttons={[
-                { label: 'Так', onClick: handleDelete, variant: 'primary' },
-                { label: 'Ні', onClick: () => {}, variant: 'secondary' },
+                { label: 'Так', onClick: handleDelete, style: 'primary' },
+                { label: 'Ні', onClick: () => {}, style: 'secondary' },
               ]}
             />
           )}
