@@ -6,7 +6,7 @@ const MainPage = ({ isMyCookie }: { isMyCookie: boolean }) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(!isMyCookie ? '/about' : '/log-in');
+    router.push(!isMyCookie ? '/about' : '/login');
   }, []);
 
   return (

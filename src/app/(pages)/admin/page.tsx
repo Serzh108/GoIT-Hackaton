@@ -1,10 +1,13 @@
-const Admin = () => {
+import PageHeader from "@/components/PageHeader/PageHeader";
+import UsersList from "@/components/Users/UsersList";
+
+const Admin = async () => {
   return(
     <section className="pageWrapper">
-      <h1>Admin</h1>
-      <p>Page routing Admin</p>
+      <PageHeader isShowEditeImage />
+      <UsersList />
     </section>
   )
 };
 
-export default Admin;
+export default Admin; 
