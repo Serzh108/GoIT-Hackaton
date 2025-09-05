@@ -1,12 +1,9 @@
 'use client';
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import axios from "axios";
 import { cn } from "@/services/cn";
 import { getNormalizedPath } from "@/services/getNormalizedPath";
-import { deleteUser, logOut, 
-  // userRegister
- } from "@/services/auth";
+import { logOut } from "@/services/auth";
 import { deleteCookie, deleteCookieRefresh } from "@/services/actions";
 import { useUserStore } from "@/store/store";
 import { MENU_ARRAY } from "@/constants/constants";

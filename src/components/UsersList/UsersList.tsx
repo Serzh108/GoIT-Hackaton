@@ -15,7 +15,7 @@ const UsersList = () => {
     getUsersList().then(res => {
       if(res) {setAllUsers(res); setUsers(res);}
     });
-  }, []);
+  }, [setUsers]);
   
   return(
     <div className="p-12 pt-20 ml-[20px]">

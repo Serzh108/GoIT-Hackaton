@@ -191,7 +191,8 @@ const UserEditing: FC<Props> = ({id}) => {
                         ...base,
                         color: "#aaa", // колір вибраного значення
                     }),
-                      option: (base, state) => ({
+                    //  option: (base, state) => ({
+                      option: (base) => ({
                         ...base,
                         // backgroundColor: state.isFocused
                         // ? "#f0f0f0" // фон при hover
