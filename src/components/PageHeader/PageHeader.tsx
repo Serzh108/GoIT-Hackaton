@@ -1,11 +1,16 @@
 'use client';
+import { FC } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { INTERNAL_LINKS, pathRenderName } from "@/constants/constants";
 import { getPathRenderName } from "@/services/getPathRenderName";
 import Edit from '@/icons/edit.svg';
 
-const PageHeader = () => {
+type Props = {
+  isShowEditeImage?: boolean;
+};
+
+const PageHeader: FC<Props> = ({isShowEditeImage = false}) => {
   const path = usePathname();
   const router = useRouter();
 
@@ -42,6 +47,7 @@ const PageHeader = () => {
         ))}
       </ul>
 
+        {isShowEditeImage ? (
         <button
           type="button"
           title="Додати"
@@ -55,7 +61,7 @@ const PageHeader = () => {
             className="w-11 h-11 icon-actions-green"
           /> */}
           <span>Додати</span>
-        </button>
+        </button>) : (<div className="w-8 h-8"></div>)}
     </div>
   );  
 };

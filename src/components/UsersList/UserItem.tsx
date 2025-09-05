@@ -19,6 +19,7 @@ const UserItem: FC<Props> = ({user}) => {
   };
 
   const deleteHandler = async (id: string) => {
+    // !!! Insert Model with delede confirmation
    console.log(' delete: ', id); 
     const result = await deleteUser(id);
     console.log(' - result1 -> ', result); 

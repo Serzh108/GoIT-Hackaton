@@ -5,7 +5,7 @@ const Admin = async () => {
   return(
     <section className="pageWrapper">
       <h1>Admin Page</h1>
-      <PageHeader />
+      <PageHeader isShowEditeImage />
       <UsersList />
     </section>
   )
