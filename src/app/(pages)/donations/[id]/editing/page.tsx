@@ -1,19 +1,19 @@
+import DonationForm from "@/components/Donatios/DonationForm/DonationForm";
 import PageHeader from "@/components/PageHeader/PageHeader";
-import UserEditing from "@/components/Users/UserEditing";
 
 type Params = {
   id: string;
 };
 
-const AdminEditingPage = async ({ params }: { params: Params }) => {
+const DonationEditingPage = async ({ params }: { params: Params }) => {
   const { id } = await params;
 
   return(
     <section className="flex flex-col pl-[260px]">
       <PageHeader />
-      <UserEditing id={id} />
+      <DonationForm id={id} />
     </section>
   ) 
 };
 
-export default AdminEditingPage;
+export default DonationEditingPage;

@@ -1,8 +1,11 @@
+import DonationsList from "@/components/Donatios/DonatiosList/DonatiosList";
+import PageHeader from "@/components/PageHeader/PageHeader";
+
 const Donations = () => {
   return(
     <section className="pageWrapper">
-      <h1>Donations</h1>
-      <p>Page routing donations</p>
+      <PageHeader isShowEditeImage />
+      <DonationsList />
     </section>
   );
 };

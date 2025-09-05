@@ -66,33 +66,22 @@ export const ENDPOINTS = {
   DELETE_REPORT: '/api/reports/{id}',
   ALL_REPORTS: '/api/reports',
   CREATE_REPORT: '/api/reports',
-  // LOGIN: '',
+  // ALL_DONATIONS: '/COLLECTIONS/{locale}',
+  ALL_DONATIONS: '/api/collections/',
+  //  DONATION: '/api/collections/{locale}/{id}',
+  DONATION: '/api/collections/',
 }
 // !!! Correct !!! ------------------
 export const INTERNAL_LINKS = {
-  ARTICLES: 'articles',
-  REVIEWS: 'reviews',
-  DISCOUNTS: 'discounts',
-  PRICES: 'prices',
-  FAQ: 'faq',
-  TEACHERS: 'teachers',
-  TESTS: 'tests',
   ADMIN: 'admin',
-  PASSWORD: 'password',
+  DONATIONS: 'donations',
   EDITING: 'editing',
   NEW: 'new',
 };
 
 export const pathRenderName = {
-  [INTERNAL_LINKS.PRICES]: 'Ціни',
-  [INTERNAL_LINKS.TESTS]: 'Тест',
-  [INTERNAL_LINKS.ARTICLES]: 'Статті',
-  [INTERNAL_LINKS.TEACHERS]: 'Викладачі',
-  [INTERNAL_LINKS.REVIEWS]: 'Відгуки',
   [INTERNAL_LINKS.ADMIN]: 'Адміністратор',
-  [INTERNAL_LINKS.FAQ]: 'Поширені питання',
+  [INTERNAL_LINKS.DONATIONS]: 'Збори',
   [INTERNAL_LINKS.NEW]: 'Додавання',
   [INTERNAL_LINKS.EDITING]: 'Редагування',
-  [INTERNAL_LINKS.PASSWORD]: 'Змінити пароль',
-  [INTERNAL_LINKS.DISCOUNTS]: 'Акції',
 };

@@ -41,9 +41,9 @@ const UserItem: FC<Props> = ({user}) => {
         <div className="flex justify-between items-center gap-8">
           <Link href={`${INTERNAL_LINKS.ADMIN}/${user._id}/${INTERNAL_LINKS.EDITING}`}
           className="group">
-          <Edit className="w-8 h-8 stroke-white cursor-pointer" onClick={() => editHandler(user._id)} />
+            <Edit className="w-8 h-8 cursor-pointer" onClick={() => editHandler(user._id)} />
           </Link>
-          <Delete className="w-8 h-8 stroke-white cursor-pointer" onClick={() => deleteHandler(user._id)} />
+          <Delete className="w-8 h-8 cursor-pointer" onClick={() => deleteHandler(user._id)} />
         </div>
     </li>
   )

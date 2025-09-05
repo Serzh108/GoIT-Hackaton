@@ -1,42 +1,116 @@
 'use client';
-import React from 'react';
-import PhotoUploader from '../PhotoUploader/PhotoUploader';
-import InputField from '../InputField/InputField';
+import React, { FC, useEffect, useState } from 'react';
+import PhotoUploader from '../../PhotoUploader/PhotoUploader';
+import InputField from '../../InputField/InputField';
 import { useFieldArray, useForm } from 'react-hook-form';
-import RadioGroup from '../RadioGroup/RadioGroup';
-import Button from '../Button/Button';
-import { string } from 'yup';
+import RadioGroup from '../../RadioGroup/RadioGroup';
+import Button from '../../Button/Button';
+// import { string } from 'yup';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
+import { donationData } from '@/services/transferData';
+import { ICollection } from '@/types/formDataTypes';
 
 type DonationFormValues = {
-  image: FileList;
+  // image: FileList;
+  image?: FileList;
   alt: string;
   title: string;
   desc: string;
   collected: string;
   target: string;
   peopleDonate: string;
-  peopleDonate_title: 'донор' | 'донори' | 'донорів' | 'donors' | 'donor';
+  // peopleDonate_title: 'донор' | 'донори' | 'донорів' | 'donors' | 'donor';
+  peopleDonate_title: string;
   days: string;
   quantity: string;
-  period: 'день' | 'дні' | 'днів' | 'day' | 'days';
-  status: 'active' | 'closed';
+  // period: 'день' | 'дні' | 'днів' | 'day' | 'days';
+  // status: 'active' | 'closed';
+  period: string;
+  status: string;
   value: string;
   importance: string;
   long_desc: { text: string }[];
 };
 
-function DonationForm() {
+type Props = {
+    id?: string;
+};
+
+const DonationForm: FC<Props> = ({id}) => {
+  console.log('id: ', id);
+const [donation, setDonation] = useState<ICollection>();
+
+  useEffect(() => {
+    if(id) {
+      const getDonation = async () => await donationData(id);
+        getDonation().then(res => {
+          console.log(' - getDonation! res --> ', res);
+            console.log(' - res.data --> ', res.data);
+          setDonation(res.data);;
+        });
+    } 
+  }, [id]);
+  console.log(' -- - donation --> ', donation); 
+
+  const [initialValues, setInitialValues] = useState<DonationFormValues>();
+
+    useEffect(() => {
+    if(donation) {
+     const initialValues = {
+      title: donation?.title  || "",
+      desc: donation?.desc  || "",
+      alt: donation?.alt || "",
+      // image: donation?.image || [],
+      image: undefined,
+      collected: (donation?.collected)?.toString() || '',
+      target: (donation?.target)?.toString() || '',
+      peopleDonate: (donation?.peopleDonate)?.toString()  || '',
+      peopleDonate_title: donation?.peopleDonate_title  || '',
+      days: donation?.days || '',
+      quantity: donation?.quantity || '',
+      period: donation?.period || '',
+      status: donation?.status || '',
+      value: donation?.value || '',
+      importance: donation?.importance || '',
+      // long_desc: donation?.long_desc || [],
+      long_desc: [{ text: '' }, { text: '' }],
+     };
+     setInitialValues(initialValues);
+    } 
+  }, [donation]);
+  
+    // const initialValues: DonationFormValues = {
+    //   title: donation?.title  || "",
+    //   desc: donation?.desc  || "",
+    //   alt: donation?.alt || "",
+    //   // image: donation?.image || [],
+    //   image: undefined,
+    //   collected: (donation?.collected)?.toString() || '',
+    //   target: (donation?.target)?.toString() || '',
+    //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
+    //   peopleDonate_title: donation?.peopleDonate_title  || '',
+    //   days: donation?.days || '',
+    //   quantity: donation?.quantity || '',
+    //   period: donation?.period || '',
+    //   status: donation?.status || '',
+    //   value: donation?.value || '',
+    //   importance: donation?.importance || '',
+    //   // long_desc: donation?.long_desc || [],
+    //   long_desc: [{ text: '' }, { text: '' }],
+    // };
+      console.log(' -- - initialValues --> ', initialValues); 
+  
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<DonationFormValues>({
-    defaultValues: {
-      long_desc: [{ text: '' }, { text: '' }],
-    },
+    defaultValues: initialValues,
+      //  {
+      // long_desc: [{ text: '' }, { text: '' }],
+    // },
   });
 
   const onSubmit = (data: DonationFormValues) => {
