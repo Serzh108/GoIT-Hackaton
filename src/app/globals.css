@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: hsl(226, 67%, 61%);
-  --color-accent: hsl(25, 95%, 53%);
+  --color-primary: hsl(236, 50%, 40%);
+  --color-accent: hsl(210, 100%, 90%);
   --color-error: hsl(0, 83%, 54%);
   --gray-50: hsl(0, 0%, 100%);
   --gray-100: hsl(0, 0%, 96%);
@@ -12,10 +12,11 @@
 
   --font-body: 'Inter', sans-serif;
   --font-heading: 'Montserrat', sans-serif;
+  --shadow-accent: 0 0 30px 0 rgba(51, 75, 155, 0.3);
 }
 
 * {
-  @apply transition-colors duration-300;
+  @apply transition-all duration-300;
 }
 
 body {
