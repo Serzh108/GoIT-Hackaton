@@ -13,7 +13,7 @@ function Modal({ children, show, onClose }: Props) {
         // }}
         onClose={onClose}
         as="div"
-        className="fixed inset-0 z-50 flex items-center"
+        className=" flex justify-center items-center fixed inset-0 z-50 "
       >
         <Transition.Child
           as={Fragment}
@@ -24,9 +24,9 @@ function Modal({ children, show, onClose }: Props) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-80 " />
+          <div className="fixed inset-0 bg-gray-500/60 " />
         </Transition.Child>
-        <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all p-2">
+        <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all p-4 w-125 h-65">
           {children}
         </Dialog.Panel>
       </Dialog>
