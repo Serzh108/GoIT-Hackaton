@@ -1,13 +1,13 @@
 import PageHeader from "@/components/PageHeader/PageHeader";
-import UserEditing from "@/components/Users/UserEditing";
+import DonationForm from "@/components/Donatios/DonationForm/DonationForm";
 
-const NewUser = async () => {
+const NewDonations = async () => {
   return(
     <section className="flex flex-col pl-[260px]">
       <PageHeader />
-      <UserEditing />
+      <DonationForm />
     </section>
   )  
 };
 
-export default NewUser; 
+export default NewDonations;
