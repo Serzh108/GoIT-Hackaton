@@ -1,16 +1,12 @@
 'use client';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import axios from 'axios';
-import { cn } from '@/services/cn';
-import { getNormalizedPath } from '@/services/getNormalizedPath';
-import {
-  logOut,
-  // userRegister
-} from '@/services/auth';
-import { deleteCookie, deleteCookieRefresh } from '@/services/actions';
-import { useUserStore } from '@/store/store';
-import { MENU_ARRAY } from '@/constants/constants';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/services/cn";
+import { getNormalizedPath } from "@/services/getNormalizedPath";
+import { logOut } from "@/services/auth";
+import { deleteCookie, deleteCookieRefresh } from "@/services/actions";
+import { useUserStore } from "@/store/store";
+import { MENU_ARRAY } from "@/constants/constants";
 // import { IRegisterFormData } from "@/types/formDataTypes";
 import Logo from '@/icons/logo.svg';
 import ExitIcon from '@/icons/exit.svg';
@@ -45,8 +41,8 @@ const Sidebar = () => {
     // const result2 = await axios.get("/api/collections/en?page=1&perPage=3");
     // console.log(' - collections list -> ', result2);
 
-    const result1 = await axios.get('/api/auth/users');
-    console.log(' - result1 -> ', result1);
+    // const result1 = await axios.get('/api/auth/users');
+    // console.log(' - result1 -> ', result1);
   };
 
   return (
