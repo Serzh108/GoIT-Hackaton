@@ -4,20 +4,33 @@ import ModalCard from '@/components/ModalCard/ModalCard';
 import { useState } from 'react';
 
 const About = () => {
-  const [open, setOpen] = useState(false);
-  const [modalType, setModalType] = useState<'confirm' | 'success' | null>(
-    null
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalVariant, setModalVariant] = useState<'delete' | 'success'>(
+    'delete'
   );
 
-  const openConfirm = () => {
-    setModalType('confirm');
-    setOpen(true);
+  const openDeleteModal = () => {
+    setModalVariant('delete');
+    setIsOpen(true);
   };
 
   const handleDelete = () => {
-    // тут виконуєш запит на видалення
-    setModalType('success');
+    try {
+      // тут має бути запит на видалення
+
+      // а це відкриття модалки що каже про успішне видалення
+      setModalVariant('success');
+    } catch (error) {
+      console.error(error);
+    }
+    console.log('Delete');
   };
+
+  const modalButtons = [
+    { label: 'Так', style: 'primary', onClick: handleDelete },
+    { label: 'Ні', style: 'secondary', onClick: () => setIsOpen(false) },
+  ];
+
   return (
     <section className="pageWrapper">
       <h1>About</h1>
@@ -26,31 +39,23 @@ const About = () => {
       <div>
         <button
           className="px-4 py-2 bg-red-500 text-white rounded"
-          onClick={openConfirm}
+          onClick={openDeleteModal}
         >
           Видалити
         </button>
 
-        <Modal show={open} onClose={() => setOpen(false)}>
-          {modalType === 'confirm' && (
-            <ModalCard
-              title="Ви дійсно бажаєте видалити звіт?"
-              variant="confirm"
-              onClose={() => setOpen(false)} // передача функції закриття
-              buttons={[
-                { label: 'Так', onClick: handleDelete, style: 'primary' },
-                { label: 'Ні', onClick: () => {}, style: 'secondary' },
-              ]}
-            />
-          )}
-
-          {modalType === 'success' && (
-            <ModalCard
-              title="Успішно видалено"
-              variant="success"
-              onClose={() => setOpen(false)}
-            />
-          )}
+        <Modal show={isOpen} onClose={() => setIsOpen(false)}>
+          <ModalCard
+            title={
+              modalVariant === 'delete'
+                ? // ? `Ви дійсно бажаєте видалити ${title}?`
+                  `Ви дійсно бажаєте видалити збір?`
+                : 'Успішно видалено'
+            }
+            variant={modalVariant}
+            onClose={() => setIsOpen(false)} // передача функції закриття
+            buttons={modalVariant === 'delete' ? modalButtons : undefined}
+          />
         </Modal>
       </div>
     </section>
