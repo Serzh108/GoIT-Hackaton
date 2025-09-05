@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { cn } from "@/services/cn";
 import { getNormalizedPath } from "@/services/getNormalizedPath";
-import { logOut, 
+import { deleteUser, logOut, 
   // userRegister
  } from "@/services/auth";
 import { deleteCookie, deleteCookieRefresh } from "@/services/actions";
@@ -32,22 +32,22 @@ const Sidebar = () => {
   };
 
   const testButtonHandler = async () => {
-    // const newUser: IRegisterFormData = {
-    //   email: 'ser2015@i.ua',
-    //   password: 'xxxxTEST1xxx',
-    //   name: 'Serhii',
-    //   role: 'editor',
-    // };  
+     
     // const resultRegister = await userRegister(newUser);
     // console.log(' - resultRegister: ', resultRegister);
 
         // const result2 = await axios.get("/api/collections/en?page=1&perPage=3");
         // console.log(' - collections list -> ', result2);
 
-        const result1 = await axios.get("/api/auth/users");
-        console.log(' - result1 -> ', result1);
+        // const result1 = await axios.get("/api/auth/users");
+        // console.log(' - result1 -> ', result1);
   };
-  
+// const newUser: IRegisterFormData = {
+    //   email: 'ser2015@i.ua',
+    //   password: 'xxxxTEST1xxx',
+    //   name: 'Serhii',
+    //   role: 'editor',
+    // };   
   return(
     <aside className="fixed flex flex-col left-0 top-0 bottom-0 w-[256px] p-6 bg-blue-800">
       <div className="flex flex-col items-center justify-between  gap-4 h-full">

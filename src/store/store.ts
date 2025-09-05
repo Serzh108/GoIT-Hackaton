@@ -1,31 +1,25 @@
+import { IAllUsersData } from "@/types/formDataTypes";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-// import { logOut } from "@/services/auth";
 
 type State = {
   isAdmin: boolean;
+  users: IAllUsersData[];
 };
 
 type Action = {
   setIsAdmin: (val: boolean) => void;
-//   setLogOut: () => Promise<true | undefined>;
+  setUsers: (val: IAllUsersData[]) => void;
 };
 
-export const useUserStore = create<
-  State & Action,
-  [['zustand/persist', State & Action]]
+export const useUserStore = create<State & Action, [['zustand/persist', State & Action]]
 >(
   persist(
     set => ({
       isAdmin: false,
+      users: [],
       setIsAdmin: (val) => set({ isAdmin: val }),
-    //   setLogOut: async () => {
-    //     const result = await logOut();
-    //     if (result === 200) {
-    //       set({ isAdmin: false });
-    //       return true;
-    //     }
-    //   },
+      setUsers: (val) => set({ users: val }),
     }),
     {
       name: 'user-storage',

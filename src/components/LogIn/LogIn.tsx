@@ -15,7 +15,7 @@ import { REGEXP } from "@/constants/regexp";
 import { COOKIES_VALUE } from "@/constants/constants";
 
 const LogIn: FC = () => {
-    const {
+  const {
     register,
     handleSubmit,
     reset,
