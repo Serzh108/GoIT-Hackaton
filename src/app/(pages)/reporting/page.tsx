@@ -1,6 +1,6 @@
 const Reporting = () => {
-  return(
-    <section className="pageWrapper">
+  return (
+    <section className="ml-[256px]">
       <h1>Reporting</h1>
       <p>Page routing Reporting</p>
     </section>
