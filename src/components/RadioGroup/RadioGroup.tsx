@@ -1,22 +1,25 @@
-'use client';
-import React from 'react';
-import {  Controller, FieldError } from 'react-hook-form';
+import {
+  Controller,
+  FieldError,
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
+} from 'react-hook-form';
 
 type RadioOptions = { label: string; value: string };
 
-
-
-type Props = {
-  name: string;
-  control: any;
+type Props<T extends FieldValues> = {
+  name: Path<T>;
+  control: Control<T>;
   options: RadioOptions[];
-  rules?: object;
+  rules?: RegisterOptions<T, Path<T>>;
   error?: FieldError;
   label?: string;
   important?: boolean;
 };
 
-const RadioGroup: React.FC<Props> = ({
+const RadioGroup = <T extends FieldValues>({
   name,
   options,
   control,
@@ -24,9 +27,9 @@ const RadioGroup: React.FC<Props> = ({
   // error,
   label,
   important,
-}: Props) => {
+}: Props<T>) => {
   return (
-    <div className=" flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       {label &&
         (important ? (
           <label className="block font-semibold text-base leading-[137%]">
@@ -44,7 +47,7 @@ const RadioGroup: React.FC<Props> = ({
         control={control}
         rules={rules}
         render={({ field, fieldState }) => (
-          <div className=" flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4">
             {options.map(option => {
               const isSelected = field.value === option.value;
               return (
@@ -62,9 +65,7 @@ const RadioGroup: React.FC<Props> = ({
                     type="radio"
                     value={option.value}
                     checked={isSelected}
-                    onChange={() => {
-                      field.onChange(option.value);
-                    }}
+                    onChange={() => field.onChange(option.value)}
                     className="hidden"
                   />
                   {option.label}

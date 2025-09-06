@@ -15,17 +15,17 @@ export const MENU_ARRAY = [
     title: 'Звітність',
     link: 'reporting',
   },
-  {
-    title: 'Звітність "ІнХармоні.Юа"',
-    link: 'reporting/reporting-in-harmony',
-    parent: 'reporting',
-  },
-  {
-    title: 'Реалізовані проєкти',
-    link: 'reporting/projects',
-    parent: 'reporting',
-  },
-  { title: 'Відгуки ', link: 'reporting/reviews', parent: 'reporting' },
+  // {
+  //   title: 'Звітність "ІнХармоні.Юа"',
+  //   link: 'reporting/reporting-in-harmony',
+  //   parent: 'reporting',
+  // },
+  // {
+  //   title: 'Реалізовані проєкти',
+  //   link: 'reporting/projects',
+  //   parent: 'reporting',
+  // },
+  // { title: 'Відгуки ', link: 'reporting/reviews', parent: 'reporting' },
   {
     title: 'Мерч',
     link: 'merch',
