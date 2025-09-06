@@ -10,6 +10,10 @@ import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
 import { donationData } from '@/services/transferData';
 import { ICollection } from '@/types/formDataTypes';
+import {
+  transformFormToLongDesc,
+  transformLongDescToForm,
+} from '@/services/transformLongDesc';
 
 type DonationFormValues = {
   // image: FileList;
@@ -34,98 +38,88 @@ type DonationFormValues = {
 };
 
 type Props = {
-    id?: string;
+  id?: string;
 };
 
-const DonationForm: FC<Props> = ({id}) => {
+const DonationForm: FC<Props> = ({ id }) => {
   console.log('id: ', id);
-const [donation, setDonation] = useState<ICollection>();
+  const [donation, setDonation] = useState<ICollection>();
 
   useEffect(() => {
-    if(id) {
+    if (id) {
       const getDonation = async () => await donationData(id);
-        getDonation().then(res => {
-          console.log(' - getDonation! res --> ', res);
-            console.log(' - res.data --> ', res.data);
-          setDonation(res.data);;
-        });
-    } 
+      getDonation().then(res => {
+        console.log(' - getDonation! res --> ', res);
+        console.log(' - res.data --> ', res.data);
+        setDonation(res.data);
+      });
+    }
   }, [id]);
-  console.log(' -- - donation --> ', donation); 
+  console.log(' -- - donation --> ', donation);
 
-  const [initialValues, setInitialValues] = useState<DonationFormValues>();
-
-    useEffect(() => {
-    if(donation) {
-     const initialValues = {
-      title: donation?.title  || "",
-      desc: donation?.desc  || "",
-      alt: donation?.alt || "",
-      // image: donation?.image || [],
-      image: undefined,
-      collected: (donation?.collected)?.toString() || '',
-      target: (donation?.target)?.toString() || '',
-      peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-      peopleDonate_title: donation?.peopleDonate_title  || '',
-      days: donation?.days || '',
-      quantity: donation?.quantity || '',
-      period: donation?.period || '',
-      status: donation?.status || '',
-      value: donation?.value || '',
-      importance: donation?.importance || '',
-      // long_desc: donation?.long_desc || [],
-      long_desc: [{ text: '' }, { text: '' }],
-     };
-     setInitialValues(initialValues);
-    } 
-  }, [donation]);
-  
-    // const initialValues: DonationFormValues = {
-    //   title: donation?.title  || "",
-    //   desc: donation?.desc  || "",
-    //   alt: donation?.alt || "",
-    //   // image: donation?.image || [],
-    //   image: undefined,
-    //   collected: (donation?.collected)?.toString() || '',
-    //   target: (donation?.target)?.toString() || '',
-    //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-    //   peopleDonate_title: donation?.peopleDonate_title  || '',
-    //   days: donation?.days || '',
-    //   quantity: donation?.quantity || '',
-    //   period: donation?.period || '',
-    //   status: donation?.status || '',
-    //   value: donation?.value || '',
-    //   importance: donation?.importance || '',
-    //   // long_desc: donation?.long_desc || [],
-    //   long_desc: [{ text: '' }, { text: '' }],
-    // };
-      console.log(' -- - initialValues --> ', initialValues); 
-  
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
-  } = useForm<DonationFormValues>({
-    defaultValues: initialValues,
-      //  {
-      // long_desc: [{ text: '' }, { text: '' }],
-    // },
-  });
+  } = useForm<DonationFormValues>({});
+
+  useEffect(() => {
+    if (donation) {
+      const initialDonationFormValues: DonationFormValues = {
+        title: donation?.title || '',
+        desc: donation?.desc || '',
+        alt: donation?.alt || '',
+        // image: donation?.image || [],
+        image: undefined,
+        collected: donation?.collected?.toString() || '',
+        target: donation?.target?.toString() || '',
+        peopleDonate: donation?.peopleDonate?.toString() || '',
+        peopleDonate_title: donation?.peopleDonate_title || '',
+        days: donation?.days || '',
+        quantity: donation?.quantity || '',
+        period: donation?.period || '',
+        status: donation?.status || '',
+        value: donation?.value || '',
+        importance: donation?.importance || '',
+        // transforming format from what we're gettig from backend to long_desc: { text: string }[];
+        long_desc: transformLongDescToForm(donation.long_desc),
+      };
+      reset(initialDonationFormValues); //! updating form;
+    }
+  }, [donation, reset]);
+
+  // const initialValues: DonationFormValues = {
+  //   title: donation?.title  || "",
+  //   desc: donation?.desc  || "",
+  //   alt: donation?.alt || "",
+  //   // image: donation?.image || [],
+  //   image: undefined,
+  //   collected: (donation?.collected)?.toString() || '',
+  //   target: (donation?.target)?.toString() || '',
+  //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
+  //   peopleDonate_title: donation?.peopleDonate_title  || '',
+  //   days: donation?.days || '',
+  //   quantity: donation?.quantity || '',
+  //   period: donation?.period || '',
+  //   status: donation?.status || '',
+  //   value: donation?.value || '',
+  //   importance: donation?.importance || '',
+  //   // long_desc: donation?.long_desc || [],
+  //   long_desc: [{ text: '' }, { text: '' }],
+  // };
 
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
 
-    // Трансформація у потрібний формат
-    const transformed = {
+    const payload = {
       ...data,
-      long_desc: data.long_desc.reduce((acc, item, idx) => {
-        acc[`section${idx + 1}`] = item.text;
-        return acc;
-      }, {} as Record<string, string>),
+      // transforming format from  long_desc: { text: string }[] to what backend expects;
+      long_desc: transformFormToLongDesc(data.long_desc),
     };
 
-    console.log('Form values:', transformed);
+    console.log('Donation Form values on submit:', payload);
   };
 
   const { fields, append, remove } = useFieldArray({
@@ -140,8 +134,8 @@ const [donation, setDonation] = useState<ICollection>();
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
           id="image"
-          //   label="Фото збору"
           error={errors.image}
+          initialImagePath={donation?.image?.[0]?.path}
           registration={register('image', { required: 'Фото обов’язкове' })}
         />
         <InputField
@@ -350,6 +344,6 @@ const [donation, setDonation] = useState<ICollection>();
       </div>
     </form>
   );
-}
+};
 
 export default DonationForm;
