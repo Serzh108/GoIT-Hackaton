@@ -10,6 +10,10 @@ import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
 import { donationData } from '@/services/transferData';
 import { ICollection } from '@/types/formDataTypes';
+import {
+  transformFormToLongDesc,
+  transformLongDescToForm,
+} from '@/services/transformLongDesc';
 
 type DonationFormValues = {
   // image: FileList;
@@ -67,7 +71,7 @@ const DonationForm: FC<Props> = ({ id }) => {
 
   useEffect(() => {
     if (donation) {
-      const values: DonationFormValues = {
+      const initialDonationFormValues: DonationFormValues = {
         title: donation?.title || '',
         desc: donation?.desc || '',
         alt: donation?.alt || '',
@@ -83,10 +87,11 @@ const DonationForm: FC<Props> = ({ id }) => {
         status: donation?.status || '',
         value: donation?.value || '',
         importance: donation?.importance || '',
-        long_desc: donation?.long_desc || [],
+        long_desc: transformLongDescToForm(donation.long_desc),
+        // long_desc: donation?.long_desc || [],
         // long_desc: [{ text: '' }, { text: '' }],
       };
-      reset(initialValues);
+      reset(initialDonationFormValues); //! updating form;
     }
   }, [donation, reset]);
 
@@ -109,21 +114,17 @@ const DonationForm: FC<Props> = ({ id }) => {
   //   // long_desc: donation?.long_desc || [],
   //   long_desc: [{ text: '' }, { text: '' }],
   // };
-  console.log(' -- - initialValues --> ', initialValues);
 
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
 
     // Трансформація у потрібний формат
-    const transformed = {
+    const payload = {
       ...data,
-      long_desc: data.long_desc.reduce((acc, item, idx) => {
-        acc[`section${idx + 1}`] = item.text;
-        return acc;
-      }, {} as Record<string, string>),
+      long_desc: transformFormToLongDesc(data.long_desc),
     };
 
-    console.log('Form values:', transformed);
+    console.log('Donation Form values on submit:', payload);
   };
 
   const { fields, append, remove } = useFieldArray({
