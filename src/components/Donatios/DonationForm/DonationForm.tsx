@@ -57,17 +57,13 @@ const DonationForm: FC<Props> = ({ id }) => {
   }, [id]);
   console.log(' -- - donation --> ', donation);
 
-  // const [initialValues, setInitialValues] = useState<DonationFormValues>();
-
   const {
     register,
     handleSubmit,
     control,
     reset,
     formState: { errors },
-  } = useForm<DonationFormValues>({
-    // defaultValues: initialValues,
-  });
+  } = useForm<DonationFormValues>({});
 
   useEffect(() => {
     if (donation) {
@@ -87,9 +83,8 @@ const DonationForm: FC<Props> = ({ id }) => {
         status: donation?.status || '',
         value: donation?.value || '',
         importance: donation?.importance || '',
+        // transforming format from what we're gettig from backend to long_desc: { text: string }[];
         long_desc: transformLongDescToForm(donation.long_desc),
-        // long_desc: donation?.long_desc || [],
-        // long_desc: [{ text: '' }, { text: '' }],
       };
       reset(initialDonationFormValues); //! updating form;
     }
@@ -118,9 +113,9 @@ const DonationForm: FC<Props> = ({ id }) => {
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
 
-    // Трансформація у потрібний формат
     const payload = {
       ...data,
+      // transforming format from  long_desc: { text: string }[] to what backend expects;
       long_desc: transformFormToLongDesc(data.long_desc),
     };
 
@@ -139,8 +134,8 @@ const DonationForm: FC<Props> = ({ id }) => {
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
           id="image"
-          //   label="Фото збору"
           error={errors.image}
+          initialImagePath={donation?.image?.[0]?.path}
           registration={register('image', { required: 'Фото обов’язкове' })}
         />
         <InputField

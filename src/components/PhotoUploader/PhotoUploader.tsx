@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react';
+'use client';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import PenIcon from '@/icons/pen.svg';
 import PlussIcon from '@/icons/pluss.svg';
@@ -8,6 +9,7 @@ export interface PhotoUploaderProps {
   id: string;
   registration: UseFormRegisterReturn;
   error?: FieldError;
+  initialImagePath?: string;
 }
 
 function PhotoUploader({
@@ -15,18 +17,29 @@ function PhotoUploader({
   registration,
   id,
   error,
-
+  initialImagePath,
   ...rest
 }: PhotoUploaderProps) {
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | File | null>(null);
+
+  useEffect(() => {
+    if (initialImagePath) {
+      setPreview(initialImagePath);
+    }
+  }, [initialImagePath]);
+
+  console.log('initialImagePath:', initialImagePath);
+
+  const BASE_IMAGE_URL = process.env.NEXT_PUBLIC_BASE_IMAGE_URL;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setPreview(URL.createObjectURL(file));
+      setPreview(file); //? now preview = File
     }
     registration.onChange(event);
   };
+
   return (
     <div className=" relative mr-auto w-[408px] h-[212px]">
       <label
@@ -34,8 +47,13 @@ function PhotoUploader({
         className="flex items-center justify-center w-full h-full border border-dashed border-black rounded-[22px] overflow-hidden cursor-pointer"
       >
         {preview ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={preview}
+            src={
+              preview instanceof File
+                ? URL.createObjectURL(preview) // new file
+                : `${BASE_IMAGE_URL}${preview}` // path from backend
+            }
             alt="preview"
             className="w-full h-full object-cover object-center"
           />
@@ -67,7 +85,6 @@ function PhotoUploader({
       />
       {label && (
         <>
-          {/* задати через svgr  */}
           <p className="font-semibold text-2xl leading-normal">{label}</p>
         </>
       )}
