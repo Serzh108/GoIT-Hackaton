@@ -34,84 +34,82 @@ type DonationFormValues = {
 };
 
 type Props = {
-    id?: string;
+  id?: string;
 };
 
-const DonationForm: FC<Props> = ({id}) => {
+const DonationForm: FC<Props> = ({ id }) => {
   console.log('id: ', id);
-const [donation, setDonation] = useState<ICollection>();
+  const [donation, setDonation] = useState<ICollection>();
 
   useEffect(() => {
-    if(id) {
+    if (id) {
       const getDonation = async () => await donationData(id);
-        getDonation().then(res => {
-          console.log(' - getDonation! res --> ', res);
-            console.log(' - res.data --> ', res.data);
-          setDonation(res.data);;
-        });
-    } 
+      getDonation().then(res => {
+        console.log(' - getDonation! res --> ', res);
+        console.log(' - res.data --> ', res.data);
+        setDonation(res.data);
+      });
+    }
   }, [id]);
-  console.log(' -- - donation --> ', donation); 
+  console.log(' -- - donation --> ', donation);
 
-  const [initialValues, setInitialValues] = useState<DonationFormValues>();
+  // const [initialValues, setInitialValues] = useState<DonationFormValues>();
 
-    useEffect(() => {
-    if(donation) {
-     const initialValues = {
-      title: donation?.title  || "",
-      desc: donation?.desc  || "",
-      alt: donation?.alt || "",
-      // image: donation?.image || [],
-      image: undefined,
-      collected: (donation?.collected)?.toString() || '',
-      target: (donation?.target)?.toString() || '',
-      peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-      peopleDonate_title: donation?.peopleDonate_title  || '',
-      days: donation?.days || '',
-      quantity: donation?.quantity || '',
-      period: donation?.period || '',
-      status: donation?.status || '',
-      value: donation?.value || '',
-      importance: donation?.importance || '',
-      // long_desc: donation?.long_desc || [],
-      long_desc: [{ text: '' }, { text: '' }],
-     };
-     setInitialValues(initialValues);
-    } 
-  }, [donation]);
-  
-    // const initialValues: DonationFormValues = {
-    //   title: donation?.title  || "",
-    //   desc: donation?.desc  || "",
-    //   alt: donation?.alt || "",
-    //   // image: donation?.image || [],
-    //   image: undefined,
-    //   collected: (donation?.collected)?.toString() || '',
-    //   target: (donation?.target)?.toString() || '',
-    //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-    //   peopleDonate_title: donation?.peopleDonate_title  || '',
-    //   days: donation?.days || '',
-    //   quantity: donation?.quantity || '',
-    //   period: donation?.period || '',
-    //   status: donation?.status || '',
-    //   value: donation?.value || '',
-    //   importance: donation?.importance || '',
-    //   // long_desc: donation?.long_desc || [],
-    //   long_desc: [{ text: '' }, { text: '' }],
-    // };
-      console.log(' -- - initialValues --> ', initialValues); 
-  
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<DonationFormValues>({
-    defaultValues: initialValues,
-      //  {
-      // long_desc: [{ text: '' }, { text: '' }],
-    // },
+    // defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    if (donation) {
+      const values: DonationFormValues = {
+        title: donation?.title || '',
+        desc: donation?.desc || '',
+        alt: donation?.alt || '',
+        // image: donation?.image || [],
+        image: undefined,
+        collected: donation?.collected?.toString() || '',
+        target: donation?.target?.toString() || '',
+        peopleDonate: donation?.peopleDonate?.toString() || '',
+        peopleDonate_title: donation?.peopleDonate_title || '',
+        days: donation?.days || '',
+        quantity: donation?.quantity || '',
+        period: donation?.period || '',
+        status: donation?.status || '',
+        value: donation?.value || '',
+        importance: donation?.importance || '',
+        long_desc: donation?.long_desc || [],
+        // long_desc: [{ text: '' }, { text: '' }],
+      };
+      reset(initialValues);
+    }
+  }, [donation, reset]);
+
+  // const initialValues: DonationFormValues = {
+  //   title: donation?.title  || "",
+  //   desc: donation?.desc  || "",
+  //   alt: donation?.alt || "",
+  //   // image: donation?.image || [],
+  //   image: undefined,
+  //   collected: (donation?.collected)?.toString() || '',
+  //   target: (donation?.target)?.toString() || '',
+  //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
+  //   peopleDonate_title: donation?.peopleDonate_title  || '',
+  //   days: donation?.days || '',
+  //   quantity: donation?.quantity || '',
+  //   period: donation?.period || '',
+  //   status: donation?.status || '',
+  //   value: donation?.value || '',
+  //   importance: donation?.importance || '',
+  //   // long_desc: donation?.long_desc || [],
+  //   long_desc: [{ text: '' }, { text: '' }],
+  // };
+  console.log(' -- - initialValues --> ', initialValues);
 
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
@@ -350,6 +348,6 @@ const [donation, setDonation] = useState<ICollection>();
       </div>
     </form>
   );
-}
+};
 
 export default DonationForm;
