@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
-import { Controller, FieldError } from 'react-hook-form';
+import {  Controller, FieldError } from 'react-hook-form';
 
 type RadioOptions = { label: string; value: string };
+
+
 
 type Props = {
   name: string;
@@ -19,7 +21,7 @@ const RadioGroup: React.FC<Props> = ({
   options,
   control,
   rules,
-  error,
+  // error,
   label,
   important,
 }: Props) => {

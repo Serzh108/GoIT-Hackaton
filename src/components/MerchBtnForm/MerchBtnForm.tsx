@@ -6,6 +6,7 @@ import InputField from '../InputField/InputField';
 import RadioGroup from '../RadioGroup/RadioGroup';
 import Button from '../Button/Button';
 import { Controller, useForm } from 'react-hook-form';
+import { merchData } from '@/services/transferData';
 
 type MerchBtnFormValues = {
   status: 'off' | 'on';
@@ -14,7 +15,7 @@ type MerchBtnFormValues = {
   locale: 'ua' | 'en';
 };
 
-function MerchBtnForm({}: Props) {
+function MerchBtnForm() {
   const {
     register,
     handleSubmit,
@@ -22,9 +23,13 @@ function MerchBtnForm({}: Props) {
     formState: { errors },
   } = useForm<MerchBtnFormValues>({ defaultValues: { status: 'off' } });
 
-  const onSubmit = (data: DonationFormValues) => {
+  const onSubmit = (data: MerchBtnFormValues) => {
     //! поки просто консоль лог
     console.log('Form values:', data);
+  // --- - ---
+    const result = async () => await merchData();
+    result().then(res => console.log('Merch result --> ', res));
+  // --- / - ---
   };
   return (
     <form

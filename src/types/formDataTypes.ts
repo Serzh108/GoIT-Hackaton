@@ -59,4 +59,10 @@ type: string;
 value: string;
 __v: number;
 _id: string;
-}
+};
+
+export interface IMerchFormData {
+  status: string,
+  content: string,
+  link: string, 
+};

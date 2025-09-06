@@ -7,7 +7,7 @@ const MainPage = ({ isMyCookie }: { isMyCookie: boolean }) => {
 
   useEffect(() => {
     router.push(!isMyCookie ? '/about' : '/login');
-  }, []);
+  }, [isMyCookie, router]);
 
   return (
     <div className="pt-[52px] mb-8 tablet:pt-8 tablet:mb-[112px]">
