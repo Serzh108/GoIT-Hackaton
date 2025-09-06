@@ -14,7 +14,7 @@ type MerchBtnFormValues = {
   locale: 'ua' | 'en';
 };
 
-function MerchBtnForm({}: Props) {
+function MerchBtnForm() {
   const {
     register,
     handleSubmit,
@@ -22,7 +22,7 @@ function MerchBtnForm({}: Props) {
     formState: { errors },
   } = useForm<MerchBtnFormValues>({ defaultValues: { status: 'off' } });
 
-  const onSubmit = (data: DonationFormValues) => {
+  const onSubmit = (data: MerchBtnFormValues) => {
     //! поки просто консоль лог
     console.log('Form values:', data);
   };
