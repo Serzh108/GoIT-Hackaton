@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader/PageHeader";
+import ReportEditing from "@/components/Reporting/ReportEditing";
 
 type Params = {
   id: string;
@@ -10,7 +11,7 @@ const ReportEditingPage = async ({ params }: { params: Params })  => {
     return(
     <section className="flex flex-col pl-[260px]">
       <PageHeader />
-        {/* <ReportEditing  id={id} /> */}
+      <ReportEditing  id={id} />
     </section>
   )
 };
