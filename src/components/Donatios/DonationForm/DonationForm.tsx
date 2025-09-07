@@ -62,8 +62,8 @@ const DonationForm: FC<Props> = ({ id }) => {
     handleSubmit,
     control,
     reset,
-    formState: { errors },
-  } = useForm<DonationFormValues>({});
+    formState: { errors, isValid },
+  } = useForm<DonationFormValues>({ mode: 'onChange' });
 
   useEffect(() => {
     if (donation) {
@@ -312,6 +312,7 @@ const DonationForm: FC<Props> = ({ id }) => {
         <Button
           type="submit"
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
+          disabled={!isValid}
         >
           Надіслати
         </Button>
