@@ -53,7 +53,7 @@ const LogIn: FC = () => {
 
       reset();
       setLoginError(false);
-      router.push('/about');
+      router.push('/donations');
     } else {
       setLoginError(true);
     }

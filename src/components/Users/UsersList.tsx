@@ -18,12 +18,12 @@ const UsersList = () => {
   }, [setUsers]);
   
   return(
-    <div className="p-12 pt-20 ml-[20px]">
+    <ul className="p-12 pt-20 ml-[20px]">
       {allUsers && allUsers.length > 0 ? allUsers.map(item => 
         <UserItem user={item} key={item._id} />)
       : <NoData message={'Немає інформації'}/>
       }
-    </div>
+    </ul>
   );
 };
 

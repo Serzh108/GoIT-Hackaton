@@ -1,12 +1,12 @@
 'use client';
 import { FC } from 'react';
+import Link from 'next/link';
 import { IAllUsersData } from '@/types/formDataTypes';
 import Edit from '@/icons/edit.svg';
 import Delete from '@/icons/delete.svg';
 import { deleteUser } from '@/services/auth';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { updateServer } from '@/services/actions';
-import Link from 'next/link';
 
 type Props = {
     user: IAllUsersData;
@@ -19,7 +19,7 @@ const UserItem: FC<Props> = ({user}) => {
   };
 
   const deleteHandler = async (id: string) => {
-    // !!! Insert Model with delede confirmation
+    // !!! Insert Modal with delede confirmation
    console.log(' delete: ', id); 
     const result = await deleteUser(id);
     console.log(' - result1 -> ', result); 

@@ -73,3 +73,21 @@ export const updateMerchFormSchema = yup.object({
     .string()
     .required(),
 });
+
+export const reportFormSchema = yup.object({
+  year: yup
+    .string()
+    .min(4)
+    .max(4)
+    .required("Обов’язкове поле"),
+  month: yup
+    .string()
+    .max(16)
+    .required("Обов’язкове поле"),
+  url: yup
+    .string()
+    .required("Обов’язкове поле"),    
+  language: yup
+    .string()
+    .required(),
+});

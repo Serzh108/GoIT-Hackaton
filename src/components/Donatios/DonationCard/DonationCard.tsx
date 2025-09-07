@@ -5,6 +5,7 @@ import DeleteIcon from '@/icons/delete.svg';
 import Link from 'next/link';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { updateServer } from '@/services/actions';
+import { deleteDonation } from '@/services/transferData';
 // import { BASE_IMAGE_URL } from '@/constants/constants';
 
 interface IDonationCard {
@@ -27,13 +28,13 @@ const DonationCard: FC<Props> = ({ donation }) => {
   const deleteHandler = async (id: string) => {
     // !!! Insert Modal with delede confirmation
     console.log(' delete: ', id);
-    // const result = await deleteUser(id);
-    // console.log(' - result1 -> ', result);
+    const result = await deleteDonation(id);
+    console.log(' - result1 -> ', result);
     // if (result === 204) {
     //   setShowNotification(true);
     // }
     setTimeout(() => {
-      updateServer(`/${INTERNAL_LINKS.ADMIN}`);
+      updateServer(`/${INTERNAL_LINKS.DONATIONS}`);
     }, 2000);
   };
 

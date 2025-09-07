@@ -82,12 +82,13 @@ const UserEditing: FC<Props> = ({id}) => {
     setIsFetching(false);
 
     setTimeout(() => {
-      redirectWithUpdateServer(redirectPath);
+      redirectWithUpdateServer(`/${INTERNAL_LINKS.ADMIN}`);
+      //  redirectWithUpdateServer(redirectPath);
     }, 2000);  
     //  }, NOTIFICATION_DURATION);     
   };
 
-  const redirectPath = `/${INTERNAL_LINKS.ADMIN}`;
+  // const redirectPath = `/${INTERNAL_LINKS.ADMIN}`;
 
   const toggleVisibilityPassword = () => {
     setIsVisiblePassword(prev => !prev);

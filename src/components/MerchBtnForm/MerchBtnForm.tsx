@@ -31,7 +31,7 @@ function MerchBtnForm() {
     watch,
     formState: { errors },
   } = useForm<MerchBtnFormValues>({ resolver: yupResolver(updateMerchFormSchema),
-    defaultValues: { status: 'off', content: 'cont' } 
+    defaultValues: { status: 'off' } 
   });
 
   // const [merchArray, setMerchArray] = useState<IMerchData[]>([]);
@@ -52,7 +52,10 @@ function MerchBtnForm() {
         // delete initValue._id;
         console.log('initValue --> ', initValue);
         reset(initValue); 
-    }
+    } else {
+      console.error('ERROR!');
+        return;
+      }
     });           
   }, [reset]);
 
@@ -127,7 +130,7 @@ function MerchBtnForm() {
         })}
         id="link"
         type="text"
-        placeholder="Назва"
+        placeholder="Посилання на сайт"
         label="Посилання на сайт"
         error={errors.link}
       />
