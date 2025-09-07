@@ -7,11 +7,9 @@ interface ILayoutProps {
 }
 const Layout = ({ children }: ILayoutProps) => {
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full h-screen ">
       <Sidebar />
-      {/* <Header /> */}
-      <main className="w-full h-full">{children}</main>
-      {/* <main className="ml-[256px]">{children}</main> */}
+      <main className=" flex-1 flex justify-center">{children}</main>
     </div>
   );
 };

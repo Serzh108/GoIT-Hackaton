@@ -1,9 +1,9 @@
-import DonationsList from "@/components/Donatios/DonatiosList/DonatiosList";
-import PageHeader from "@/components/PageHeader/PageHeader";
+import DonationsList from '@/components/Donatios/DonatiosList/DonatiosList';
+import PageHeader from '@/components/PageHeader/PageHeader';
 
 const Donations = () => {
-  return(
-    <section className="pageWrapper">
+  return (
+    <section className="ml-[256px]">
       <PageHeader isShowEditeImage />
       <DonationsList />
     </section>
