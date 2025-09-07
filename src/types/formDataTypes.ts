@@ -71,3 +71,17 @@ export interface IMerchData extends IMerchUpdateData {
   // locale: 'ua' | 'en';
   _id?: string, 
 };
+
+export interface IReportFormData  {
+  month: string,
+  url: string,
+  year: string,
+  language: string,
+};
+
+export interface IReportsListData extends IReportFormData {
+  status: string,
+  type: string,
+  __v?: number,
+  _id: string,
+}

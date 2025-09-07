@@ -92,7 +92,6 @@ const DonationForm: FC<Props> = ({ id }) => {
 
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
-
     const payload = {
       ...data,
       // transforming format from  long_desc: { text: string }[] to what backend expects;
@@ -106,6 +105,7 @@ const DonationForm: FC<Props> = ({ id }) => {
     control,
     name: 'long_desc',
   });
+  
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
