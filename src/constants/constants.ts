@@ -82,6 +82,7 @@ export const INTERNAL_LINKS = {
   REPORTING: 'reporting',
   EDITING: 'editing',
   NEW: 'new',
+  MERCH: 'merch',
 };
 
 export const pathRenderName = {

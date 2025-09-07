@@ -90,26 +90,6 @@ const DonationForm: FC<Props> = ({ id }) => {
     }
   }, [donation, reset]);
 
-  // const initialValues: DonationFormValues = {
-  //   title: donation?.title  || "",
-  //   desc: donation?.desc  || "",
-  //   alt: donation?.alt || "",
-  //   // image: donation?.image || [],
-  //   image: undefined,
-  //   collected: (donation?.collected)?.toString() || '',
-  //   target: (donation?.target)?.toString() || '',
-  //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-  //   peopleDonate_title: donation?.peopleDonate_title  || '',
-  //   days: donation?.days || '',
-  //   quantity: donation?.quantity || '',
-  //   period: donation?.period || '',
-  //   status: donation?.status || '',
-  //   value: donation?.value || '',
-  //   importance: donation?.importance || '',
-  //   // long_desc: donation?.long_desc || [],
-  //   long_desc: [{ text: '' }, { text: '' }],
-  // };
-
   const onSubmit = (data: DonationFormValues) => {
     //! поки просто консоль лог
 

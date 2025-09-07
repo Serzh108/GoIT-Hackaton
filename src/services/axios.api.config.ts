@@ -21,7 +21,8 @@ export const axiosPrivate = axios.create({
   withCredentials: true,
 });
 
-axiosPublic.interceptors.response.use(
+// axiosPublic.interceptors.response.use(
+axios.interceptors.response.use(
   response => response,
   async error => {
     // console.log(' - in Public interceptors: error -> ', error);

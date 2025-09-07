@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ENDPOINTS } from "@/constants/constants";
-import { IMerchFormData } from "@/types/formDataTypes";
+import { IMerchData, IMerchUpdateData } from "@/types/formDataTypes";
 
 export const donationsList = async () => {
   try {
@@ -35,8 +35,12 @@ export const donationData = async (id: string) => {
 export const merchData = async () => {
   try {
     //    const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_DONATIONS);
-    const { data }: AxiosResponse = await axios.get(ENDPOINTS.MERCH);
+    const { data }: AxiosResponse<IMerchData[]> = await axios.get(ENDPOINTS.MERCH);
     console.log(' - merch data --> ', data);
+    // const cleanedArray = data.map(({ _id, ...rest }) => {
+    //   console.log(_id); return rest;});
+    // console.log(' - merch cleanedArray --> ', cleanedArray);
+    // return cleanedArray;
     return data;
       // console.log(' - result --> ', result);
       // if(result.status === 200) { return result.data; };
@@ -47,7 +51,7 @@ export const merchData = async () => {
   }
 };
 
-export const updateMerch = async (updateData: IMerchFormData, locale: string) => {
+export const updateMerch = async (updateData: IMerchUpdateData, locale: string) => {
   console.log(' updateMerch updateData ->', updateData);
   console.log(' updateMerch locale ->', locale);
   const url = `${ENDPOINTS.REFRESH_MERCH}${locale}`;
