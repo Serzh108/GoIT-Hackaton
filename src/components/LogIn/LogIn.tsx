@@ -14,16 +14,19 @@ import { REGEXP } from '@/constants/regexp';
 import { COOKIES_VALUE } from '@/constants/constants';
 import AuthInputField from '../AuthInputField/AuthInputField';
 import Button from '../Button/Button';
+import { BeatLoader } from 'react-spinners';
 
 const LogIn: FC = () => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+
+    formState: { errors, isValid },
   } = useForm<logInFormData>({
     resolver: yupResolver(logInFormSchema),
     defaultValues: {},
+    mode: 'onChange',
   });
 
   const setIsAdmin = useUserStore(state => state.setIsAdmin);
@@ -31,8 +34,10 @@ const LogIn: FC = () => {
   const router = useRouter();
 
   const [loginError, setLoginError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const logInRequest = async (data: logInFormData) => {
+    setIsLoading(true);
     const emailSA = process.env.NEXT_PUBLIC_EMAIL_SA || '';
     const result = await logIn(data);
     if (result === 200) {
@@ -52,6 +57,7 @@ const LogIn: FC = () => {
     } else {
       setLoginError(true);
     }
+    setIsLoading(false);
   };
 
   const onSubmitForm: SubmitHandler<logInFormData> = async data => {
@@ -106,46 +112,13 @@ const LogIn: FC = () => {
           registration={register('password', { required: true })}
           error={errors.password}
         />
-        {/* <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-          Email
-          <input
-            className="bordered-input"
-            placeholder="example@i.ua"
-            autoFocus
-            {...register('email', { required: true })}
-            autoComplete="example@i.ua" // ???
-          />
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.email?.message}
-          </span>
-        </label> 
-        <label className="flex flex-col mb-10 text-base leading-[30px] font-medium">
-          Пароль
-          <div className="relative">
-            <input
-              className="bordered-input pr-14"
-              type={isVisiblePassword ? 'text' : 'password'}
-              placeholder="Введіть пароль"
-              {...register('password', { required: true })}
-              autoComplete="current-password"
-            />
-            <div
-              className="absolute top-[15px] right-5 cursor-pointer"
-              onClick={toggleVisibilityPassword}
-            >
-              {isVisiblePassword ? <Eye /> : <EyeSlash />}
-            </div>
-          </div>
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.password?.message}
-          </span>
-        </label> */}
 
         <Button
           type="submit"
+          disabled={!isValid || isLoading}
           className="block mx-auto mt-10 w-[300px] h-16 bg-gray-900 text-white p-4 rounded-3xl font-semibold"
         >
-          Увійти
+          {isLoading ? <BeatLoader color="white" /> : 'Увійти'}
         </Button>
       </form>
 
