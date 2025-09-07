@@ -26,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.variable} ${inter.variable} antialiased`}>
         <div className="flex w-full h-full">
-          <div className=" w-full h-full">{children}</div>
+          <div className=" w-full h-full flex flex-col items-center ">
+            {children}
+          </div>
         </div>
       </body>
     </html>
