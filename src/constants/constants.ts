@@ -61,27 +61,34 @@ export const ENDPOINTS = {
   // DELETE_USER: '/api/auth/users/{userId}',
   DELETE_USER: '/api/auth/users/',
   ALL_USERS: '/api/auth/users',
-  // LOGIN: '',
-  REFRESH_REPORT: '/api/reports/{id}',
-  DELETE_REPORT: '/api/reports/{id}',
+   // REFRESH_REPORT: '/api/reports/{id}',
+  REFRESH_REPORT: '/api/reports/',
+  // DELETE_REPORT: '/api/reports/{id}',
+  DELETE_REPORT: '/api/reports/',
   ALL_REPORTS: '/api/reports',
   CREATE_REPORT: '/api/reports',
   // ALL_DONATIONS: '/COLLECTIONS/{locale}',
   ALL_DONATIONS: '/api/collections/',
   //  DONATION: '/api/collections/{locale}/{id}',
   DONATION: '/api/collections/',
-};
+  MERCH: '/api/merch',
+  // REFRESH_MERCH: '/api/merch/{locale}',
+  REFRESH_MERCH: '/api/merch/',
+}
 // !!! Correct !!! ------------------
 export const INTERNAL_LINKS = {
   ADMIN: 'admin',
   DONATIONS: 'donations',
+  REPORTING: 'reporting',
   EDITING: 'editing',
   NEW: 'new',
+  MERCH: 'merch',
 };
 
 export const pathRenderName = {
   [INTERNAL_LINKS.ADMIN]: 'Адміністратор',
   [INTERNAL_LINKS.DONATIONS]: 'Збори',
+  [INTERNAL_LINKS.REPORTING]: 'Звітність',
   [INTERNAL_LINKS.NEW]: 'Додавання',
   [INTERNAL_LINKS.EDITING]: 'Редагування',
 };

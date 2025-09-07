@@ -1,3 +1,4 @@
+import { updateMerch } from './../../services/transferData';
 import * as yup from 'yup';
 import { REGEXP } from '../regexp';
 
@@ -54,4 +55,21 @@ export const RegisterFormSchema = yup.object({
     .min(8, REGEXP.password.mes.mismatchLessSymbols)
     .max(128, REGEXP.password.mes.mismatchMoreSymbols)
     // .matches(REGEXP.password.reg, REGEXP.password.mes.mismatch),
+});
+
+export const updateMerchFormSchema = yup.object({
+  status: yup
+    .string()
+    .required(),
+  content: yup
+    .string()
+    .max(12)
+    .required("Обов’язкове поле"),    
+  link: yup
+    .string()
+    .max(512)
+    .required("Обов’язкове поле"),
+  locale: yup
+    .string()
+    .required(),
 });

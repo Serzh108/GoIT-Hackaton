@@ -24,7 +24,7 @@ const RadioGroup = <T extends FieldValues>({
   options,
   control,
   rules,
-  error,
+  // error,
   label,
   important,
 }: Props<T>) => {

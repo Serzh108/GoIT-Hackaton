@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
 
   if (myAccessCookie && myAccessCookie?.value && request.nextUrl.pathname !== '/') {
     if ((myAccessCookie?.value === COOKIES_VALUE.usual) && (request.nextUrl.pathname === '/admin')) {
-      return NextResponse.redirect(new URL('/about', request.url));
+      return NextResponse.redirect(new URL('/donations', request.url));
     }
     return NextResponse.next();
   }

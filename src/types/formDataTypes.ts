@@ -60,3 +60,14 @@ export interface ICollection {
   __v: number;
   _id: string;
 }
+
+export interface IMerchUpdateData {
+  status: string,
+  content: string,
+  link: string, 
+};
+export interface IMerchData extends IMerchUpdateData {
+  locale: string, 
+  // locale: 'ua' | 'en';
+  _id?: string, 
+};
