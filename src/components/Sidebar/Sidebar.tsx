@@ -24,7 +24,7 @@ const Sidebar = () => {
       await deleteCookie();
       await deleteCookieRefresh();
       // await refreshPath(path); // ? Why
-      router.push('/about'); // ???
+      router.push('/donations'); // ???
     }
   };
 
