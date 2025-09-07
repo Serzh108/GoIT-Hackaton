@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/services/cn';
 import React from 'react';
 
 export interface ButtonProps
@@ -14,9 +15,12 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       {...rest}
-      className={`cursor-pointer ${rest.className || ''}  ${
-        disabled && 'bg-neutral-500 text-neutral-700'
-      }`}
+      disabled={disabled}
+      className={cn(
+        'cursor-pointer',
+        rest.className || '',
+        disabled && 'bg-gray-500 text-gray-700 cursor-not-allowed opacity-50'
+      )}
     >
       {children}
     </button>
