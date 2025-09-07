@@ -32,7 +32,7 @@ const About = () => {
   ];
 
   return (
-    <section className="pageWrapper">
+    <section className="ml-[256px]">
       <h1>About</h1>
       <p className="mb-3">Page routing About</p>
 
