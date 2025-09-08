@@ -8,7 +8,9 @@ import Button from '../../Button/Button';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
 import { useUserStore } from '@/store/store';
-import { createDonation, donationData, updateDonation } from '@/services/transferData';
+import {  donationData, 
+  // createDonation, updateDonation 
+} from '@/services/transferData';
 import { redirectWithUpdateServer } from '@/services/actions';
 import { ICollection } from '@/types/formDataTypes';
 import {
@@ -45,9 +47,9 @@ type Props = {
 };
 
 const DonationForm: FC<Props> = ({ id }) => {
-  console.log('id: ', id);
   const locale = useUserStore(state => state.locale);
   const [donation, setDonation] = useState<ICollection>();
+  console.log('id: ', id, ', - locale: ', locale);
 
   useEffect(() => {
     if (id) {

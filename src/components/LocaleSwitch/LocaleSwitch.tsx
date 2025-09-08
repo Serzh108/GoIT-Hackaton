@@ -4,10 +4,11 @@ import React from 'react';
 
 type Props = {
   checked?: boolean;
-  onChange?: (value: boolean) => void;
+  // onChange?: (value: boolean) => void;
 };
 
-function LocaleSwitch({  checked, onChange }: Props) {
+// function LocaleSwitch({  checked, onChange }: Props) {
+  function LocaleSwitch({  checked }: Props) {
     // --- - ---
     const setLocale = useUserStore(state => state.setLocale);
     const onChange1 = (checked1: boolean) => {

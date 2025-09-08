@@ -1,4 +1,3 @@
-import { updateMerch } from './../../services/transferData';
 import * as yup from 'yup';
 import { REGEXP } from '../regexp';
 
