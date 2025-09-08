@@ -2,10 +2,9 @@ import axios, { AxiosResponse } from "axios";
 import { ENDPOINTS } from "@/constants/constants";
 import { ICreateDonationData, IMerchData, IMerchUpdateData, IReportFormData, IReportsListData } from "@/types/formDataTypes";
 
-export const donationsList = async () => {
+export const donationsList = async (locale: string) => {
   try {
-    //    const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_DONATIONS);
-    const { data }: AxiosResponse = await axios.get(`${ENDPOINTS.ALL_DONATIONS}ua`);
+    const { data }: AxiosResponse = await axios.get(`${ENDPOINTS.ALL_DONATIONS}${locale}`);
     console.log(' - donationsList data --> ', data);
     return data;
       // console.log(' - result --> ', result);
@@ -17,10 +16,14 @@ export const donationsList = async () => {
   }
 };
 
-export const donationData = async (id: string) => {
+export const donationData = async (locale: string, id: string) => {
+  console.log('donationData - > id: ', id, ', - locale: ', locale);
+ const url = `${ENDPOINTS.DONATION}${locale}/${id}`;
+ console.log('url - > ', url);
   try {
     //    const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_DONATIONS);
-    const { data }: AxiosResponse = await axios.get(`${ENDPOINTS.DONATION}ua/${id}`);
+    // const { data }: AxiosResponse = await axios.get(`${ENDPOINTS.DONATION}${locale}/${id}`);
+     const { data }: AxiosResponse = await axios.get(url);
     console.log(' - donation data --> ', data);
     return data;
       // console.log(' - result --> ', result);
@@ -43,10 +46,10 @@ export const deleteDonation = async (id: string) => {
   }
 };
 
-export const updateDonation = async (updateData: ICreateDonationData, id: string) => {
+export const updateDonation = async (updateData: ICreateDonationData, locale: string, id: string) => {
   console.log(' updateDonation updateData ->', updateData);
   console.log(' updateDonation id ->', id);
-  const url = `${ENDPOINTS.REFRESH_DONATION}ua/${id}`;
+  const url = `${ENDPOINTS.REFRESH_DONATION}${locale}/${id}`;
   console.log(' updateDonation url ->', url);
   try {
     const result = await axios.patch(url, updateData);
