@@ -7,12 +7,15 @@ import RadioGroup from '../../RadioGroup/RadioGroup';
 import Button from '../../Button/Button';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
-import { donationData } from '@/services/transferData';
+import { useUserStore } from '@/store/store';
+import { createDonation, donationData, updateDonation } from '@/services/transferData';
+import { redirectWithUpdateServer } from '@/services/actions';
 import { ICollection } from '@/types/formDataTypes';
 import {
   transformFormToLongDesc,
   transformLongDescToForm,
 } from '@/services/transformLongDesc';
+import { INTERNAL_LINKS } from '@/constants/constants';
 import { useRouter } from 'next/navigation';
 
 type DonationFormValues = {
@@ -43,6 +46,7 @@ type Props = {
 
 const DonationForm: FC<Props> = ({ id }) => {
   console.log('id: ', id);
+  const locale = useUserStore(state => state.locale);
   const [donation, setDonation] = useState<ICollection>();
 
   useEffect(() => {
@@ -90,15 +94,40 @@ const DonationForm: FC<Props> = ({ id }) => {
     }
   }, [donation, reset]);
 
-  const onSubmit = (data: DonationFormValues) => {
+  const onSubmit = async (data: DonationFormValues) => {
     //! поки просто консоль лог
     const payload = {
       ...data,
       // transforming format from  long_desc: { text: string }[] to what backend expects;
       long_desc: transformFormToLongDesc(data.long_desc),
+      collected: +data.collected,
     };
 
     console.log('Donation Form values on submit:', payload);
+
+    let result;
+    if (donation) {
+      console.log('donation - result -> ', result);
+      // result = await updateDonation(payload, donation._id);  // !!! check type payload
+    } else {
+      console.log('donation - result -> ', result);
+      // result = await createDonation(payload, locale);  // !!! check type payload
+    }
+    console.log('donation - result -> ', result);
+    // reset();
+
+    if (!result) {
+        console.error('donation - ERROR!!');
+    //   setNotificationType(NOTIFICATION_TYPE.ERROR);
+    }
+
+    // setShowNotification(true);
+
+    // setIsFetching(false);
+
+    setTimeout(() => {
+      redirectWithUpdateServer(`/${INTERNAL_LINKS.DONATIONS}`);
+    }, 2000); 
   };
 
   const { fields, append, remove } = useFieldArray({

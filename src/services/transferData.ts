@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ENDPOINTS } from "@/constants/constants";
-import { IMerchData, IMerchUpdateData, IReportFormData, IReportsListData } from "@/types/formDataTypes";
+import { ICreateDonationData, IMerchData, IMerchUpdateData, IReportFormData, IReportsListData } from "@/types/formDataTypes";
 
 export const donationsList = async () => {
   try {
@@ -43,7 +43,7 @@ export const deleteDonation = async (id: string) => {
   }
 };
 
-export const updateDonation = async (updateData: IReportFormData, id: string) => {
+export const updateDonation = async (updateData: ICreateDonationData, id: string) => {
   console.log(' updateDonation updateData ->', updateData);
   console.log(' updateDonation id ->', id);
   const url = `${ENDPOINTS.REFRESH_DONATION}ua/${id}`;
@@ -57,7 +57,7 @@ export const updateDonation = async (updateData: IReportFormData, id: string) =>
   }
 };
 
-export const createDonation = async (createData: IReportFormData, locale: string) => {
+export const createDonation = async (createData: ICreateDonationData, locale: string) => {
   console.log(' createDonation createData ->', createData);
   const url = `${ENDPOINTS.CREATE_DONATION}${locale}`;
    console.log(' createDonation url ->', url);

@@ -16,6 +16,9 @@ const Sidebar = () => {
   const router = useRouter();
   const normalizePath = getNormalizedPath(path);
   const isAdmin = useUserStore(state => state.isAdmin);
+      // --- - ---
+      const locale = useUserStore(state => state.locale);
+      // --- / - ---
 
   const logoutButtonHandler = async () => {
     const resultLogOut = await logOut();
@@ -119,7 +122,7 @@ const Sidebar = () => {
           onClick={testButtonHandler}
           className="w-[80%] p-1.5 text-red-500 border border-white rounded-md cursor-pointer"
         >
-          <span className="text-xl font-semibold">Test</span>
+          <span className="text-xl font-semibold">Test/{locale}</span>
         </button>
       </div>
     </aside>
