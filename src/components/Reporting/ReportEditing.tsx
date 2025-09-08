@@ -34,7 +34,7 @@ const ReportEditing: FC<Props> = ({id}) => {
     const {
       register,
       handleSubmit,
-      reset,
+      // reset,
       control,
       formState: { errors },
       } = useForm<IReportFormData>({

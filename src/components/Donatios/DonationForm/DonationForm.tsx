@@ -8,12 +8,14 @@ import Button from '../../Button/Button';
 // import { string } from 'yup';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
-import { donationData } from '@/services/transferData';
+import { createDonation, donationData, updateDonation } from '@/services/transferData';
 import { ICollection } from '@/types/formDataTypes';
 import {
   transformFormToLongDesc,
   transformLongDescToForm,
 } from '@/services/transformLongDesc';
+import { INTERNAL_LINKS } from '@/constants/constants';
+import { redirectWithUpdateServer } from '@/services/actions';
 
 type DonationFormValues = {
   // image: FileList;
@@ -90,15 +92,38 @@ const DonationForm: FC<Props> = ({ id }) => {
     }
   }, [donation, reset]);
 
-  const onSubmit = (data: DonationFormValues) => {
+  const onSubmit = async (data: DonationFormValues) => {
     //! поки просто консоль лог
     const payload = {
       ...data,
       // transforming format from  long_desc: { text: string }[] to what backend expects;
       long_desc: transformFormToLongDesc(data.long_desc),
+      collected: +data.collected,
     };
 
     console.log('Donation Form values on submit:', payload);
+
+    let result;
+    if (donation) {
+      result = await updateDonation(payload, donation._id);
+    } else {
+      result = await createDonation(payload, locale);
+    }
+    console.log('donation - result -> ', result);
+    // reset();
+
+    if (!result) {
+        console.error('donation - ERROR!!');
+    //   setNotificationType(NOTIFICATION_TYPE.ERROR);
+    }
+
+    // setShowNotification(true);
+
+    // setIsFetching(false);
+
+    setTimeout(() => {
+      redirectWithUpdateServer(`/${INTERNAL_LINKS.DONATIONS}`);
+    }, 2000); 
   };
 
   const { fields, append, remove } = useFieldArray({
