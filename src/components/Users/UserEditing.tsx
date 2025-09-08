@@ -43,6 +43,7 @@ const UserEditing: FC<Props> = ({id}) => {
     } = useForm<IRegisterFormData>({
     resolver: yupResolver(RegisterFormSchema),
     defaultValues: initialValues,
+    mode: 'onChange',
   });
 
   // const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);

@@ -21,7 +21,6 @@ const LogIn: FC = () => {
     register,
     handleSubmit,
     reset,
-
     formState: { errors, isValid },
   } = useForm<logInFormData>({
     resolver: yupResolver(logInFormSchema),
