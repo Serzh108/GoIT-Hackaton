@@ -25,7 +25,7 @@ const ReportsList = () => {
   return (
     <>
       {allReports && allReports.length > 0 ? (
-        <div className=" shadow-accent w-[80%] rounded-lg ">
+        <div className=" shadow-accent w-[80%] rounded-lg mt-[140px]">
           <div className="rounded-lg overflow-hidden">
             <div className="flex rounded-lg border-b border-black font-semibold font-body leading-[22px] sticky top-0 bg-white z-10">
               <h2 className="px-6 py-5 text-left min-w-[100px]">Місяць</h2>

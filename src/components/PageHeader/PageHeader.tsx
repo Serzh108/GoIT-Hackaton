@@ -26,7 +26,8 @@ const PageHeader: FC<Props> = ({isShowEditeImage = false}) => {
   console.log(' path: ', path);
   
   return (
-    <div className="min-h-11 fixed left-4 right-4 z-40 flex justify-between items-center text-xl font-semibold top-8 pr-8 pl-[290px]">
+    // <div className="min-h-11 fixed left-4 right-4 z-40 flex justify-between items-center text-xl font-semibold top-8 pr-8 pl-[290px] bg-white">
+    <div className="min-h-11 fixed left-4 right-4 z-40 flex justify-between items-center text-xl font-semibold pb-3 pt-8 pr-8 pl-[290px] bg-white">
       <ul className="flex gap-2 min-w-fit text-base font-semibold">
         {renderPath.map((path, index) => (
           <li key={index}>

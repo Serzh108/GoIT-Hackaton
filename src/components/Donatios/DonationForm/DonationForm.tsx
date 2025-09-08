@@ -142,7 +142,7 @@ const DonationForm: FC<Props> = ({ id }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6"
+      className="flex flex-col gap-8 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6 pt-0 mt-[140px]"
     >
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
@@ -344,7 +344,7 @@ const DonationForm: FC<Props> = ({ id }) => {
       <div className="flex flex-row gap-6 justify-center items-center mt-14">
         <Button
           type="submit"
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
+          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
           disabled={!isValid}
         >
           Надіслати
@@ -352,7 +352,7 @@ const DonationForm: FC<Props> = ({ id }) => {
         <Button
           type="button"
           onClick={() => router.push('/donations')}
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[288px]"
+          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[280px]"
         >
           Відхилити
         </Button>

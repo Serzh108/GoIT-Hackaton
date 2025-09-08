@@ -3,7 +3,7 @@ import ReportsList from '@/components/Reporting/ReportsList';
 
 const Reporting = () => {
   return (
-    <section className="flex flex-col justify-center items-center w-full ml-[256px] ">
+    <section className="flex flex-col justify-start items-center w-full ml-[256px] ">
       <PageHeader isShowEditeImage />
       <ReportsList />
     </section>
