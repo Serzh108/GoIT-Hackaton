@@ -18,7 +18,7 @@ export async function createCookie(value: string) {
 
 export async function deleteCookie() {
   (await cookies()).delete('accessToken');
-    // (await cookies()).delete('fec-rerb');
+    (await cookies()).delete('fec-rerb');
 };
 
 export async function getCookie(name: string) {
@@ -39,7 +39,7 @@ export async function createCookieRefresh(value: string) {
 };
 
 export async function deleteCookieRefresh() {
-  // (await cookies()).delete('fec-refresh');
+    (await cookies()).delete('fec-refresh');
   (await cookies()).delete('refreshToken');
 };
 

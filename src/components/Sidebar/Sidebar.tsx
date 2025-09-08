@@ -47,7 +47,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="fixed flex flex-col left-0 top-0 bottom-0 w-[256px] p-6 bg-primary">
+    <aside className="fixed flex flex-col left-0 top-0 bottom-0 w-[256px] p-6 bg-primary z-50">
       <div className="flex flex-col items-center justify-between  gap-4 h-full">
         <a className="cursor-pointer" href="">
           <Logo className="w-16 h-16 " />
@@ -85,28 +85,6 @@ const Sidebar = () => {
               );
             })}
         </ul>
-        {/*         
-              
-
-              //   <li key={item.link} className="flex flex-col">
-              //     <Link
-              //       className={cn(
-              //         normalizePath.includes(item.link)
-              //           ? 'text-active '
-              //           : 'text-secondaryText ',
-              //         item.parent
-              //           ? 'hover-effect py-2 pl-8 leading-[175%] font-semibold text-base relative before:content-[""] before:inline-block before:w-1 before:h-1 before:rounded-full before:bg-current before:mr-2.5'
-              //           : 'hover-effect  py-2.5 px-8 font-semibold leading-normal text-lg',
-              //         current && 'rounded-3xl py-2.5 px-8.5 w-52 bg-primary/20'
-              //       )}
-              //       href={`/${item.link}`}
-              //     >
-              //       {item.title}
-              //     </Link>
-              //   </li>
-              // ) : null
-        //     )}
-        // </ul> */}
 
         <button
           type="button"
