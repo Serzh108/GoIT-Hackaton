@@ -4,7 +4,7 @@ import CrossIcon from '@/icons/little_cross.svg';
 import Button from '../Button/Button';
 import { cn } from '@/services/cn';
 
-interface ModalBtn {
+export interface ModalBtn {
   label: string;
   onClick: () => void;
   style: 'primary' | 'secondary';
@@ -17,7 +17,7 @@ type ModalCardProps = {
   onClose: () => void;
 };
 
-function ModalCard({ title, buttons, variant, onClose }: Props) {
+function ModalCard({ title, buttons, variant, onClose }: ModalCardProps) {
   return (
     <div className="flex flex-col justify-center items-center gap-2 relative w-full h-full ">
       <CrossIcon

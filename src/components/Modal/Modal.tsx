@@ -1,6 +1,6 @@
 'use client';
 import React, { Fragment } from 'react';
-import { Dialog, DialogPanel, Transition } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 
 type Props = { children?: React.ReactNode; show: boolean; onClose: () => void };
 

@@ -58,16 +58,18 @@ const DonationCard: FC<Props> = ({ donation }) => {
       <div className="flex flex-row justify-center gap-5 mt-auto">
         <Link
           href={`${INTERNAL_LINKS.DONATIONS}/${_id}/${INTERNAL_LINKS.EDITING}`}
-          className=""
+          className="hover:scale-110"
         >
           <EditIcon className="w-8 h-8 cursor-pointer" />
         </Link>
-        {/* <button type="button" aria-label="Редагувати збір">
-          <EditIcon className="w-8 h-8 cursor-pointer" aria-hidden />
-        </button> */}
-        <button type="button" aria-label="Видалити збір">
+
+        <button
+          type="button"
+          aria-label="Видалити збір"
+          className="hover:scale-110"
+        >
           <DeleteIcon
-            className="w-8 h-8 cursor-pointer"
+            className="w-8 h-8 cursor-pointer hover:text-error"
             onClick={() => deleteHandler(_id)}
             aria-hidden
           />
