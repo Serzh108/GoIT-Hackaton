@@ -1,6 +1,6 @@
 'use client';
 import Modal from '@/components/Modal/Modal';
-import ModalCard from '@/components/ModalCard/ModalCard';
+import ModalCard, { ModalBtn } from '@/components/ModalCard/ModalCard';
 import { useState } from 'react';
 
 const About = () => {
@@ -26,7 +26,7 @@ const About = () => {
     console.log('Delete');
   };
 
-  const modalButtons = [
+  const modalButtons: ModalBtn[] = [
     { label: 'Так', style: 'primary', onClick: handleDelete },
     { label: 'Ні', style: 'secondary', onClick: () => setIsOpen(false) },
   ];

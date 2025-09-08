@@ -83,17 +83,6 @@ const LogIn: FC = () => {
         onSubmit={handleSubmit(onSubmitForm)}
         className="space-y-10 w-[360px]"
       >
-        <div className="flex items-center justify-end gap-5 mb-6 px-2">
-          <label htmlFor="isAdmin" className="font-medium font-body">
-            Увійти як адмін
-          </label>
-          <input
-            type="checkbox"
-            id="isAdmin"
-            name="isAdmin"
-            className="w-6 h-6 border border-gray-300 rounded accent-gray-900  "
-          />
-        </div>
         <AuthInputField
           id="email"
           label="E-mail*"
@@ -129,7 +118,7 @@ const LogIn: FC = () => {
         <Link
           //!чи тут типу буде посилання на їх сайт
           href="/"
-          className="inline-flex items-center gap-6 text-base font-normal text-black"
+          className="inline-flex items-center gap-6 text-base font-normal text-black hover:font-semibold"
         >
           <ArrowIcon />
           Назад до ІнХармоні.Юа

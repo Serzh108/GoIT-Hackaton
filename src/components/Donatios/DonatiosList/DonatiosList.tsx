@@ -59,20 +59,22 @@ const DonationsList = () => {
   // }
 
   return (
-    <div className="mx-8 mt-33 w-[984px]">
+    <>
       {cardData && cardData.length > 0 ? (
-        <ul className="grid grid-cols-3 gap-6  p-2.5 bg-white shadow-accent rounded-lg ">
-          {cardData.map(item => (
-            <li key={item._id}>
-              <DonationCard donation={item} key={item._id} />
-            </li>
-          ))}
-        </ul>
+        <div className="mx-8 mt-33 w-[984px]">
+          <ul className="grid grid-cols-3 gap-6  p-2.5 bg-white shadow-accent rounded-lg ">
+            {cardData.map(item => (
+              <li key={item._id}>
+                <DonationCard donation={item} key={item._id} />
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
         <NoData message={'Немає інформації'} />
       )}
       {/* <DonationCard donation={testDonation} /> */}
-    </div>
+    </>
   );
 };
 

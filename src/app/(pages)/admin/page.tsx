@@ -3,7 +3,7 @@ import UsersList from '@/components/Users/UsersList';
 
 const Admin = async () => {
   return (
-    <section className="ml-[256px]">
+    <section className="flex flex-col justify-center items-center w-full ml-[256px] ">
       <PageHeader isShowEditeImage />
       <UsersList />
     </section>

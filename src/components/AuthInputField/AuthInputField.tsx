@@ -38,7 +38,7 @@ export default function AuthInputField({
         {...rest}
         {...registration}
         className={cn(
-          'w-full h-[60px]  border rounded-3xl p-[20px]  focus:outline-none focus:ring-1',
+          'w-full h-[60px] outline-0  border rounded-3xl p-[20px]  ',
           error ? 'border-red-500 ' : 'border-gray-900'
         )}
       />

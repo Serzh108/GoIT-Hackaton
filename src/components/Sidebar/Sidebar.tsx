@@ -108,7 +108,7 @@ const Sidebar = () => {
         <button
           type="button"
           onClick={logoutButtonHandler}
-          className=" text-gray-50  hover:text-accent w-[80%] py-0 px-5  cursor-pointer mb-12 flex items-center gap-3"
+          className="hover:scale-120 text-gray-50  hover:text-accent w-[80%] py-0 px-5  cursor-pointer mb-12 flex items-center gap-3"
         >
           <ExitIcon />
           <span className="font-semibold text-lg leading-[156%]">Вихід</span>
