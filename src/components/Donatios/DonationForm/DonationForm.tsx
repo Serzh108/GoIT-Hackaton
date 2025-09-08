@@ -53,14 +53,14 @@ const DonationForm: FC<Props> = ({ id }) => {
 
   useEffect(() => {
     if (id) {
-      const getDonation = async () => await donationData(id);
+      const getDonation = async () => await donationData(locale, id);
       getDonation().then(res => {
         console.log(' - getDonation! res --> ', res);
         console.log(' - res.data --> ', res.data);
         setDonation(res.data);
       });
     }
-  }, [id]);
+  }, [id, locale]);
   console.log(' -- - donation --> ', donation);
 
   const {
@@ -110,7 +110,7 @@ const DonationForm: FC<Props> = ({ id }) => {
     let result;
     if (donation) {
       console.log('donation - result -> ', result);
-      // result = await updateDonation(payload, donation._id);  // !!! check type payload
+      // result = await updateDonation(payload, locale, donation._id);  // !!! check type payload
     } else {
       console.log('donation - result -> ', result);
       // result = await createDonation(payload, locale);  // !!! check type payload

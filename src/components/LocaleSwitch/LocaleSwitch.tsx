@@ -32,7 +32,7 @@ type Props = {
         />
         <span className="absolute inset-0 bg-gray-300 rounded-full transition-colors -200 ease-in-out peer-checked:bg-accent peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
         <span className="absolute top-1/2 start-1 -translate-y-1/2 size-13 bg-white rounded-full shadow-xs transition-transform -200 ease-in-out  peer-checked:translate-x-15"></span>
-
+       
         <span className="text-2xl leading-8 font-body absolute top-1/2 start-6 -translate-y-1/2 flex justify-center items-center size-5 text-white peer-checked:text-black transition-colors -200">
           UA
         </span>

@@ -6,6 +6,7 @@ import { INTERNAL_LINKS, pathRenderName } from "@/constants/constants";
 import { getPathRenderName } from "@/services/getPathRenderName";
 import Edit from '@/icons/edit.svg';
 import LocaleSwitch from "../LocaleSwitch/LocaleSwitch";
+import { useUserStore } from "@/store/store";
 
 type Props = {
   isShowEditeImage?: boolean;
@@ -14,6 +15,7 @@ type Props = {
 const PageHeader: FC<Props> = ({isShowEditeImage = false}) => {
   const path = usePathname();
   const router = useRouter();
+  const locale = useUserStore(state => state.locale);
 
   const renderPath = getPathRenderName(path);
 
@@ -49,7 +51,7 @@ const PageHeader: FC<Props> = ({isShowEditeImage = false}) => {
         ))}
       </ul>
 
-      <LocaleSwitch />
+      <LocaleSwitch checked={locale === 'ua'}/>
 
       {isShowEditeImage ? (
       <button

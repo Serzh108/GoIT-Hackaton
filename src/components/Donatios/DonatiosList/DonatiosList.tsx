@@ -4,6 +4,7 @@ import DonationCard from '@/components/Donatios/DonationCard/DonationCard';
 import NoData from '@/components/NoData/NoData';
 import { donationsList } from '@/services/transferData';
 import { ICollection } from '@/types/formDataTypes';
+import { useUserStore } from '@/store/store';
 
 interface IDonationCard {
   path: string;
@@ -14,11 +15,12 @@ interface IDonationCard {
 }
 
 const DonationsList = () => {
+  const locale = useUserStore(state => state.locale);
   const [allDonations, setAllDonations] = useState<ICollection[]>([]);
   const [cardData, setCardData] = useState<IDonationCard[]>([]);
 
   useEffect(() => {
-    const getDonationsList = async () => await donationsList();
+    const getDonationsList = async () => await donationsList(locale);
     getDonationsList().then(res => {
       console.log(' - res --> ', res);
       console.log(' - res.data --> ', res.data);
@@ -30,7 +32,7 @@ const DonationsList = () => {
         setAllDonations(res.data.activeCollections);
       }
     });
-  }, []);
+  }, [locale]);
   //   --- - ---
   useEffect(() => {
     let cardData: IDonationCard[] = [];
