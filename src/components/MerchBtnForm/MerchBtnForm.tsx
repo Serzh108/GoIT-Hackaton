@@ -29,7 +29,7 @@ function MerchBtnForm() {
     control,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<MerchBtnFormValues>({
     resolver: yupResolver(updateMerchFormSchema),
     defaultValues: { status: 'off' },
@@ -90,7 +90,7 @@ function MerchBtnForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8 w-[90%] min-w-[550px] bg-white shadow-accent rounded-lg pt-4 px-6 pb-14"
+      className="flex flex-col gap-8 w-[70%] min-w-[550px] bg-white shadow-accent rounded-lg pt-4 px-6 pb-14"
     >
       <Controller
         control={control}
@@ -138,7 +138,8 @@ function MerchBtnForm() {
 
       <Button
         type="submit"
-        className="block mx-auto font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
+        className="block mx-auto font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
+        disabled={!isValid}
       >
         Зберегти
       </Button>

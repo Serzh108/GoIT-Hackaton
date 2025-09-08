@@ -37,7 +37,7 @@ const ReportEditing: FC<Props> = ({ id }) => {
     handleSubmit,
     // reset,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<IReportFormData>({
     resolver: yupResolver(reportFormSchema),
     defaultValues: initialValues,
@@ -76,7 +76,8 @@ const ReportEditing: FC<Props> = ({ id }) => {
   const router = useRouter();
 
   return (
-    <div className="p-12 pt-20 ml-[20px]">
+    // <div className="p-12 pt-20 ml-[20px]">
+      <div className="p-12 pt-[140px] ml-[20px]">
       <form
         onSubmit={handleSubmit(handleEditing)}
         className="text-xl leading-6"
@@ -121,19 +122,6 @@ const ReportEditing: FC<Props> = ({ id }) => {
           </span>
         </label>
 
-        {/* <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-            Мова
-            <input
-            className="bordered-input"
-            placeholder="Оберить мову"
-            {...register('language', { required: true })}
-            autoComplete="Мова" // ???
-            /> 
-           <span className={cn('input-error', 'h-4')}>
-            {errors?.language?.message}
-          </span>
-        </label>   */}
-
         <RadioGroup
           label="Мова:"
           name="language"
@@ -144,20 +132,22 @@ const ReportEditing: FC<Props> = ({ id }) => {
             { label: 'English', value: 'en' },
           ]}
         />
-
+<div className="flex gap-6 pt-8">
         <Button
           type="submit"
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
+          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
+          disabled={!isValid}
         >
           {report ? 'Оновити' : 'Створити'}
         </Button>
         <Button
           type="button"
           onClick={() => router.push('/reporting')}
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[288px]"
+          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[280px]"
         >
           Відхилити
         </Button>
+</div>
       </form>
     </div>
   );

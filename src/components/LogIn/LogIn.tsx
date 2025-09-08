@@ -117,20 +117,13 @@ const LogIn: FC = () => {
       <div className="text-center mt-36">
         <Link
           //!чи тут типу буде посилання на їх сайт
-          href="/"
+          href="https://inharmony.com.ua/ua"
           className="inline-flex items-center gap-6 text-base font-normal text-black hover:font-semibold"
         >
           <ArrowIcon />
           Назад до ІнХармоні.Юа
         </Link>
       </div>
-
-      {/* <Link
-        href="/forget"
-        className="text-base font-medium underline hover:text-accent"
-      >
-        Забули пароль?
-      </Link> */}
     </div>
   );
 };
