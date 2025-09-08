@@ -41,10 +41,6 @@ export const MENU_ARRAY = [
     title: 'Адміністратор',
     link: 'admin',
   },
-  {
-    title: 'Редактори',
-    link: 'editor',
-  },
 ];
 
 export const COOKIES_VALUE = {
@@ -56,32 +52,39 @@ export const ENDPOINTS = {
   LOGIN: '/api/auth/login',
   LOGOUT: '/api/auth/logout',
   REGISTER: '/api/auth/register',
-  // REFRESH_USER: '/api/auth/users/{userId}',
-  REFRESH_USER: '/api/auth/users/',
-  // DELETE_USER: '/api/auth/users/{userId}',
-  DELETE_USER: '/api/auth/users/',
+
+  REFRESH_USER: '/api/auth/users/', // REFRESH_USER: '/api/auth/users/{userId}',
+  DELETE_USER: '/api/auth/users/', // DELETE_USER: '/api/auth/users/{userId}',
   ALL_USERS: '/api/auth/users',
-  // LOGIN: '',
-  REFRESH_REPORT: '/api/reports/{id}',
-  DELETE_REPORT: '/api/reports/{id}',
+
+  REFRESH_REPORT: '/api/reports/', // REFRESH_REPORT: '/api/reports/{id}',
+  DELETE_REPORT: '/api/reports/', // DELETE_REPORT: '/api/reports/{id}',
   ALL_REPORTS: '/api/reports',
   CREATE_REPORT: '/api/reports',
-  // ALL_DONATIONS: '/COLLECTIONS/{locale}',
-  ALL_DONATIONS: '/api/collections/',
-  //  DONATION: '/api/collections/{locale}/{id}',
-  DONATION: '/api/collections/',
+
+  ALL_DONATIONS: '/api/collections/', // ALL_DONATIONS: '/COLLECTIONS/{locale}',
+  DONATION: '/api/collections/', //  DONATION: '/api/collections/{locale}/{id}',
+  DELETE_DONATION: '/api/collections/', //   DELETE_DONATION: '/api/collections/{locale}/{id}',
+  CREATE_DONATION: '/api/collections/', // CREATE_DONATIONS: '/COLLECTIONS/{locale}',
+  REFRESH_DONATION: '/api/reports/', // REFRESH_DONATION: '/api/collections/{locale}/{id}',
+
+  MERCH: '/api/merch',
+  REFRESH_MERCH: '/api/merch/', // REFRESH_MERCH: '/api/merch/{locale}',
 };
 // !!! Correct !!! ------------------
 export const INTERNAL_LINKS = {
   ADMIN: 'admin',
   DONATIONS: 'donations',
+  REPORTING: 'reporting',
   EDITING: 'editing',
   NEW: 'new',
+  MERCH: 'merch',
 };
 
 export const pathRenderName = {
   [INTERNAL_LINKS.ADMIN]: 'Адміністратор',
   [INTERNAL_LINKS.DONATIONS]: 'Збори',
+  [INTERNAL_LINKS.REPORTING]: 'Звітність',
   [INTERNAL_LINKS.NEW]: 'Додавання',
   [INTERNAL_LINKS.EDITING]: 'Редагування',
 };

@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { INTERNAL_LINKS, pathRenderName } from "@/constants/constants";
 import { getPathRenderName } from "@/services/getPathRenderName";
 import Edit from '@/icons/edit.svg';
+import LocaleSwitch from "../LocaleSwitch/LocaleSwitch";
 
 type Props = {
   isShowEditeImage?: boolean;
@@ -47,21 +48,23 @@ const PageHeader: FC<Props> = ({isShowEditeImage = false}) => {
         ))}
       </ul>
 
-        {isShowEditeImage ? (
-        <button
-          type="button"
-          title="Додати"
-          onClick={() => router.push(`${path}/${INTERNAL_LINKS.NEW}`)}
-          className="flex gap-3 items-center group"
-        >
-          <Edit className="w-8 h-8 stroke-white cursor-pointer"  />
-          {/* <Icon
-            name="/assets/add.svg"
-            id="add"
-            className="w-11 h-11 icon-actions-green"
-          /> */}
-          <span>Додати</span>
-        </button>) : (<div className="w-8 h-8"></div>)}
+      <LocaleSwitch />
+
+      {isShowEditeImage ? (
+      <button
+        type="button"
+        title="Додати"
+        onClick={() => router.push(`${path}/${INTERNAL_LINKS.NEW}`)}
+        className="flex gap-3 items-center group"
+      >
+        <Edit className="w-8 h-8 stroke-white cursor-pointer"  />
+        {/* <Icon
+          name="/assets/add.svg"
+          id="add"
+          className="w-11 h-11 icon-actions-green"
+        /> */}
+        <span>Додати</span>
+      </button>) : (<div className="w-8 h-8"></div>)}
     </div>
   );  
 };

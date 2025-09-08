@@ -55,3 +55,38 @@ export const RegisterFormSchema = yup.object({
     .max(128, REGEXP.password.mes.mismatchMoreSymbols)
     // .matches(REGEXP.password.reg, REGEXP.password.mes.mismatch),
 });
+
+export const updateMerchFormSchema = yup.object({
+  status: yup
+    .string()
+    .required(),
+  content: yup
+    .string()
+    .max(12)
+    .required("Обов’язкове поле"),    
+  link: yup
+    .string()
+    .max(512)
+    .required("Обов’язкове поле"),
+  locale: yup
+    .string()
+    .required(),
+});
+
+export const reportFormSchema = yup.object({
+  year: yup
+    .string()
+    .min(4)
+    .max(4)
+    .required("Обов’язкове поле"),
+  month: yup
+    .string()
+    .max(16)
+    .required("Обов’язкове поле"),
+  url: yup
+    .string()
+    .required("Обов’язкове поле"),    
+  language: yup
+    .string()
+    .required(),
+});

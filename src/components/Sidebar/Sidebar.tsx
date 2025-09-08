@@ -16,6 +16,9 @@ const Sidebar = () => {
   const router = useRouter();
   const normalizePath = getNormalizedPath(path);
   const isAdmin = useUserStore(state => state.isAdmin);
+      // --- - ---
+      const locale = useUserStore(state => state.locale);
+      // --- / - ---
 
   const logoutButtonHandler = async () => {
     const resultLogOut = await logOut();
@@ -24,7 +27,7 @@ const Sidebar = () => {
       await deleteCookie();
       await deleteCookieRefresh();
       // await refreshPath(path); // ? Why
-      router.push('/about'); // ???
+      router.push('/donations'); // ???
     }
   };
 
@@ -108,7 +111,7 @@ const Sidebar = () => {
         <button
           type="button"
           onClick={logoutButtonHandler}
-          className=" text-gray-50  hover:text-accent w-[80%] py-0 px-5  cursor-pointer mb-12 flex items-center gap-3"
+          className="hover:scale-120 text-gray-50  hover:text-accent w-[80%] py-0 px-5  cursor-pointer mb-12 flex items-center gap-3"
         >
           <ExitIcon />
           <span className="font-semibold text-lg leading-[156%]">Вихід</span>
@@ -119,7 +122,7 @@ const Sidebar = () => {
           onClick={testButtonHandler}
           className="w-[80%] p-1.5 text-red-500 border border-white rounded-md cursor-pointer"
         >
-          <span className="text-xl font-semibold">Test</span>
+          <span className="text-xl font-semibold">Test/{locale}</span>
         </button>
       </div>
     </aside>

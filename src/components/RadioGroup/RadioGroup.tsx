@@ -1,3 +1,4 @@
+// import { DEFAULT_MIN_VERSION } from 'node:tls';
 import {
   Controller,
   FieldError,
@@ -24,7 +25,7 @@ const RadioGroup = <T extends FieldValues>({
   options,
   control,
   rules,
-  error,
+  // error,
   label,
   important,
 }: Props<T>) => {
@@ -32,15 +33,19 @@ const RadioGroup = <T extends FieldValues>({
     <div className="flex flex-col gap-4">
       {label &&
         (important ? (
-          <label className="block font-semibold text-base leading-[137%]">
+          <div className="block font-semibold text-base leading-[137%]">
+            {/* <label className="block font-semibold text-base leading-[137%]"> */}
             <span className="after:content-['*'] after:ml-2 after:text-current block">
               {label}
             </span>
-          </label>
+          {/* </label> */}
+          </div>
         ) : (
-          <label className="font-semibold text-base leading-[137%]">
+          <div className="font-semibold text-base leading-[137%]">
+            {/* <label className="font-semibold text-base leading-[137%]"> */}
             {label}
-          </label>
+         {/* </label> */}
+          </div>
         ))}
       <Controller
         name={name}

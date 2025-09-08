@@ -5,11 +5,20 @@ import InputField from '../../InputField/InputField';
 import { useFieldArray, useForm } from 'react-hook-form';
 import RadioGroup from '../../RadioGroup/RadioGroup';
 import Button from '../../Button/Button';
-// import { string } from 'yup';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
-import { donationData } from '@/services/transferData';
+import { useUserStore } from '@/store/store';
+import {  donationData, 
+  // createDonation, updateDonation 
+} from '@/services/transferData';
+import { redirectWithUpdateServer } from '@/services/actions';
 import { ICollection } from '@/types/formDataTypes';
+import {
+  transformFormToLongDesc,
+  transformLongDescToForm,
+} from '@/services/transformLongDesc';
+import { INTERNAL_LINKS } from '@/constants/constants';
+import { useRouter } from 'next/navigation';
 
 type DonationFormValues = {
   // image: FileList;
@@ -34,104 +43,102 @@ type DonationFormValues = {
 };
 
 type Props = {
-    id?: string;
+  id?: string;
 };
 
-const DonationForm: FC<Props> = ({id}) => {
-  console.log('id: ', id);
-const [donation, setDonation] = useState<ICollection>();
+const DonationForm: FC<Props> = ({ id }) => {
+  const locale = useUserStore(state => state.locale);
+  const [donation, setDonation] = useState<ICollection>();
+  console.log('id: ', id, ', - locale: ', locale);
 
   useEffect(() => {
-    if(id) {
+    if (id) {
       const getDonation = async () => await donationData(id);
-        getDonation().then(res => {
-          console.log(' - getDonation! res --> ', res);
-            console.log(' - res.data --> ', res.data);
-          setDonation(res.data);;
-        });
-    } 
+      getDonation().then(res => {
+        console.log(' - getDonation! res --> ', res);
+        console.log(' - res.data --> ', res.data);
+        setDonation(res.data);
+      });
+    }
   }, [id]);
-  console.log(' -- - donation --> ', donation); 
+  console.log(' -- - donation --> ', donation);
 
-  const [initialValues, setInitialValues] = useState<DonationFormValues>();
-
-    useEffect(() => {
-    if(donation) {
-     const initialValues = {
-      title: donation?.title  || "",
-      desc: donation?.desc  || "",
-      alt: donation?.alt || "",
-      // image: donation?.image || [],
-      image: undefined,
-      collected: (donation?.collected)?.toString() || '',
-      target: (donation?.target)?.toString() || '',
-      peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-      peopleDonate_title: donation?.peopleDonate_title  || '',
-      days: donation?.days || '',
-      quantity: donation?.quantity || '',
-      period: donation?.period || '',
-      status: donation?.status || '',
-      value: donation?.value || '',
-      importance: donation?.importance || '',
-      // long_desc: donation?.long_desc || [],
-      long_desc: [{ text: '' }, { text: '' }],
-     };
-     setInitialValues(initialValues);
-    } 
-  }, [donation]);
-  
-    // const initialValues: DonationFormValues = {
-    //   title: donation?.title  || "",
-    //   desc: donation?.desc  || "",
-    //   alt: donation?.alt || "",
-    //   // image: donation?.image || [],
-    //   image: undefined,
-    //   collected: (donation?.collected)?.toString() || '',
-    //   target: (donation?.target)?.toString() || '',
-    //   peopleDonate: (donation?.peopleDonate)?.toString()  || '',
-    //   peopleDonate_title: donation?.peopleDonate_title  || '',
-    //   days: donation?.days || '',
-    //   quantity: donation?.quantity || '',
-    //   period: donation?.period || '',
-    //   status: donation?.status || '',
-    //   value: donation?.value || '',
-    //   importance: donation?.importance || '',
-    //   // long_desc: donation?.long_desc || [],
-    //   long_desc: [{ text: '' }, { text: '' }],
-    // };
-      console.log(' -- - initialValues --> ', initialValues); 
-  
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
-  } = useForm<DonationFormValues>({
-    defaultValues: initialValues,
-      //  {
-      // long_desc: [{ text: '' }, { text: '' }],
-    // },
-  });
+    reset,
+    formState: { errors, isValid },
+  } = useForm<DonationFormValues>({ mode: 'onChange' });
 
-  const onSubmit = (data: DonationFormValues) => {
+  useEffect(() => {
+    if (donation) {
+      const initialDonationFormValues: DonationFormValues = {
+        title: donation?.title || '',
+        desc: donation?.desc || '',
+        alt: donation?.alt || '',
+        // image: donation?.image || [],
+        image: undefined,
+        collected: donation?.collected?.toString() || '',
+        target: donation?.target?.toString() || '',
+        peopleDonate: donation?.peopleDonate?.toString() || '',
+        peopleDonate_title: donation?.peopleDonate_title || '',
+        days: donation?.days || '',
+        quantity: donation?.quantity || '',
+        period: donation?.period || '',
+        status: donation?.status || '',
+        value: donation?.value || '',
+        importance: donation?.importance || '',
+        // transforming format from what we're gettig from backend to long_desc: { text: string }[];
+        long_desc: transformLongDescToForm(donation.long_desc),
+      };
+      reset(initialDonationFormValues); //! updating form;
+    }
+  }, [donation, reset]);
+
+  const onSubmit = async (data: DonationFormValues) => {
     //! поки просто консоль лог
-
-    // Трансформація у потрібний формат
-    const transformed = {
+    const payload = {
       ...data,
-      long_desc: data.long_desc.reduce((acc, item, idx) => {
-        acc[`section${idx + 1}`] = item.text;
-        return acc;
-      }, {} as Record<string, string>),
+      // transforming format from  long_desc: { text: string }[] to what backend expects;
+      long_desc: transformFormToLongDesc(data.long_desc),
+      collected: +data.collected,
     };
 
-    console.log('Form values:', transformed);
+    console.log('Donation Form values on submit:', payload);
+
+    let result;
+    if (donation) {
+      console.log('donation - result -> ', result);
+      // result = await updateDonation(payload, donation._id);  // !!! check type payload
+    } else {
+      console.log('donation - result -> ', result);
+      // result = await createDonation(payload, locale);  // !!! check type payload
+    }
+    console.log('donation - result -> ', result);
+    // reset();
+
+    if (!result) {
+        console.error('donation - ERROR!!');
+    //   setNotificationType(NOTIFICATION_TYPE.ERROR);
+    }
+
+    // setShowNotification(true);
+
+    // setIsFetching(false);
+
+    setTimeout(() => {
+      redirectWithUpdateServer(`/${INTERNAL_LINKS.DONATIONS}`);
+    }, 2000); 
   };
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'long_desc',
   });
+
+  const router = useRouter();
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -140,8 +147,8 @@ const [donation, setDonation] = useState<ICollection>();
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
           id="image"
-          //   label="Фото збору"
           error={errors.image}
+          initialImagePath={donation?.image?.[0]?.path}
           registration={register('image', { required: 'Фото обов’язкове' })}
         />
         <InputField
@@ -338,11 +345,13 @@ const [donation, setDonation] = useState<ICollection>();
         <Button
           type="submit"
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
+          disabled={!isValid}
         >
           Надіслати
         </Button>
         <Button
-          type="reset"
+          type="button"
+          onClick={() => router.push('/donations')}
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[288px]"
         >
           Відхилити
@@ -350,6 +359,6 @@ const [donation, setDonation] = useState<ICollection>();
       </div>
     </form>
   );
-}
+};
 
 export default DonationForm;
