@@ -5,7 +5,6 @@ import InputField from '../../InputField/InputField';
 import { useFieldArray, useForm } from 'react-hook-form';
 import RadioGroup from '../../RadioGroup/RadioGroup';
 import Button from '../../Button/Button';
-// import { string } from 'yup';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
 import { donationData } from '@/services/transferData';
@@ -14,6 +13,7 @@ import {
   transformFormToLongDesc,
   transformLongDescToForm,
 } from '@/services/transformLongDesc';
+import { useRouter } from 'next/navigation';
 
 type DonationFormValues = {
   // image: FileList;
@@ -105,7 +105,9 @@ const DonationForm: FC<Props> = ({ id }) => {
     control,
     name: 'long_desc',
   });
-  
+
+  const router = useRouter();
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -317,7 +319,8 @@ const DonationForm: FC<Props> = ({ id }) => {
           Надіслати
         </Button>
         <Button
-          type="reset"
+          type="button"
+          onClick={() => router.push('/donations')}
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[288px]"
         >
           Відхилити

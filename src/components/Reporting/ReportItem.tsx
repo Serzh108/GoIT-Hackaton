@@ -31,7 +31,7 @@ const ReportItem: FC<Props> = ({ report }) => {
   };
 
   return (
-    <li className="bg-white border-b-2 border-black rounded-lg px-6 py-5  flex items-center justify-between gap-6">
+    <li className="bg-white border-b border-black rounded-lg px-6 py-5  flex items-center justify-between gap-6">
       <div className=" flex items-center gap-8 flex-1 overflow-hidden font-semibold font-body leading-[22px]">
         <p className="min-w-[80px]">{report.month}</p>
         <p className="min-w-[60px]">{report.year}</p>

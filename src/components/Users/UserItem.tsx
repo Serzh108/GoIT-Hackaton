@@ -1,5 +1,5 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
 import { IAllUsersData } from '@/types/formDataTypes';
 import Edit from '@/icons/edit.svg';
@@ -7,8 +7,6 @@ import Delete from '@/icons/delete.svg';
 import { deleteUser } from '@/services/auth';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { updateServer } from '@/services/actions';
-import Modal from '../Modal/Modal';
-import ModalCard from '../ModalCard/ModalCard';
 import { Button } from '@headlessui/react';
 
 type Props = {

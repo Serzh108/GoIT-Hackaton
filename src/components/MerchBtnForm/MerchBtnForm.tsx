@@ -138,7 +138,7 @@ function MerchBtnForm() {
 
       <Button
         type="submit"
-        className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
+        className="block mx-auto font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[288px]"
       >
         Зберегти
       </Button>
