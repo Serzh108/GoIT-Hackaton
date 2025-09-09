@@ -5,7 +5,7 @@ export default async function Home() {
   const isMyCookie = await checkCookie();
 
   return (
-    <main className={`flex flex-col items-center justify-center w-full px-4`}>
+    <main className={`flex flex-col items-center justify-center w-full px-4 `}>
       <MainPage isMyCookie={isMyCookie} />
     </main>
   );

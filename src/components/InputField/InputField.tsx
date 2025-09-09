@@ -33,7 +33,7 @@ function InputField({
           className="flex font-semibold text-base leading-[137%]"
         >
           {label}
-          {important && <span className="ml-2 text-current block ">*</span>}
+          {important && <span className="ml-1 text-current block ">*</span>}
         </label>
       )}
       <div className="relative ">
