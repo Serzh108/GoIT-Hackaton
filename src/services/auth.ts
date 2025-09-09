@@ -83,3 +83,16 @@ export const usersList = async () => {
       // return { message: error };
   }
 };
+
+export const userInfo = async () => {
+  try {
+    const { data }: AxiosResponse = await axios.get(ENDPOINTS.USER);
+    console.log(' - userInfo data --> ', data);
+    return data;
+      // if(result.status === 200) { return result.data; };
+      // return result;
+  } catch (error) {
+    console.error(error);
+      // return { message: error };
+  }
+};
