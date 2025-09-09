@@ -26,7 +26,7 @@ function ModalCard({ title, buttons, variant, onClose }: ModalCardProps) {
       />
       {variant === 'success' && <CheckIcon className="w-10 h-10   " />}
 
-      <h2 className="font-semibold leading-normal font-body text-black text-2xl ">
+      <h2 className="font-semibold leading-normal font-body text-black text-2xl text-center">
         {title}
       </h2>
       <div className="flex gap-6 items-center justify-center mt-9">
