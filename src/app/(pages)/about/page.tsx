@@ -5,19 +5,18 @@ import { useState } from 'react';
 
 const About = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [modalVariant, setModalVariant] = useState<'delete' | 'success'>(
-    'delete'
-  );
+  const [modalVariant, setModalVariant] = useState<'delete' | 'success'>('delete');
 
   const openDeleteModal = () => {
     setModalVariant('delete');
+    // setModalVariant('success');
     setIsOpen(true);
   };
 
   const handleDelete = () => {
     try {
       // тут має бути запит на видалення
-
+console.log('I try to delete You!!!');
       // а це відкриття модалки що каже про успішне видалення
       setModalVariant('success');
     } catch (error) {
