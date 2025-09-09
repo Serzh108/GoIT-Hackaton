@@ -8,10 +8,11 @@ import { IReportsListData } from '@/types/formDataTypes';
 
 const ReportsList = () => {
   const setReports = useUserStore(state => state.setReports);
+  const locale = useUserStore(state => state.locale);
   const [allReports, setAllReports] = useState<IReportsListData[]>([]);
 
   useEffect(() => {
-    const getUsersList = async () => await reportsListData();
+    const getUsersList = async () => await reportsListData(locale);
     getUsersList().then(res => {
       if (res) {
         console.log('- getUsersList -> ', res);
@@ -19,7 +20,7 @@ const ReportsList = () => {
         setReports(res);
       }
     });
-  }, [setReports]);
+  }, [setReports, locale]);
   // }, []);
 
   return (

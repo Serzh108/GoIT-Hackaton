@@ -1,12 +1,4 @@
 export const MENU_ARRAY = [
-  // {
-  //   title: 'Home',
-  //   link: '',
-  // },
-  {
-    title: 'Дашборд',
-    link: 'dashboard',
-  },
   {
     title: 'Збори',
     link: 'donations',
@@ -30,14 +22,12 @@ export const MENU_ARRAY = [
     title: 'Мерч',
     link: 'merch',
   },
-  {
-    title: 'Про нас',
-    link: 'about',
-  },
-  { title: 'Партнери', link: 'partners',},
-  // { title: 'Партнери', link: 'about/partners', parent: 'about' },
-  { title: 'Команда', link: 'about/team', parent: 'about' },
-  { title: 'Досягнення', link: 'about/achievements', parent: 'about' },
+  // {
+  //   title: 'Про нас',
+  //   link: 'about',
+  // },
+  { title: 'Партнери', link: 'partners' },
+
   {
     title: 'Адміністратор',
     link: 'admin',
@@ -72,12 +62,10 @@ export const ENDPOINTS = {
   MERCH: '/api/merch',
   REFRESH_MERCH: '/api/merch/', // REFRESH_MERCH: '/api/merch/{locale}',
 
-  
   ALL_PARTNERS: '/api/partners', // ALL_PARTNERS: '/partners',
   DELETE_PARTNER: '/api/partners/', //   DELETE_PARTNERS: '/api/partners/{id}',
   CREATE_PARTNER: '/api/partners', // CREATE_PARTNERS: '/partners',
   REFRESH_PARTNER: '/api/partners/', // REFRESH_PARTNERS: '/api/partners/{id}',
-
 };
 // !!! Correct !!! ------------------
 export const INTERNAL_LINKS = {
