@@ -47,6 +47,7 @@ export const ENDPOINTS = {
   REFRESH_USER: '/api/auth/users/', // REFRESH_USER: '/api/auth/users/{userId}',
   DELETE_USER: '/api/auth/users/', // DELETE_USER: '/api/auth/users/{userId}',
   ALL_USERS: '/api/auth/users',
+  USER: '/api/auth/users/current',
 
   REFRESH_REPORT: '/api/reports/', // REFRESH_REPORT: '/api/reports/{id}',
   DELETE_REPORT: '/api/reports/', // DELETE_REPORT: '/api/reports/{id}',

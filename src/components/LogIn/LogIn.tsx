@@ -7,7 +7,7 @@ import { useUserStore } from '@/store/store';
 import { logInFormSchema } from '@/constants/validationSchemas/validationSchemas';
 import { logInFormData } from '@/types/formDataTypes';
 import ArrowIcon from '@/icons/arrow.svg';
-import { logIn } from '@/services/auth';
+import { logIn, userInfo } from '@/services/auth';
 import { createCookie, createCookieRefresh } from '@/services/actions';
 import Link from 'next/link';
 import { REGEXP } from '@/constants/regexp';
@@ -37,10 +37,15 @@ const LogIn: FC = () => {
 
   const logInRequest = async (data: logInFormData) => {
     setIsFetching(true);
-    const emailSA = process.env.NEXT_PUBLIC_EMAIL_SA || '';
-    const result = await logIn(data);
+    // const emailSA = process.env.NEXT_PUBLIC_EMAIL_SA || '';
+      const result = await logIn(data);
     if (result === 200) {
-      if (data.email.toLowerCase() === emailSA.toLowerCase()) {
+      // -----------------------
+      const currentUser = await userInfo();
+      // console.log(' - - currentUser -> ', currentUser.role);
+      if (currentUser.role === 'admin') {
+      // ----------/----------
+      // if (data.email.toLowerCase() === emailSA.toLowerCase()) {
         setIsAdmin(true);
         await createCookie(COOKIES_VALUE.super);
         await createCookieRefresh(COOKIES_VALUE.super);
