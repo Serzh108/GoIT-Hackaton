@@ -12,6 +12,7 @@ import { createReport, updateReport } from '@/services/transferData';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { redirectWithUpdateServer } from '@/services/actions';
 import { useRouter } from 'next/navigation';
+import { BeatLoader } from 'react-spinners';
 
 type Props = {
   id?: string;
@@ -132,22 +133,23 @@ const ReportEditing: FC<Props> = ({ id }) => {
             { label: 'English', value: 'en' },
           ]}
         />
-<div className="flex gap-6 pt-8">
-        <Button
-          type="submit"
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
-          disabled={!isValid}
-        >
-          {report ? 'Оновити' : 'Створити'}
-        </Button>
-        <Button
-          type="button"
-          onClick={() => router.push('/reporting')}
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[280px]"
-        >
-          Відхилити
-        </Button>
-</div>
+        
+        <div className="flex gap-6 pt-8">
+          <Button
+            type="submit"
+            className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
+            disabled={!isValid || isFetching}
+          >
+            {isFetching ? <BeatLoader color="white" /> : report ? 'Оновити' : 'Створити'}
+          </Button>
+          <Button
+            type="button"
+            onClick={() => router.push('/reporting')}
+            className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 text-black bg-zinc-50 border border-black w-[280px]"
+          >
+            Відхилити
+          </Button>
+        </div>
       </form>
     </div>
   );
