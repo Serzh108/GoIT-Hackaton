@@ -7,7 +7,6 @@ import { logOut } from '@/services/auth';
 import { deleteCookie, deleteCookieRefresh } from '@/services/actions';
 import { useUserStore } from '@/store/store';
 import { MENU_ARRAY } from '@/constants/constants';
-// import { IRegisterFormData } from "@/types/formDataTypes";
 import Logo from '@/icons/logo.svg';
 import ExitIcon from '@/icons/exit.svg';
 
@@ -16,9 +15,6 @@ const Sidebar = () => {
   const router = useRouter();
   const normalizePath = getNormalizedPath(path);
   const isAdmin = useUserStore(state => state.isAdmin);
-      // --- - ---
-      const locale = useUserStore(state => state.locale);
-      // --- / - ---
 
   const logoutButtonHandler = async () => {
     const resultLogOut = await logOut();
@@ -31,28 +27,13 @@ const Sidebar = () => {
     }
   };
 
-  const testButtonHandler = async () => {
-    // const newUser: IRegisterFormData = {
-    //   email: 'ser2015@i.ua',
-    //   password: 'xxxxTEST1xxx',
-    //   name: 'Serhii',
-    //   role: 'editor',
-    // };
-    // const resultRegister = await userRegister(newUser);
-    // console.log(' - resultRegister: ', resultRegister);
-    // const result2 = await axios.get("/api/collections/en?page=1&perPage=3");
-    // console.log(' - collections list -> ', result2);
-    // const result1 = await axios.get('/api/auth/users');
-    // console.log(' - result1 -> ', result1);
-  };
-
   return (
     <aside className="fixed flex flex-col left-0 top-0 bottom-0 w-[256px] p-6 bg-primary z-50">
-      <div className="flex flex-col items-center justify-between  gap-4 h-full">
-        <a className="cursor-pointer" href="">
-          <Logo className="w-16 h-16 " />
+      <div className="flex flex-col items-center justify-between gap-4 h-full">
+        <a className="cursor-pointer" href="https://inharmony.com.ua/ua" target='_blank'>
+          <Logo className="w-16 h-16" />
         </a>
-        <ul className="flex flex-col text-gray-50 font-heading">
+        <ul className="flex flex-col pb-16 text-gray-50 font-heading">
           {MENU_ARRAY &&
             MENU_ARRAY.length > 0 &&
             MENU_ARRAY.map(item => {
@@ -93,14 +74,6 @@ const Sidebar = () => {
         >
           <ExitIcon />
           <span className="font-semibold text-lg leading-[156%]">Вихід</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={testButtonHandler}
-          className="w-[80%] p-1.5 text-red-500 border border-white rounded-md cursor-pointer"
-        >
-          <span className="text-xl font-semibold">Test/{locale}</span>
         </button>
       </div>
     </aside>

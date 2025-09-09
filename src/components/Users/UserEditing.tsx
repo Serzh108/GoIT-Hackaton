@@ -48,16 +48,16 @@ const UserEditing: FC<Props> = ({id}) => {
 
   // const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
    
 
   const handleEditing = async (data: IRegisterFormData) => {
       console.log('handleEditing data -> ', data);
-      if (isLoading) {
+      if (isFetching) {
       return;
       };
 
-    setIsLoading(true);
+    setIsFetching(true);
 
     const newUser: IRegisterFormData = {
       email: data.email,
@@ -82,7 +82,7 @@ const UserEditing: FC<Props> = ({id}) => {
 
     // setShowNotification(true);
 
-    setIsLoading(false);
+    setIsFetching(false);
 
     setTimeout(() => {
       redirectWithUpdateServer(`/${INTERNAL_LINKS.ADMIN}`);
@@ -350,7 +350,7 @@ const UserEditing: FC<Props> = ({id}) => {
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
           disabled={!isValid}
         >
-           {isLoading ? <BeatLoader color="white" /> : user ? 'Оновити' : 'Зареєструвати'}
+           {isFetching ? <BeatLoader color="white" /> : user ? 'Оновити' : 'Зареєструвати'}
         </Button>   
       </form>
       </div>

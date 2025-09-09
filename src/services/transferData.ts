@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ENDPOINTS } from "@/constants/constants";
-import { ICreateDonationData, IMerchData, IMerchUpdateData, IReportFormData, IReportsListData } from "@/types/formDataTypes";
+import { ICreateDonationData, IMerchData, IMerchUpdateData, IPartnerFormData, IReportFormData, IReportsListData } from "@/types/formDataTypes";
 
 export const donationsList = async (locale: string) => {
   try {
@@ -109,7 +109,7 @@ export const updateMerch = async (updateData: IMerchUpdateData, locale: string) 
 export const reportsListData = async (locale?: string) => {
   console.log(' reportsListData locale ->', locale);
   const url = `${ENDPOINTS.ALL_REPORTS}?locale=${locale ? locale : 'ua'}`;
-  console.log(' updateMerch url ->', url);
+  console.log(' reportsListData url ->', url);
   try {
     const { data }: AxiosResponse<IReportsListData[]> = await axios.get(url);
     console.log(' - reports data --> ', data);
@@ -146,6 +146,55 @@ export const updateReport = async (updateData: IReportFormData, id: string) => {
   console.log(' updateReport id ->', id);
   const url = `${ENDPOINTS.REFRESH_REPORT}${id}`;
   console.log(' updateRegister url ->', url);
+  try {
+    const result = await axios.patch(url, updateData);
+      console.log(' - result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+// --- Partners --- -------
+export const partnersListData = async () => {
+  const url = `${ENDPOINTS.ALL_PARTNERS}?`;
+  console.log(' partnersListData url ->', url);
+  try {
+    // const { data }: AxiosResponse<IReportsListData[]> = await axios.get(url);
+    const { data }: AxiosResponse = await axios.get(url);
+    console.log(' - partnersListData reports data --> ', data);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createPartner = async (partnerData: IPartnerFormData) => {
+  console.log(' createPartner partnerData ->', partnerData);
+  try {
+    const result = await axios.post(ENDPOINTS.CREATE_PARTNER, partnerData);
+      console.log(' - createPartner result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+
+export const deletePartner = async (id: string) => {
+  const url = `${ENDPOINTS.DELETE_PARTNER}${id}`;
+  try {
+    const result = await axios.delete(url);
+      console.log(' - deletePartner result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+
+export const updatePartner = async (updateData: IPartnerFormData, id: string) => {
+  console.log(' updatePartner updateData ->', updateData);
+  console.log(' updatePartner id ->', id);
+  const url = `${ENDPOINTS.REFRESH_PARTNER}${id}`;
+  console.log(' updatePartner url ->', url);
   try {
     const result = await axios.patch(url, updateData);
       console.log(' - result --> ', result);

@@ -90,3 +90,19 @@ export const reportFormSchema = yup.object({
     .string()
     .required(),
 });
+
+export const partnerFormSchema = yup.object({
+  image: yup
+    .string()
+    .required("Обов’язкове поле"),
+  logo: yup
+    .string()
+    .max(16)
+    .required("Обов’язкове поле"),
+  link: yup
+    .string()
+    .required("Обов’язкове поле"),    
+  language: yup
+    .string()
+    .required(),
+});

@@ -33,10 +33,10 @@ const LogIn: FC = () => {
   const router = useRouter();
 
   const [loginError, setLoginError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const logInRequest = async (data: logInFormData) => {
-    setIsLoading(true);
+    setIsFetching(true);
     const emailSA = process.env.NEXT_PUBLIC_EMAIL_SA || '';
     const result = await logIn(data);
     if (result === 200) {
@@ -56,7 +56,7 @@ const LogIn: FC = () => {
     } else {
       setLoginError(true);
     }
-    setIsLoading(false);
+    setIsFetching(false);
   };
 
   const onSubmitForm: SubmitHandler<logInFormData> = async data => {
@@ -103,10 +103,10 @@ const LogIn: FC = () => {
 
         <Button
           type="submit"
-          disabled={!isValid || isLoading}
+          disabled={!isValid || isFetching}
           className="block mx-auto mt-10 w-[300px] h-16 bg-gray-900 text-white p-4 rounded-3xl font-semibold"
         >
-          {isLoading ? <BeatLoader color="white" /> : 'Увійти'}
+          {isFetching ? <BeatLoader color="white" /> : 'Увійти'}
         </Button>
       </form>
 
