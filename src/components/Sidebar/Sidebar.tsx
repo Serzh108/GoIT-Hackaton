@@ -30,9 +30,14 @@ const Sidebar = () => {
   return (
     <aside className="fixed flex flex-col left-0 top-0 bottom-0 w-[256px] p-6 bg-primary z-50">
       <div className="flex flex-col items-center justify-between gap-4 h-full">
-        <a className="cursor-pointer" href="https://inharmony.com.ua/ua" target='_blank'>
+        <a
+          className="flex items-center justify-center size-25 cursor-pointer rounded-full bg-transparent transition-colors duration-300 hover:bg-white/20"
+          href="https://inharmony.com.ua/ua"
+          target="_blank"
+        >
           <Logo className="w-16 h-16" />
         </a>
+
         <ul className="flex flex-col pb-16 text-gray-50 font-heading">
           {MENU_ARRAY &&
             MENU_ARRAY.length > 0 &&
