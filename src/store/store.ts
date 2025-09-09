@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 
 type State = {
   isAdmin: boolean;
+  admins: string[];
   users: IAllUsersData[];
   reports: IReportsListData[];
   partners: IPartnerData[];
@@ -12,6 +13,7 @@ type State = {
 
 type Action = {
   setIsAdmin: (val: boolean) => void;
+  addAdmins: (val: string[]) => void;
   setUsers: (val: IAllUsersData[]) => void;
   setReports: (val: IReportsListData[]) => void;
   setPartners: (val: IPartnerData[]) => void;
@@ -23,11 +25,13 @@ export const useUserStore = create<State & Action, [['zustand/persist', State & 
   persist(
     set => ({
       isAdmin: false,
+      admins: [],
       users: [],
       reports: [],
       locale: 'ua',
       partners: [],
       setIsAdmin: (val) => set({ isAdmin: val }),
+      addAdmins:(val) => set({ admins : val }),
       setUsers: (val) => set({ users: val }),
       setReports: (val) => set({ reports: val }),
       setPartners: (val) => set({ partners: val }),

@@ -23,6 +23,8 @@ const roleOptions = [
   { value: "editor", label: "Редактор" },
 ];
 
+const TO_MANY_ADMINS = 'Ліміт користувачів з роллю admin перевищено';
+
 const UserEditing: FC<Props> = ({id}) => {    
   const users = useUserStore(state => state.users);
   const user = users.find(item => item._id === id); 
@@ -39,6 +41,7 @@ const UserEditing: FC<Props> = ({id}) => {
     handleSubmit,
     // reset,
     control,
+    watch,
     formState: { errors, isValid },
     } = useForm<IRegisterFormData>({
     resolver: yupResolver(RegisterFormSchema),
@@ -46,7 +49,15 @@ const UserEditing: FC<Props> = ({id}) => {
     mode: 'onChange',
   });
 
-  // const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
+  const selectedRole = watch('role');
+  console.log(' - selectedRole -> ', selectedRole);
+
+  const adminsAmount = users.filter(user => user.role === 'admin').length;
+  console.log(' - adminsAmount -> ', adminsAmount, ' - ', adminsAmount); 
+  const adminError = (selectedRole === 'admin') && (adminsAmount > 1) ? TO_MANY_ADMINS : '';
+
+
+  // const [isVisiblePasswor d, setIsVisiblePassword] = useState<boolean>(false);
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
    
@@ -100,7 +111,7 @@ const UserEditing: FC<Props> = ({id}) => {
     <div className="p-12 pt-[140px]">
       <form
         onSubmit={handleSubmit(handleEditing)}
-        className="flex flex-col gap-12 text-xl leading-6"
+        className="flex flex-col gap-10 text-xl leading-6"
       >
 
 
@@ -133,132 +144,8 @@ const UserEditing: FC<Props> = ({id}) => {
           registration={register('password', { required: true })}
           error={errors.password}
         />
-
-        {/* <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-            Ім&#39;я
-            <input
-            className="bordered-input"
-            placeholder="Введіть ім'я та призвище"
-            autoFocus
-            {...register('name', { required: true })}
-            autoComplete="Ім'я" // ???
-            /> 
-           <span className={cn('input-error', 'h-4')}>
-            {errors?.name?.message}
-          </span>
-        </label>  */}
-
-        {/* <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-            Email
-            <input
-            className="bordered-input"
-            placeholder="example@i.ua"           
-            {...register('email', { required: true })}
-            autoComplete="example@i.ua" // ???
-            /> 
-           <span className={cn('input-error', 'h-4')}>
-            {errors?.email?.message}
-          </span>
-        </label>  */}
-        
-        {/* <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-          Пароль
-          <div className="relative">
-            <input
-              className="bordered-input pr-14"
-              type={isVisiblePassword ? 'text' : 'password'}
-              placeholder="Введіть пароль"
-              {...register('password', { required: true })}
-              autoComplete="current-password"
-            />
-            <div
-              className="absolute top-[15px] right-5 cursor-pointer"
-              onClick={toggleVisibilityPassword}
-            >
-              {isVisiblePassword ? <OpenedEyeIcon /> : <ClosedEyeIcon />}
-            </div>
-          </div>
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.password?.message}
-          </span>
-        </label> */}
-
-        {/* <label className="flex flex-col mb-24 text-base leading-[30px] font-medium">
-          Роль
-          <Controller
-            name="role"
-            control={control} 
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={roleOptions}
-                value={roleOptions.find((opt) => opt.value === field.value) || null}
-                onChange={(option) => field.onChange(option?.value)}
-                placeholder="Оберіть роль"
-                onMenuOpen={() => setIsSelectOpened(true)}
-                onMenuClose={() => setIsSelectOpened(false)}
-                styles={{
-                    control: base => ({
-                        ...base,
-                        background: 'rgba(0, 0, 0, 0)',
-                        border: '1px solid #aaa',
-                        color: 'rgb(237, 237, 237)',
-                        "&:hover": {
-                            borderColor: "#2551eb",
-                        },
-                    }),
-                    valueContainer: base => ({
-                        ...base,
-                        // background: '#c0ffc0',
-                        // color: 'green'
-                    }),
-                    input: base => ({
-                        ...base,
-                        // border: '1px solid #aaa',
-                        color: 'rgb(237, 237, 237)',
-                    }),
-                    dropdownIndicator: (base) => ({
-                        ...base,
-                        transition: 'transform 0.2s',
-                        transform: isSelectOpened ? 'rotate(180deg)' : 'rotate(0deg)',
-                    }),
-                    singleValue: (base) => ({
-                        ...base,
-                        color: "#aaa", // колір вибраного значення
-                    }),
-                    //  option: (base, state) => ({
-                      option: (base) => ({
-                        ...base,
-                        // backgroundColor: state.isFocused
-                        // ? "#f0f0f0" // фон при hover
-                        // : state.isSelected
-                        // ? "#0b0b0b" // фон вибраного
-                        // : "white",
-                        // color: state.isSelected ? "white" : "#fff0f0",
-                        cursor: "pointer",
-                    }),
-                    menu: (base) => ({
-                        ...base,
-                        background: 'rgba(0, 0, 0, 0)', // фон випадаючого меню
-                        color: "#aaa",
-                        border: "1px solid #aaa",
-                        borderRadius: "8px",
-                        overflow: "hidden",
-                        "&:hover": {
-                          background: 'rgba(125, 120, 120, 0)',
-                        },
-                    }),
-                }}  
-              />
-            )}
-          />
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.role?.message}
-          </span>
-        </label> */}
-
         {/* ----------------------------------------- */}
-        <div className="relative">
+        <div className="relative mb-10">
           <Controller
             name="role"
             control={control} 
@@ -335,7 +222,7 @@ const UserEditing: FC<Props> = ({id}) => {
             )}
           />
           <span className={cn('input-error', 'h-4')}>
-            {errors?.role?.message}
+            {errors?.role?.message || adminError}
           </span>
           <label
             htmlFor={'role'}
@@ -348,7 +235,7 @@ const UserEditing: FC<Props> = ({id}) => {
         <Button
           type="submit"
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
-          disabled={!isValid}
+          disabled={!isValid || !!adminError}
         >
            {isFetching ? <BeatLoader color="white" /> : user ? 'Оновити' : 'Зареєструвати'}
         </Button>   
