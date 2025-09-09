@@ -34,7 +34,8 @@ export const MENU_ARRAY = [
     title: 'Про нас',
     link: 'about',
   },
-  { title: 'Партнери', link: 'about/partners', parent: 'about' },
+  { title: 'Партнери', link: 'partners',},
+  // { title: 'Партнери', link: 'about/partners', parent: 'about' },
   { title: 'Команда', link: 'about/team', parent: 'about' },
   { title: 'Досягнення', link: 'about/achievements', parent: 'about' },
   {
@@ -70,6 +71,13 @@ export const ENDPOINTS = {
 
   MERCH: '/api/merch',
   REFRESH_MERCH: '/api/merch/', // REFRESH_MERCH: '/api/merch/{locale}',
+
+  
+  ALL_PARTNERS: '/api/partners', // ALL_PARTNERS: '/partners',
+  DELETE_PARTNER: '/api/partners/', //   DELETE_PARTNERS: '/api/partners/{id}',
+  CREATE_PARTNER: '/api/partners', // CREATE_PARTNERS: '/partners',
+  REFRESH_PARTNER: '/api/partners/', // REFRESH_PARTNERS: '/api/partners/{id}',
+
 };
 // !!! Correct !!! ------------------
 export const INTERNAL_LINKS = {
@@ -79,12 +87,14 @@ export const INTERNAL_LINKS = {
   EDITING: 'editing',
   NEW: 'new',
   MERCH: 'merch',
+  PARTNERS: 'partners',
 };
 
 export const pathRenderName = {
   [INTERNAL_LINKS.ADMIN]: 'Адміністратор',
   [INTERNAL_LINKS.DONATIONS]: 'Збори',
   [INTERNAL_LINKS.REPORTING]: 'Звітність',
+  [INTERNAL_LINKS.PARTNERS]: 'Партнери',
   [INTERNAL_LINKS.NEW]: 'Додавання',
   [INTERNAL_LINKS.EDITING]: 'Редагування',
 };
