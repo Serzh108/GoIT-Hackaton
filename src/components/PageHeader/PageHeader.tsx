@@ -31,24 +31,26 @@ const PageHeader: FC<Props> = ({ isShowEditeImage = false }) => {
   return (
     <div className="min-h-11 fixed left-4 right-4 z-40 flex justify-between items-center text-xl font-semibold pb-3 pt-8 pr-8 pl-[290px] bg-gray-100">
       <ul className="flex gap-2 min-w-fit text-xl font-semibold">
-        {renderPath.map((path, index) => (
-          <li key={index}>
-            {index === 0 ? (
-              <Link
-                key={index}
-                href={`/${getLink(path)}`}
-                className={
-                  index !== renderPath.length - 1 ? 'text-accentSecondary' : ''
-                }
-              >
-                {path}
-                {index < renderPath.length - 1 && <span> {'>'} </span>}
-              </Link>
-            ) : (
-              <div>{path}</div>
-            )}
-          </li>
-        ))}
+        {renderPath.map((path, index) => {
+          const isLast = index === renderPath.length - 1;
+          return (
+            <li key={index} className="flex items-center">
+              {!isLast ? (
+                <>
+                  <Link
+                    href={`/${getLink(path)}`}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    {path}
+                  </Link>
+                  <span className="ml-2 text-gray-500">{'>'}</span>
+                </>
+              ) : (
+                <span className="text-black">{path}</span>
+              )}
+            </li>
+          );
+        })}
       </ul>
 
       <div className="flex gap-15">

@@ -8,8 +8,9 @@ import Button from '../../Button/Button';
 import CrossIcon from '@/icons/cross.svg';
 import EditPenIcon from '@/icons/edit_pen.svg';
 import { useUserStore } from '@/store/store';
-import {  donationData, 
-  // createDonation, updateDonation 
+import {
+  donationData,
+  // createDonation, updateDonation
 } from '@/services/transferData';
 import { redirectWithUpdateServer } from '@/services/actions';
 import { ICollection } from '@/types/formDataTypes';
@@ -22,7 +23,7 @@ import { useRouter } from 'next/navigation';
 
 type DonationFormValues = {
   // image: FileList;
-  image?: FileList;
+  image?: FileList | string;
   alt: string;
   title: string;
   desc: string;
@@ -69,7 +70,12 @@ const DonationForm: FC<Props> = ({ id }) => {
     control,
     reset,
     formState: { errors, isValid },
-  } = useForm<DonationFormValues>({ mode: 'onChange' });
+  } = useForm<DonationFormValues>({
+    mode: 'onChange',
+    defaultValues: {
+      long_desc: [{ text: '' }, { text: '' }],
+    },
+  });
 
   useEffect(() => {
     if (donation) {
@@ -119,8 +125,8 @@ const DonationForm: FC<Props> = ({ id }) => {
     // reset();
 
     if (!result) {
-        console.error('donation - ERROR!!');
-    //   setNotificationType(NOTIFICATION_TYPE.ERROR);
+      console.error('donation - ERROR!!');
+      //   setNotificationType(NOTIFICATION_TYPE.ERROR);
     }
 
     // setShowNotification(true);
@@ -129,7 +135,7 @@ const DonationForm: FC<Props> = ({ id }) => {
 
     setTimeout(() => {
       redirectWithUpdateServer(`/${INTERNAL_LINKS.DONATIONS}`);
-    }, 2000); 
+    }, 2000);
   };
 
   const { fields, append, remove } = useFieldArray({
@@ -142,7 +148,7 @@ const DonationForm: FC<Props> = ({ id }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8 max-w-237 bg-zinc-50 drop-shadow-2xl rounded-lg p-6 pt-0 mt-[140px]"
+      className="flex flex-col gap-8 max-w-237 bg-zinc-50 shadow-accent rounded-lg p-6 pb-14 my-[140px] "
     >
       <div className="flex flex-row items-end justify-center gap-12">
         <PhotoUploader
@@ -341,7 +347,7 @@ const DonationForm: FC<Props> = ({ id }) => {
         ]}
       />
 
-      <div className="flex flex-row gap-6 justify-center items-center mt-14">
+      <div className="flex flex-row gap-6 justify-center items-center ">
         <Button
           type="submit"
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
