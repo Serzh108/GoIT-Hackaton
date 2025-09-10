@@ -40,6 +40,7 @@ function MerchBtnForm() {
       console.log('Merch result --> ', res);
       if (res) {
         const cleanedArray = res.map(({ _id, ...rest }) => {
+          console.log(_id);
           return rest;
         });
         setMerchArray(cleanedArray);
