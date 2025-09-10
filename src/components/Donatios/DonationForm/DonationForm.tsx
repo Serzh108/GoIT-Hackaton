@@ -314,7 +314,7 @@ const DonationForm: FC<Props> = ({ id }) => {
         id="quantity"
         type="text"
         placeholder="Кількість відгуків"
-        label="Днів до завершення"
+        label="Кількість відгуків"
         error={errors.quantity}
         registration={register('quantity', {
           required: 'Кількість відгуків обов’язкова',
