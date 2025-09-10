@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IReportFormData } from '@/types/formDataTypes';
 import { reportFormSchema } from '@/constants/validationSchemas/validationSchemas';
-import { cn } from '@/services/cn';
 import { useUserStore } from '@/store/store';
 import Button from '../Button/Button';
 import RadioGroup from '../RadioGroup/RadioGroup';
