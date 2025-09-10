@@ -5,8 +5,8 @@ export async function middleware(request: NextRequest) {
   const myAccessCookie = request.cookies.get('fec-rerb');
   // const myAccessCookie = request.cookies.get('accessToken');
   const myRefreshCookie = request.cookies.get('refreshToken');
-  console.log(' - !!! --- myAccessCookie =', myAccessCookie);
-   console.log(' - !!! --- myRefreshCookie =', myRefreshCookie);
+  // console.log(' - !!! --- myAccessCookie =', myAccessCookie);
+  //  console.log(' - !!! --- myRefreshCookie =', myRefreshCookie);
 
   if (myAccessCookie && myAccessCookie?.value && request.nextUrl.pathname !== '/') {
     if ((myAccessCookie?.value === COOKIES_VALUE.usual) && (request.nextUrl.pathname === '/admin')) {

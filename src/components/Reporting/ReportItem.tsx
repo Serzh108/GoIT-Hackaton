@@ -1,33 +1,20 @@
+'use client';
 import { FC } from 'react';
 import Link from 'next/link';
+import Button from '../Button/Button';
 import Edit from '@/icons/edit.svg';
 import Delete from '@/icons/delete.svg';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { IReportsListData } from '@/types/formDataTypes';
-import { deleteReport } from '@/services/transferData';
-import { updateServer } from '@/services/actions';
-import Button from '../Button/Button';
 
 type Props = {
   report: IReportsListData;
+  deleteHandler: (id: string) => void;
 };
 
-const ReportItem: FC<Props> = ({ report }) => {
+const ReportItem: FC<Props> = ({ report, deleteHandler }) => {
   const editHandler = async (id: string) => {
     console.log(' edit: ', id);
-  };
-
-  const deleteHandler = async (id: string) => {
-    // !!! Insert Modal with delede confirmation
-    console.log(' delete: ', id);
-    const result = await deleteReport(id);
-    console.log(' - result1 -> ', result);
-    // if (result === 204) {
-    //   setShowNotification(true);
-    // }
-    setTimeout(() => {
-      updateServer(`/${INTERNAL_LINKS.REPORTING}`);
-    }, 2000);
   };
 
   return (

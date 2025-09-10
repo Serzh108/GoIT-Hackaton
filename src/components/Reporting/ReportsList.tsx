@@ -3,13 +3,19 @@ import { useEffect, useState } from 'react';
 import NoData from '../NoData/NoData';
 import ReportItem from './ReportItem';
 import { useUserStore } from '@/store/store';
-import { reportsListData } from '@/services/transferData';
+import Modal from '../Modal/Modal';
+import ModalCard, { ModalBtn } from '../ModalCard/ModalCard';
+import { deleteReport, reportsListData } from '@/services/transferData';
 import { IReportsListData } from '@/types/formDataTypes';
 
 const ReportsList = () => {
   const setReports = useUserStore(state => state.setReports);
   const locale = useUserStore(state => state.locale);
   const [allReports, setAllReports] = useState<IReportsListData[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalVariant, setModalVariant] = useState<'delete' | 'success'>('delete');
+  const [deletingId, setDeletingId] = useState<string>('');
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   useEffect(() => {
     const getUsersList = async () => await reportsListData(locale);
@@ -20,8 +26,32 @@ const ReportsList = () => {
         setReports(res);
       }
     });
-  }, [setReports, locale]);
- 
+  }, [setReports, locale, isDeleted]);
+
+  const deleteHandler = async (id: string) => {
+    setDeletingId(id);
+    setModalVariant('delete');
+    setIsOpen(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+        const result = await deleteReport(deletingId);
+        console.log(' - result1 -> ', result, ' deletingId- ', deletingId);
+        if (result === 204) {     
+          setModalVariant('success');
+          setIsDeleted(true);
+        }      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const modalButtons: ModalBtn[] = [
+    { label: 'Так', style: 'primary', onClick: handleDelete },
+    { label: 'Ні', style: 'secondary', onClick: () => setIsOpen(false) },
+  ];
+      
   return (
     <>
       {allReports && allReports.length > 0 ? (
@@ -34,7 +64,7 @@ const ReportsList = () => {
             </div>
             <ul className="flex flex-col max-h-[590px] overflow-y-scroll scrollbar-hide bg-gray-300">
               {allReports.map(item => (
-                <ReportItem report={item} key={item._id} />
+                <ReportItem report={item} key={item._id} deleteHandler={deleteHandler} />
               ))}
             </ul>
           </div>
@@ -42,6 +72,19 @@ const ReportsList = () => {
       ) : (
         <NoData message={'Немає інформації'} />
       )}
+
+      <Modal show={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalCard
+          title={
+            modalVariant === 'delete'
+              ? `Ви дійсно бажаєте видалити звітність?`
+              : 'Успішно видалено'
+          }
+          variant={modalVariant}
+          onClose={() => setIsOpen(false)} 
+          buttons={modalVariant === 'delete' ? modalButtons : undefined}
+        />
+      </Modal>
     </>
   );
 };
