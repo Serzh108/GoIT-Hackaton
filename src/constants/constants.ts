@@ -68,7 +68,7 @@ export const ENDPOINTS = {
   CREATE_PARTNER: '/api/partners', // CREATE_PARTNERS: '/partners',
   REFRESH_PARTNER: '/api/partners/', // REFRESH_PARTNERS: '/api/partners/{id}',
 };
-// !!! Correct !!! ------------------
+
 export const INTERNAL_LINKS = {
   ADMIN: 'admin',
   DONATIONS: 'donations',

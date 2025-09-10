@@ -1,10 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import { COOKIES_VALUE } from "./constants/constants";
 
-// export async function middleware(request: NextRequest): Promise<NextResponse> {
 export async function middleware(request: NextRequest) {
   const myAccessCookie = request.cookies.get('fec-rerb');
-  // const myRefreshCookie = request.cookies.get('fec-refresh');
   // const myAccessCookie = request.cookies.get('accessToken');
   const myRefreshCookie = request.cookies.get('refreshToken');
   console.log(' - !!! --- myAccessCookie =', myAccessCookie);

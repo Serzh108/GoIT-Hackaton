@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { updateServer } from '@/services/actions';
 import { deleteDonation } from '@/services/transferData';
-// import { BASE_IMAGE_URL } from '@/constants/constants';
 
 interface IDonationCard {
   path: string;
@@ -30,10 +29,7 @@ const DonationCard: FC<Props> = ({ donation }) => {
     console.log(' delete: ', id);
     const result = await deleteDonation(id);
     console.log(' - result1 -> ', result);
-    // if (result === 204) {
-    //   setShowNotification(true);
-    // }
-    setTimeout(() => {
+     setTimeout(() => {
       updateServer(`/${INTERNAL_LINKS.DONATIONS}`);
     }, 2000);
   };

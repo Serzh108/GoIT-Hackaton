@@ -56,8 +56,6 @@ const UserEditing: FC<Props> = ({id}) => {
   console.log(' - adminsAmount -> ', adminsAmount, ' - ', adminsAmount); 
   const adminError = (selectedRole === 'admin') && (adminsAmount > 1) ? TO_MANY_ADMINS : '';
 
-
-  // const [isVisiblePasswor d, setIsVisiblePassword] = useState<boolean>(false);
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
    
@@ -88,24 +86,14 @@ const UserEditing: FC<Props> = ({id}) => {
 
     if (!result) {
         console.error('userRegister - ERROR!!');
-    //   setNotificationType(NOTIFICATION_TYPE.ERROR);
     }
-
-    // setShowNotification(true);
 
     setIsFetching(false);
 
     setTimeout(() => {
       redirectWithUpdateServer(`/${INTERNAL_LINKS.ADMIN}`);
-      //  redirectWithUpdateServer(redirectPath);
     }, 2000);       
   };
-
-  // const redirectPath = `/${INTERNAL_LINKS.ADMIN}`;
-
-  // const toggleVisibilityPassword = () => {
-  //   setIsVisiblePassword(prev => !prev);
-  // };
 
     return(
     <div className="p-12 pt-[140px]">
@@ -193,7 +181,7 @@ const UserEditing: FC<Props> = ({id}) => {
                     }),
                     singleValue: (base) => ({
                         ...base,
-                        color: "#aaa", // колір вибраного значення
+                        color: "#aaa", 
                     }),
                     //  option: (base, state) => ({
                       option: (base) => ({
@@ -208,7 +196,7 @@ const UserEditing: FC<Props> = ({id}) => {
                     }),
                     menu: (base) => ({
                         ...base,
-                        background: 'rgba(0, 0, 0, 0)', // фон випадаючого меню
+                        background: 'rgba(0, 0, 0, 0)', 
                         color: "#aaa",
                         border: "1px solid #aaa",
                         borderRadius: "8px",

@@ -21,9 +21,7 @@ export const donationData = async (locale: string, id: string) => {
  const url = `${ENDPOINTS.DONATION}${locale}/${id}`;
  console.log('url - > ', url);
   try {
-    //    const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_DONATIONS);
-    // const { data }: AxiosResponse = await axios.get(`${ENDPOINTS.DONATION}${locale}/${id}`);
-     const { data }: AxiosResponse = await axios.get(url);
+    const { data }: AxiosResponse = await axios.get(url);
     console.log(' - donation data --> ', data);
     return data;
       // console.log(' - result --> ', result);
@@ -75,13 +73,8 @@ export const createDonation = async (createData: ICreateDonationData, locale: st
 // --- Merch ---
 export const merchData = async () => {
   try {
-    //    const { data }: AxiosResponse<IAllUsersData[]> = await axios.get(ENDPOINTS.ALL_DONATIONS);
     const { data }: AxiosResponse<IMerchData[]> = await axios.get(ENDPOINTS.MERCH);
     console.log(' - merch data --> ', data);
-    // const cleanedArray = data.map(({ _id, ...rest }) => {
-    //   console.log(_id); return rest;});
-    // console.log(' - merch cleanedArray --> ', cleanedArray);
-    // return cleanedArray;
     return data;
       // console.log(' - result --> ', result);
       // if(result.status === 200) { return result.data; };
@@ -159,7 +152,6 @@ export const partnersListData = async () => {
   const url = `${ENDPOINTS.ALL_PARTNERS}?`;
   console.log(' partnersListData url ->', url);
   try {
-    // const { data }: AxiosResponse<IReportsListData[]> = await axios.get(url);
     const { data }: AxiosResponse = await axios.get(url);
     console.log(' - partnersListData reports data --> ', data);
     return data;

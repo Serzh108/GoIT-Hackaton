@@ -7,8 +7,6 @@ import UserItem from './UserItem';
 import { useUserStore } from '@/store/store';
 import Modal from '../Modal/Modal';
 import ModalCard, { ModalBtn } from '../ModalCard/ModalCard';
-// import { INTERNAL_LINKS } from '@/constants/constants';
-// import { updateServer } from '@/services/actions';
 
 const UsersList = () => {
   const setUsers = useUserStore(state => state.setUsers);
@@ -28,7 +26,7 @@ const UsersList = () => {
       }
     });
   }, [setUsers, isDeleted]);
-  // --------------
+ 
   const deleteHandler = async (id: string) => {
     setDeletingId(id);
     setModalVariant('delete');
@@ -55,7 +53,7 @@ const UsersList = () => {
       { label: 'Так', style: 'primary', onClick: handleDelete },
       { label: 'Ні', style: 'secondary', onClick: () => setIsOpen(false) },
     ];
-  // ----------/-----
+  
   return (
     <div className='flex flex-col pt-[140px]'>
       {allUsers && allUsers.length > 0 ? (
@@ -78,7 +76,7 @@ const UsersList = () => {
       ) : (
         <NoData message="Немає інформації" />
       )}
-{/* -------------------- */}
+
       <Modal show={isOpen} onClose={() => setIsOpen(false)}>
         <ModalCard
           title={

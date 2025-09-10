@@ -33,7 +33,7 @@ const DonationsList = () => {
       }
     });
   }, [locale]);
-  //   --- - ---
+  
   useEffect(() => {
     let cardData: IDonationCard[] = [];
     cardData =
@@ -48,7 +48,7 @@ const DonationsList = () => {
     setCardData(cardData);
   }, [allDonations]);
   console.log(' - cardData --> ', cardData);
-  // --- / - ---
+ 
   return (
     <>
       {cardData && cardData.length > 0 ? (
