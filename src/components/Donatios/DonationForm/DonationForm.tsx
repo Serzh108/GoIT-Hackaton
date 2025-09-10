@@ -353,7 +353,7 @@ const DonationForm: FC<Props> = ({ id }) => {
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
           disabled={!isValid}
         >
-          Надіслати
+          Зберегти
         </Button>
         <Button
           type="button"
