@@ -62,10 +62,7 @@ const ReportEditing: FC<Props> = ({ id }) => {
 
     if (!result) {
       console.error('createReport - ERROR!!');
-      //   setNotificationType(NOTIFICATION_TYPE.ERROR);
     }
-
-    // setShowNotification(true);
 
     setIsFetching(false);
 
@@ -77,7 +74,6 @@ const ReportEditing: FC<Props> = ({ id }) => {
   const router = useRouter();
 
   return (
-    // <div className="p-12 pt-20 ml-[20px]">
       <div className="p-12 pt-[140px] ml-[20px]">
       <form
         onSubmit={handleSubmit(handleEditing)}
@@ -90,7 +86,7 @@ const ReportEditing: FC<Props> = ({ id }) => {
             placeholder="Введіть рік"
             autoFocus
             {...register('year', { required: true })}
-            autoComplete="Рік" // ???
+            autoComplete="Рік" 
           />
           <span className={cn('input-error', 'h-4')}>
             {errors?.year?.message}
@@ -103,7 +99,7 @@ const ReportEditing: FC<Props> = ({ id }) => {
             className="bordered-input"
             placeholder="Введіть місяць"
             {...register('month', { required: true })}
-            autoComplete="Місяць" // ???
+            autoComplete="Місяць" 
           />
           <span className={cn('input-error', 'h-4')}>
             {errors?.month?.message}
@@ -116,7 +112,7 @@ const ReportEditing: FC<Props> = ({ id }) => {
             className="bordered-input"
             placeholder="Введіть посилання"
             {...register('url', { required: true })}
-            autoComplete="Посилання" // ???
+            autoComplete="Посилання" 
           />
           <span className={cn('input-error', 'h-4')}>
             {errors?.url?.message}

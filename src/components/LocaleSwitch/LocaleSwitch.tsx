@@ -4,18 +4,14 @@ import React from 'react';
 
 type Props = {
   checked?: boolean;
-  // onChange?: (value: boolean) => void;
 };
 
-// function LocaleSwitch({  checked, onChange }: Props) {
 function LocaleSwitch({ checked }: Props) {
-  // --- - ---
   const setLocale = useUserStore(state => state.setLocale);
   const onChange1 = (checked1: boolean) => {
-    console.log('onChange1 -> ', checked1, 'checked -> ', checked);
-    setLocale(checked1);
+   setLocale(checked1);
   };
-  // --- / - ---
+ 
   return (
     <div className="hs-tooltip flex flex-row items-center justify-center gap-x-3">
       <label
@@ -26,7 +22,6 @@ function LocaleSwitch({ checked }: Props) {
           type="checkbox"
           id="hs-large-soft-switch-with-icons"
           checked={checked}
-          //   onChange={event => onChange?.(event.target.checked)}
           onChange={event => onChange1(event.target.checked)}
           className="peer sr-only"
         />

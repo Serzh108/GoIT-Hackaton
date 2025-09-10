@@ -48,7 +48,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
       link: partner?.link || '',
       language: partner?.language || '',
       };
-      reset(initialPartnerFormValues); //! updating form;
+      reset(initialPartnerFormValues); 
     }
   }, [partner, reset]);
 
@@ -70,10 +70,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
 
     if (!result) {
       console.error('createReport - ERROR!!');
-      //   setNotificationType(NOTIFICATION_TYPE.ERROR);
     }
-
-    // setShowNotification(true);
 
     setIsFetching(false);
 
@@ -104,7 +101,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
             placeholder="Введіть назву партнера"
             autoFocus
             {...register('logo', { required: true })}
-            autoComplete="Назва партнера" // ???
+            autoComplete="Назва партнера" 
             />
             <span className={cn('input-error', 'h-4')}>
             {errors?.logo?.message}
@@ -117,7 +114,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
             className="bordered-input"
             placeholder="Введіть посилання"
             {...register('link', { required: true })}
-            autoComplete="Посилання" // ???
+            autoComplete="Посилання" 
             />
             <span className={cn('input-error', 'h-4')}>
             {errors?.link?.message}

@@ -21,9 +21,7 @@ const PartnerItem: FC<Props> = ({ partner }) => {
     console.log(' deleteHandler id: ', id);
     const result = await deletePartner(id);
     console.log(' - result1 -> ', result);
-    // if (result === 204) {
-    //   setShowNotification(true);
-    // }
+
     setTimeout(() => {
       updateServer(`/${INTERNAL_LINKS.PARTNERS}`);
     }, 2000);

@@ -9,7 +9,6 @@ const About = () => {
 
   const openDeleteModal = () => {
     setModalVariant('delete');
-    // setModalVariant('success');
     setIsOpen(true);
   };
 
