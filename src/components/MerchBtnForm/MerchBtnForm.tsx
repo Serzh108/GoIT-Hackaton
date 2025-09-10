@@ -7,18 +7,15 @@ import RadioGroup from '../RadioGroup/RadioGroup';
 import Button from '../Button/Button';
 import { Controller, useForm } from 'react-hook-form';
 import { merchData, updateMerch } from '@/services/transferData';
-// import { IMerchData } from '@/types/formDataTypes';
 import { INTERNAL_LINKS } from '@/constants/constants';
 import { redirectWithUpdateServer } from '@/services/actions';
 import { updateMerchFormSchema } from '@/constants/validationSchemas/validationSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 type MerchBtnFormValues = {
-  // status: 'off' | 'on';
   status: string;
   content: string;
   link: string;
-  // locale: 'ua' | 'en';
   locale: string;
 };
 
@@ -35,7 +32,6 @@ function MerchBtnForm() {
     defaultValues: { status: 'off' },
   });
 
-  // const [merchArray, setMerchArray] = useState<IMerchData[]>([]);
   const [merchArray, setMerchArray] = useState<MerchBtnFormValues[]>([]);
 
   useEffect(() => {
@@ -48,12 +44,7 @@ function MerchBtnForm() {
           return rest;
         });
         setMerchArray(cleanedArray);
-        // setMerchArray(res);
-        console.log('Merch result 0 --> ', res[0]);
         const initValue = { ...cleanedArray[0] };
-        // const initValue = {...res[0]};
-        // delete initValue._id;
-        console.log('initValue --> ', initValue);
         reset(initValue);
       } else {
         console.error('ERROR!');
@@ -69,7 +60,6 @@ function MerchBtnForm() {
     const newItem = merchArray.filter(item => item.locale === localeValue);
     console.log('newItem --> ', newItem[0]);
     const initValue = { ...newItem[0] };
-    // delete initValue._id;
     console.log('initValue --> ', initValue);
     reset(initValue);
   }, [localeValue, reset, merchArray]);
@@ -79,8 +69,6 @@ function MerchBtnForm() {
     const { locale, ...updateData } = data;
     const result = await updateMerch(updateData, locale);
     console.log(' - onSubmit result -> ', result);
-
-    // reset();
 
     setTimeout(() => {
       redirectWithUpdateServer(INTERNAL_LINKS.MERCH);

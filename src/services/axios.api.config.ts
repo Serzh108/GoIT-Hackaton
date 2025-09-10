@@ -1,9 +1,6 @@
 import axios from 'axios';
-// import { refresh } from './auth';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_API;
-// const BASE_URL = 'https://inharmony-v2.h.goit.study/api';
-// console.log('- - BASE_URL = ', BASE_URL);
 
 export const axiosPublic = axios.create({
   baseURL: BASE_URL,
@@ -37,10 +34,6 @@ axios.interceptors.response.use(
         return await axiosPublic(originalRequest);
       } catch (error) {
         console.error('Public interceptor catch in try error -> ', error);
-        // sessionStorage.removeItem(
-        //   `${process.env.NEXT_PUBLIC_SESSION_STORAGE_KEY}`,
-        // );
-        // return (window.location.href = "/");
       }
     }
     return Promise.reject(error);
@@ -68,10 +61,6 @@ axios.interceptors.response.use(
 //         return await axiosPrivate(originalRequest);
 //       } catch (error) {
 //         console.error('- axios error -> ', error);
-//         // sessionStorage.removeItem(
-//         //   `${process.env.NEXT_PUBLIC_SESSION_STORAGE_KEY}`,
-//         // );
-//         // return (window.location.href = "/");
 //       }
 //     }
 //     // console.log('NOT if() !!!!!!!-> ');

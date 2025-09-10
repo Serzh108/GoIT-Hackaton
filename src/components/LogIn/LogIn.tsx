@@ -8,10 +8,8 @@ import { logInFormSchema } from '@/constants/validationSchemas/validationSchemas
 import { logInFormData } from '@/types/formDataTypes';
 import ArrowIcon from '@/icons/arrow.svg';
 import { logIn, userInfo } from '@/services/auth';
-import { createCookie, createCookieRefresh } from '@/services/actions';
 import Link from 'next/link';
 import { REGEXP } from '@/constants/regexp';
-import { COOKIES_VALUE } from '@/constants/constants';
 import AuthInputField from '../AuthInputField/AuthInputField';
 import Button from '../Button/Button';
 import { BeatLoader } from 'react-spinners';
@@ -37,22 +35,14 @@ const LogIn: FC = () => {
 
   const logInRequest = async (data: logInFormData) => {
     setIsFetching(true);
-    // const emailSA = process.env.NEXT_PUBLIC_EMAIL_SA || '';
       const result = await logIn(data);
     if (result === 200) {
-      // -----------------------
       const currentUser = await userInfo();
       // console.log(' - - currentUser -> ', currentUser.role);
       if (currentUser.role === 'admin') {
-      // ----------/----------
-      // if (data.email.toLowerCase() === emailSA.toLowerCase()) {
         setIsAdmin(true);
-        await createCookie(COOKIES_VALUE.super);
-        await createCookieRefresh(COOKIES_VALUE.super);
       } else {
         setIsAdmin(false);
-        await createCookie(COOKIES_VALUE.usual);
-        await createCookieRefresh(COOKIES_VALUE.usual);
       }
 
       reset();
@@ -67,15 +57,6 @@ const LogIn: FC = () => {
   const onSubmitForm: SubmitHandler<logInFormData> = async data => {
     console.log('data -> ', data);
     logInRequest(data);
-    // const result = await logIn(data);
-    // const result = await axios.post("/api/auth/login", {email:'super_user@mail.com', password: 'xxxxTESTxxxx'});
-    // const result = await axios.post("/api/auth/login", data);
-    //  const result = await axios.get("auth/users");
-    // console.log(' - result -> ', result);
-    // const result1 = await axios.get("/api/auth/users");
-    // console.log(' - result1 -> ', result1);
-    //    const result2 = await axios.get("/api/collections/en?page=1&perPage=3");
-    // console.log(' - collections list -> ', result2);
   };
 
   return (
@@ -120,7 +101,6 @@ const LogIn: FC = () => {
       </p>
       <div className="text-center mt-36">
         <Link
-          //!чи тут типу буде посилання на їх сайт
           href="https://inharmony.com.ua/ua"
           className="inline-flex items-center gap-6 text-base font-normal text-black hover:font-semibold"
         >

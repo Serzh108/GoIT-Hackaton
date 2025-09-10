@@ -21,8 +21,7 @@ const ReportsList = () => {
       }
     });
   }, [setReports, locale]);
-  // }, []);
-
+ 
   return (
     <>
       {allReports && allReports.length > 0 ? (
