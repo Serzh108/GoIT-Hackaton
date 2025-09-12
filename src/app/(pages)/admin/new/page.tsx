@@ -1,13 +1,15 @@
-import PageHeader from "@/components/PageHeader/PageHeader";
-import UserEditing from "@/components/Users/UserEditing";
+import PageHeader from '@/components/PageHeader/PageHeader';
+import UserEditing from '@/components/Users/UserEditing';
 
 const NewUser = async () => {
-  return(
-    <section className="flex flex-col pl-[260px]">
+  return (
+    <section className="flex flex-col pl-[260px] min-h-screen">
       <PageHeader />
-      <UserEditing />
+      <div className="flex grow justify-center items-center p-6 pt-[120px]">
+        <UserEditing />
+      </div>
     </section>
-  )  
+  );
 };
 
-export default NewUser; 
+export default NewUser;
