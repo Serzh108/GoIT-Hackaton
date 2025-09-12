@@ -145,7 +145,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
         <Controller
           name="image"
           control={control}
-          render={({ field }) => (
+          render={({ }) => (
             <>
               <input
                 type="file"
