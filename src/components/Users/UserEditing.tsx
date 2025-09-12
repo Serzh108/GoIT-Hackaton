@@ -13,29 +13,31 @@ import { useUserStore } from '@/store/store';
 import Button from '../Button/Button';
 import { BeatLoader } from 'react-spinners';
 import AuthInputField from '../AuthInputField/AuthInputField';
+import EditIcon from '@/icons/edit.svg';
+import AddIcon from '@/icons/add_pen.svg';
 
 type Props = {
-    id?: string;
+  id?: string;
 };
 
 const roleOptions = [
-  { value: "admin", label: "Адмін" },
-  { value: "editor", label: "Редактор" },
+  { value: 'admin', label: 'Адмін' },
+  { value: 'editor', label: 'Редактор' },
 ];
 
 const TO_MANY_ADMINS = 'Ліміт користувачів з роллю admin перевищено';
 
-const UserEditing: FC<Props> = ({id}) => {    
+const UserEditing: FC<Props> = ({ id }) => {
   const users = useUserStore(state => state.users);
-  const user = users.find(item => item._id === id); 
- 
+  const user = users.find(item => item._id === id);
+
   const initialValues: IRegisterFormData = {
-    role: user?.role || "editor",
-    name: user?.name || "",
-    email: user?.email || "",
-    password: "",
+    role: user?.role || 'editor',
+    name: user?.name || '',
+    email: user?.email || '',
+    password: '',
   };
- 
+
   const {
     register,
     handleSubmit,
@@ -43,7 +45,7 @@ const UserEditing: FC<Props> = ({id}) => {
     control,
     watch,
     formState: { errors, isValid },
-    } = useForm<IRegisterFormData>({
+  } = useForm<IRegisterFormData>({
     resolver: yupResolver(RegisterFormSchema),
     defaultValues: initialValues,
     mode: 'onChange',
@@ -53,18 +55,18 @@ const UserEditing: FC<Props> = ({id}) => {
   console.log(' - selectedRole -> ', selectedRole);
 
   const adminsAmount = users.filter(user => user.role === 'admin').length;
-  console.log(' - adminsAmount -> ', adminsAmount, ' - ', adminsAmount); 
-  const adminError = (selectedRole === 'admin') && (adminsAmount > 1) ? TO_MANY_ADMINS : '';
+  console.log(' - adminsAmount -> ', adminsAmount, ' - ', adminsAmount);
+  const adminError =
+    selectedRole === 'admin' && adminsAmount > 1 ? TO_MANY_ADMINS : '';
 
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
-   
 
   const handleEditing = async (data: IRegisterFormData) => {
-      console.log('handleEditing data -> ', data);
-      if (isFetching) {
+    console.log('handleEditing data -> ', data);
+    if (isFetching) {
       return;
-      };
+    }
 
     setIsFetching(true);
 
@@ -73,7 +75,7 @@ const UserEditing: FC<Props> = ({id}) => {
       password: data.password,
       name: data.name,
       role: data.role,
-    }; 
+    };
 
     let result;
     if (user) {
@@ -85,24 +87,24 @@ const UserEditing: FC<Props> = ({id}) => {
     // reset();
 
     if (!result) {
-        console.error('userRegister - ERROR!!');
+      console.error('userRegister - ERROR!!');
     }
 
     setIsFetching(false);
 
     setTimeout(() => {
       redirectWithUpdateServer(`/${INTERNAL_LINKS.ADMIN}`);
-    }, 2000);       
+    }, 2000);
   };
+  const Icon = user ? EditIcon : AddIcon;
 
-    return(
-    <div className="p-12 pt-[140px]">
+  return (
+    <div className="pt-4.5 p-11 w-[632px] flex flex-col items-center bg-white rounded-2xl shadow-md">
+      <Icon className="mb-7" />
       <form
         onSubmit={handleSubmit(handleEditing)}
-        className="flex flex-col gap-10 text-xl leading-6"
+        className="flex flex-col gap-10 text-xl leading-6 w-100"
       >
-
-
         <AuthInputField
           id="name"
           label="Ім&#39;я*"
@@ -136,76 +138,81 @@ const UserEditing: FC<Props> = ({id}) => {
         <div className="relative mb-10">
           <Controller
             name="role"
-            control={control} 
+            control={control}
             render={({ field }) => (
               <Select
                 {...field}
+                instanceId="role-select"
                 options={roleOptions}
-                value={roleOptions.find((opt) => opt.value === field.value) || null}
-                onChange={(option) => field.onChange(option?.value)}
+                value={
+                  roleOptions.find(opt => opt.value === field.value) || null
+                }
+                onChange={option => field.onChange(option?.value)}
                 placeholder="Оберіть роль"
                 onMenuOpen={() => setIsSelectOpened(true)}
                 onMenuClose={() => setIsSelectOpened(false)}
-                        className={cn(
-                          'flex w-full h-[60px] outline-0  border rounded-3xl',
-                          errors?.role ? 'border-red-500 ' : 'border-gray-900'
-                        )}
+                className={cn(
+                  'flex w-full h-[60px] outline-0  border rounded-3xl',
+                  errors?.role ? 'border-red-500 ' : 'border-gray-900'
+                )}
                 styles={{
-                    control: base => ({
-                        ...base,
-                        width: '100%',
-                        background: 'rgba(0, 0, 0, 0)',
-                        // border: '1px solid #aaa',
-                        borderRadius: '24px',
-                        border: '1px solid transparent',
-                        color: 'rgb(237, 237, 237)',
-                        paddingLeft: '12px',
-                        // "&:hover": {
-                        //     borderColor: "#2551eb",
-                        // },
-                    }),
-                    valueContainer: base => ({
-                        ...base,
-                        // background: '#c0ffc0',
-                        // color: 'green'
-                    }),
-                    input: base => ({
-                        ...base,
-                        // border: '1px solid #aaa',
-                        color: 'rgb(237, 237, 237)',
-                    }),
-                    dropdownIndicator: (base) => ({
-                        ...base,
-                        transition: 'transform 0.2s',
-                        transform: isSelectOpened ? 'rotate(180deg)' : 'rotate(0deg)',
-                    }),
-                    singleValue: (base) => ({
-                        ...base,
-                        color: "#aaa", 
-                    }),
-                    //  option: (base, state) => ({
-                      option: (base) => ({
-                        ...base,
-                        // backgroundColor: state.isFocused
-                        // ? "#f0f0f0" // фон при hover
-                        // : state.isSelected
-                        // ? "#0b0b0b" // фон вибраного
-                        // : "white",
-                        // color: state.isSelected ? "white" : "#fff0f0",
-                        cursor: "pointer",
-                    }),
-                    menu: (base) => ({
-                        ...base,
-                        background: 'rgba(0, 0, 0, 0)', 
-                        color: "#aaa",
-                        border: "1px solid #aaa",
-                        borderRadius: "8px",
-                        overflow: "hidden",
-                        "&:hover": {
-                          background: 'rgba(125, 120, 120, 0)',
-                        },
-                    }),
-                }}  
+                  control: base => ({
+                    ...base,
+                    width: '100%',
+                    background: 'rgba(0, 0, 0, 0)',
+                    // border: '1px solid #aaa',
+                    borderRadius: '24px',
+                    border: '1px solid transparent',
+                    color: 'rgb(237, 237, 237)',
+                    paddingLeft: '12px',
+                    // "&:hover": {
+                    //     borderColor: "#2551eb",
+                    // },
+                  }),
+                  valueContainer: base => ({
+                    ...base,
+                    // background: '#c0ffc0',
+                    // color: 'green'
+                  }),
+                  input: base => ({
+                    ...base,
+                    // border: '1px solid #aaa',
+                    color: 'rgb(237, 237, 237)',
+                  }),
+                  dropdownIndicator: base => ({
+                    ...base,
+                    transition: 'transform 0.2s',
+                    transform: isSelectOpened
+                      ? 'rotate(180deg)'
+                      : 'rotate(0deg)',
+                  }),
+                  singleValue: base => ({
+                    ...base,
+                    color: '#aaa',
+                  }),
+                  //  option: (base, state) => ({
+                  option: base => ({
+                    ...base,
+                    // backgroundColor: state.isFocused
+                    // ? "#f0f0f0" // фон при hover
+                    // : state.isSelected
+                    // ? "#0b0b0b" // фон вибраного
+                    // : "white",
+                    // color: state.isSelected ? "white" : "#fff0f0",
+                    cursor: 'pointer',
+                  }),
+                  menu: base => ({
+                    ...base,
+                    background: 'rgba(0, 0, 0, 0)',
+                    color: '#aaa',
+                    border: '1px solid #aaa',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    '&:hover': {
+                      background: 'rgba(125, 120, 120, 0)',
+                    },
+                  }),
+                }}
               />
             )}
           />
@@ -222,14 +229,20 @@ const UserEditing: FC<Props> = ({id}) => {
 
         <Button
           type="submit"
-          className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
+          className="block mx-auto font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
           disabled={!isValid || !!adminError}
         >
-           {isFetching ? <BeatLoader color="white" /> : user ? 'Оновити' : 'Зареєструвати'}
-        </Button>   
+          {isFetching ? (
+            <BeatLoader color="white" />
+          ) : user ? (
+            'Зберегти'
+          ) : (
+            'Зареєструвати'
+          )}
+        </Button>
       </form>
-      </div>
-    );
+    </div>
+  );
 };
 
 export default UserEditing;

@@ -33,7 +33,7 @@ const DonationsList = () => {
       }
     });
   }, [locale]);
-  
+
   useEffect(() => {
     let cardData: IDonationCard[] = [];
     cardData =
@@ -48,12 +48,12 @@ const DonationsList = () => {
     setCardData(cardData);
   }, [allDonations]);
   console.log(' - cardData --> ', cardData);
- 
+
   return (
     <>
       {cardData && cardData.length > 0 ? (
         <div className="mx-8 mt-33 w-[984px]">
-          <ul className="grid grid-cols-3 gap-6  p-2.5 bg-white shadow-accent rounded-lg ">
+          <ul className="grid grid-cols-3 gap-6  p-2.5 bg-white shadow-accent rounded-2xl ">
             {cardData.map(item => (
               <li key={item._id}>
                 <DonationCard donation={item} key={item._id} />

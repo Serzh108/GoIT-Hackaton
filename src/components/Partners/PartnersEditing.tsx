@@ -1,19 +1,19 @@
 'use client';
-import { FC, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FC, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 // import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/store/store";
-import { IPartnerFormData } from "@/types/formDataTypes";
-import { createPartner, updatePartner } from "@/services/transferData";
-import { redirectWithUpdateServer } from "@/services/actions";
-import { INTERNAL_LINKS } from "@/constants/constants";
+import { useRouter } from 'next/navigation';
+import { useUserStore } from '@/store/store';
+import { IPartnerFormData } from '@/types/formDataTypes';
+import { createPartner, updatePartner } from '@/services/transferData';
+import { redirectWithUpdateServer } from '@/services/actions';
+import { INTERNAL_LINKS } from '@/constants/constants';
 // import { partnerFormSchema } from "@/constants/validationSchemas/validationSchemas";
-import Button from "../Button/Button";
-import { cn } from "@/services/cn";
-import RadioGroup from "../RadioGroup/RadioGroup";
-import { BeatLoader } from "react-spinners";
-import PhotoUploader from "../PhotoUploader/PhotoUploader";
+import Button from '../Button/Button';
+import RadioGroup from '../RadioGroup/RadioGroup';
+import { BeatLoader } from 'react-spinners';
+import PhotoUploader from '../PhotoUploader/PhotoUploader';
+import InputField from '../InputField/InputField';
 
 type Props = {
   id?: string;
@@ -37,18 +37,18 @@ const PartnersEditing: FC<Props> = ({ id }) => {
     // resolver: yupResolver(partnerFormSchema),
     mode: 'onChange',
   });
-  console.log(" - isValid -> ", isValid);
+  console.log(' - isValid -> ', isValid);
 
   useEffect(() => {
     if (partner) {
       const initialPartnerFormValues: IPartnerFormData = {
-      // image: partner?.image || '',
-      image: undefined,
-      logo: partner?.logo || '',
-      link: partner?.link || '',
-      language: partner?.language || '',
+        // image: partner?.image || '',
+        image: undefined,
+        logo: partner?.logo || '',
+        link: partner?.link || '',
+        language: partner?.language || '',
       };
-      reset(initialPartnerFormValues); 
+      reset(initialPartnerFormValues);
     }
   }, [partner, reset]);
 
@@ -81,64 +81,63 @@ const PartnersEditing: FC<Props> = ({ id }) => {
 
   const router = useRouter();
 
-  return(
-     <div className="p-12 pt-[140px]">
+  return (
+    <div className="p-12 pt-[140px]">
       <form
         onSubmit={handleSubmit(handleEditing)}
-        className="flex flex-col gap-4 text-xl leading-6"
+        className="flex flex-col gap-4 w-197 bg-zinc-50 shadow-accent rounded-2xl p-6 pb-12  text-xl leading-6 "
       >
-        <PhotoUploader
-          id="image"
-          error={errors.image}
-          initialImagePath={partner?.image?.[0]?.path}
-          registration={register('image', { required: 'Фото обов’язкове' })}
+        <div className="flex justify-center items-end">
+          <PhotoUploader
+            id="image"
+            error={errors.image}
+            initialImagePath={partner?.image?.[0]?.path}
+            registration={register('image', { required: 'Фото обов’язкове' })}
+          />
+
+          <RadioGroup
+            label="Мова:"
+            name="language"
+            control={control}
+            rules={{ required: 'Оберить мову' }}
+            options={[
+              { label: 'Українська', value: 'ua' },
+              { label: 'English', value: 'en' },
+            ]}
+          />
+        </div>
+        <InputField
+          id="logo"
+          label="Назва партнера"
+          placeholder="Введіть назву партнера"
+          registration={register('logo', { required: 'Назва обов’язкова' })}
+          error={errors.logo}
+          important
+          autoComplete="Назва партнера"
+        />
+        <InputField
+          id="link"
+          label="Посилання"
+          placeholder="Введіть посилання"
+          registration={register('link', { required: 'Посилання обов’язкове' })}
+          error={errors.link}
+          important
+          autoComplete="Посилання"
         />
 
-        <label className="flex flex-col text-base leading-[30px] font-medium">
-            Назва партнера
-            <input
-            className="bordered-input"
-            placeholder="Введіть назву партнера"
-            autoFocus
-            {...register('logo', { required: true })}
-            autoComplete="Назва партнера" 
-            />
-            <span className={cn('input-error', 'h-4')}>
-            {errors?.logo?.message}
-            </span>
-        </label>
-
-        <label className="flex flex-col text-base leading-[30px] font-medium">
-            Посилання
-            <input
-            className="bordered-input"
-            placeholder="Введіть посилання"
-            {...register('link', { required: true })}
-            autoComplete="Посилання" 
-            />
-            <span className={cn('input-error', 'h-4')}>
-            {errors?.link?.message}
-            </span>
-        </label>
-
-        <RadioGroup
-          label="Мова:"
-          name="language"
-          control={control}
-          rules={{ required: 'Оберить мову' }}
-          options={[
-            { label: 'Українська', value: 'ua' },
-            { label: 'English', value: 'en' },
-          ]}
-        />
-
-        <div className="flex gap-6 pt-6">
+        <div className="flex justify-center gap-6 pt-6">
           <Button
             type="submit"
             className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
             disabled={!isValid || isFetching}
           >
-            {isFetching ? <BeatLoader color="white" /> : partner ? 'Оновити' : 'Створити'}
+            {isFetching ? (
+              <BeatLoader color="white" />
+            ) : partner ? (
+              'Зберегти'
+            ) : (
+              'Створити'
+            )}
           </Button>
           <Button
             type="button"
@@ -147,10 +146,10 @@ const PartnersEditing: FC<Props> = ({ id }) => {
           >
             Відхилити
           </Button>
-        </div>        
+        </div>
       </form>
     </div>
-  )
+  );
 };
 
 export default PartnersEditing;
