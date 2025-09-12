@@ -1,18 +1,16 @@
 'use client';
 import { cn } from '@/services/cn';
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 type Props = {
   label?: string;
   error?: FieldError;
-  type?: string;
-  placeholder?: string;
+  registration: UseFormRegisterReturn;
   important?: boolean;
   className?: string;
   id: string;
-  registration: UseFormRegisterReturn;
-};
+} & InputHTMLAttributes<HTMLInputElement>;
 
 function InputField({
   label,
@@ -44,7 +42,7 @@ function InputField({
           {...registration}
           id={id}
           className={cn(
-            'outline-0 border rounded-md py-3 px-4 border-neutral-600 placeholder:text-base placeholder:leading-[137%] placeholder:font-normal',
+            'focus:ring-1 focus:ring-primary outline-0 border rounded-md py-3 px-4 border-neutral-600 placeholder:text-base placeholder:leading-[137%] placeholder:font-normal',
             className || 'w-full'
           )}
         />

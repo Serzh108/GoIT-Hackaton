@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IReportFormData } from '@/types/formDataTypes';
 import { reportFormSchema } from '@/constants/validationSchemas/validationSchemas';
-import { cn } from '@/services/cn';
 import { useUserStore } from '@/store/store';
 import Button from '../Button/Button';
 import RadioGroup from '../RadioGroup/RadioGroup';
@@ -13,6 +12,7 @@ import { INTERNAL_LINKS } from '@/constants/constants';
 import { redirectWithUpdateServer } from '@/services/actions';
 import { useRouter } from 'next/navigation';
 import { BeatLoader } from 'react-spinners';
+import InputField from '../InputField/InputField';
 
 type Props = {
   id?: string;
@@ -74,50 +74,41 @@ const ReportEditing: FC<Props> = ({ id }) => {
   const router = useRouter();
 
   return (
-      <div className="p-12 pt-[140px] ml-[20px]">
+    <div className="p-12 pt-[140px] ml-[20px]">
       <form
         onSubmit={handleSubmit(handleEditing)}
-        className="text-xl leading-6"
+        className="text-xl leading-6 flex flex-col gap-6 max-w-237 bg-zinc-50 shadow-accent rounded-lg p-6 pb-14 "
       >
-        <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-          Рік
-          <input
-            className="bordered-input"
-            placeholder="Введіть рік"
-            autoFocus
-            {...register('year', { required: true })}
-            autoComplete="Рік" 
-          />
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.year?.message}
-          </span>
-        </label>
+        <InputField
+          id="year"
+          label="Рік"
+          placeholder="Введіть рік"
+          registration={register('year', { required: true })}
+          error={errors.year}
+          autoFocus
+          autoComplete="Рік"
+          important
+        />
 
-        <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-          Місяць
-          <input
-            className="bordered-input"
-            placeholder="Введіть місяць"
-            {...register('month', { required: true })}
-            autoComplete="Місяць" 
-          />
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.month?.message}
-          </span>
-        </label>
+        <InputField
+          id="month"
+          label="Місяць"
+          placeholder="Введіть місяць"
+          registration={register('month', { required: true })}
+          error={errors.month}
+          autoComplete="Місяць"
+          important
+        />
 
-        <label className="flex flex-col mb-4 text-base leading-[30px] font-medium">
-          Посилання
-          <input
-            className="bordered-input"
-            placeholder="Введіть посилання"
-            {...register('url', { required: true })}
-            autoComplete="Посилання" 
-          />
-          <span className={cn('input-error', 'h-4')}>
-            {errors?.url?.message}
-          </span>
-        </label>
+        <InputField
+          id="url"
+          label="Посилання"
+          placeholder="Введіть посилання"
+          registration={register('url', { required: true })}
+          error={errors.url}
+          autoComplete="Посилання"
+          important
+        />
 
         <RadioGroup
           label="Мова:"
@@ -129,14 +120,20 @@ const ReportEditing: FC<Props> = ({ id }) => {
             { label: 'English', value: 'en' },
           ]}
         />
-        
-        <div className="flex gap-6 pt-8">
+
+        <div className="flex gap-6">
           <Button
             type="submit"
             className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
             disabled={!isValid || isFetching}
           >
-            {isFetching ? <BeatLoader color="white" /> : report ? 'Оновити' : 'Створити'}
+            {isFetching ? (
+              <BeatLoader color="white" />
+            ) : report ? (
+              'Зберегти'
+            ) : (
+              'Створити'
+            )}
           </Button>
           <Button
             type="button"
