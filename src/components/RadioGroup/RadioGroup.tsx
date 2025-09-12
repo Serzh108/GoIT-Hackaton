@@ -34,17 +34,13 @@ const RadioGroup = <T extends FieldValues>({
       {label &&
         (important ? (
           <div className="block font-semibold text-base leading-[137%]">
-            {/* <label className="block font-semibold text-base leading-[137%]"> */}
             <span className="after:content-['*'] after:ml-2 after:text-current block">
               {label}
             </span>
-          {/* </label> */}
           </div>
         ) : (
           <div className="font-semibold text-base leading-[137%]">
-            {/* <label className="font-semibold text-base leading-[137%]"> */}
             {label}
-         {/* </label> */}
           </div>
         ))}
       <Controller

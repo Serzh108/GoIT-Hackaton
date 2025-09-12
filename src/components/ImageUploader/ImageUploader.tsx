@@ -20,7 +20,7 @@ const ImageUploader: React.FC<Props> = ({
   return (
     <>
       {image ? (
-        <div className="flex align-top gap-12 relative mr-auto w-full h-full">
+        <div className="flex align-top gap-14 relative mr-auto w-full h-full">
          <div
           className="w-[408px] h-[212px] flex items-center justify-center border border-dashed border-black rounded-[22px] overflow-hidden cursor-pointer"
          >
