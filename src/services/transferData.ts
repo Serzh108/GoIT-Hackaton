@@ -160,17 +160,6 @@ export const partnersListData = async () => {
   }
 };
 
-export const createPartner = async (partnerData: IPartnerFormData) => {
-  console.log(' createPartner partnerData ->', partnerData);
-  try {
-    const result = await axios.post(ENDPOINTS.CREATE_PARTNER, partnerData);
-      console.log(' - createPartner result --> ', result);
-    return result.status;
-  } catch (error) {
-    return { message: error };
-  }
-};
-
 export const deletePartner = async (id: string) => {
   const url = `${ENDPOINTS.DELETE_PARTNER}${id}`;
   try {
@@ -182,13 +171,36 @@ export const deletePartner = async (id: string) => {
   }
 };
 
-export const updatePartner = async (updateData: IPartnerFormData, id: string) => {
-  console.log(' updatePartner updateData ->', updateData);
+export const createPartner = async (partnerData: IPartnerFormData | FormData, isFileUpload = false) => {
+  console.log(' createPartner partnerData ->', partnerData);
+  try {
+    const result = await axios.post(ENDPOINTS.CREATE_PARTNER, partnerData, {
+      headers: {
+        'Content-Type': isFileUpload
+          ? 'multipart/form-data'
+          : 'application/json',
+      },
+    });
+      console.log(' - createPartner result --> ', result);
+    return result.status;
+  } catch (error) {
+    return { message: error };
+  }
+};
+
+export const updatePartner = async (formData: IPartnerFormData | FormData, id: string, isFileUpload = false) => {
+  console.log(' updatePartner updateData ->', formData);
   console.log(' updatePartner id ->', id);
   const url = `${ENDPOINTS.REFRESH_PARTNER}${id}`;
   console.log(' updatePartner url ->', url);
   try {
-    const result = await axios.patch(url, updateData);
+    const result = await axios.patch(url, formData, {
+      headers: {
+        'Content-Type': isFileUpload
+          ? 'multipart/form-data'
+          : 'application/json',
+      },
+    });
       console.log(' - result --> ', result);
     return result.status;
   } catch (error) {
