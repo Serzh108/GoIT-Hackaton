@@ -145,13 +145,12 @@ export interface IReportsListData extends IReportFormData {
   __v?: number,
   _id: string,
 }
-
 export interface IPartnerFormData  {
-   image?: FileList;
-  // image: string,
+  image: string,
   logo: string,
   link: string,
   language: string,
+  imageFile?: File | undefined;
 };
 
 type PartnerImage = {

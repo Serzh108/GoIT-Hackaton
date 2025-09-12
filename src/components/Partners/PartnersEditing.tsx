@@ -1,6 +1,6 @@
 'use client';
-import { FC, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FC, useEffect, useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 // import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/store";
@@ -13,7 +13,8 @@ import Button from "../Button/Button";
 import { cn } from "@/services/cn";
 import RadioGroup from "../RadioGroup/RadioGroup";
 import { BeatLoader } from "react-spinners";
-import PhotoUploader from "../PhotoUploader/PhotoUploader";
+// import PhotoUploader from "../PhotoUploader/PhotoUploader";
+import ImageUploader from "../ImageUploader/ImageUploader";
 
 type Props = {
   id?: string;
@@ -32,6 +33,9 @@ const PartnersEditing: FC<Props> = ({ id }) => {
     handleSubmit,
     reset,
     control,
+    setValue,
+    trigger,
+    watch,
     formState: { errors, isValid },
   } = useForm<IPartnerFormData>({
     // resolver: yupResolver(partnerFormSchema),
@@ -42,28 +46,72 @@ const PartnersEditing: FC<Props> = ({ id }) => {
   useEffect(() => {
     if (partner) {
       const initialPartnerFormValues: IPartnerFormData = {
-      // image: partner?.image || '',
-      image: undefined,
+      image: partner?.image[0].path || '', 
       logo: partner?.logo || '',
       link: partner?.link || '',
       language: partner?.language || '',
+      imageFile: undefined,
       };
       reset(initialPartnerFormValues); 
     }
   }, [partner, reset]);
 
-  const handleEditing = async (data: IPartnerFormData) => {
-    console.log('ReportEditing handler data -> ', data);
+  // -----------------------------------
+  const imageValue = watch('image');
+   console.log(" - imageValue -> ", imageValue);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+    const [uploadedImage, setUploadedImage] = useState<string | null>(
+    partner?.image[0].path || null
+  );
+
+  const handleAddImage = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+        setValue('imageFile', file, { shouldDirty: true });
+        trigger('image');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  // ----------------- / ---------------
+
+  const handleEditing = async (formData: IPartnerFormData) => {
+    console.log('ReportEditing handler data -> ', formData);
     if (isFetching) {
       return;
     }
     setIsFetching(true);
 
+    // --------------------------------
+    const requestObj = new FormData();
+    requestObj.append('logo', formData.logo);
+    requestObj.append('link', formData.link);
+    requestObj.append('language', formData.language);
+    requestObj.append('image', formData.imageFile ? formData.imageFile : '');
+
+    //  - - - - - - - -  --
+  // const requestObj: IPartnerFormData = {
+  //   image: formData.imageFile ? formData.imageFile.name : '',
+  //   logo: formData.logo,
+  //   link: formData.link,
+  //   language: formData.language,
+  //   imageFile: formData.imageFile,
+  // };
+
+    const isFileUpload = true;
+ // ----------------- / ---------------
     let result;
     if (partner) {
-      result = await updatePartner(data, partner._id);
+      result = await updatePartner(requestObj, partner._id, isFileUpload);
     } else {
-      result = await createPartner(data);
+      result = await createPartner(requestObj, isFileUpload);
     }
     console.log('createReport - result -> ', result);
     // reset();
@@ -87,12 +135,42 @@ const PartnersEditing: FC<Props> = ({ id }) => {
         onSubmit={handleSubmit(handleEditing)}
         className="flex flex-col gap-4 text-xl leading-6"
       >
-        <PhotoUploader
+        {/* <PhotoUploader
           id="image"
           error={errors.image}
           initialImagePath={partner?.image?.[0]?.path}
           registration={register('image', { required: 'Фото обов’язкове' })}
+        /> */}
+        {/* ------------------------------------------------ */}
+        <Controller
+          name="image"
+          control={control}
+          render={({ field }) => (
+            <>
+              <input
+                type="file"
+                {...register('image')}
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                accept="image/jpeg, image/jpg, image/png, image/webp"
+                onChange={handleFileChange}
+              />
+              <ImageUploader
+                image={uploadedImage || partner?.image[0].path}
+                title={partner?.logo}
+                width={408}
+                height={210}
+                handleAddImage={handleAddImage}
+              />
+              <span className="input-error block min-h-6 mt-2">
+                {errors?.imageFile?.message && (
+                  <span className="mt-1">{errors.imageFile.message}</span>
+                )}
+              </span>
+            </>
+          )}
         />
+        {/* ---------------------- / ----------------------- */}
 
         <label className="flex flex-col text-base leading-[30px] font-medium">
             Назва партнера
