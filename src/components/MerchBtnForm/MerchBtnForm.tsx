@@ -78,7 +78,7 @@ function MerchBtnForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8 w-[70%] min-w-[550px] bg-white shadow-accent rounded-lg pt-4 px-6 pb-14"
+      className="flex flex-col gap-8 w-[70%] min-w-[550px] bg-white shadow-accent rounded-lg mt-[140px] pt-4 px-6 pb-14"
     >
       <Controller
         control={control}

@@ -55,7 +55,7 @@ const UsersList = () => {
     ];
   
   return (
-    <div className='flex flex-col pt-[140px]'>
+    <div className='flex flex-col'>
       {allUsers && allUsers.length > 0 ? (
         <div className="overflow-x-auto shadow-accent w-[90%] rounded-lg">
           <table className="min-w-full bg-white  ">
