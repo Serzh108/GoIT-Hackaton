@@ -1,19 +1,14 @@
 'use client';
-import { FC } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { INTERNAL_LINKS, pathRenderName } from '@/constants/constants';
-import { getPathRenderName } from '@/services/getPathRenderName';
-import Edit from '@/icons/add_pen.svg';
 import LocaleSwitch from '../LocaleSwitch/LocaleSwitch';
-import { useUserStore } from '@/store/store';
 import Button from '../Button/Button';
+import Edit from '@/icons/add_pen.svg';
+import { useUserStore } from '@/store/store';
+import { getPathRenderName } from '@/services/getPathRenderName';
+import { INTERNAL_LINKS, pathRenderName } from '@/constants/constants';
 
-type Props = {
-  isShowEditeImage?: boolean;
-};
-
-const PageHeader: FC<Props> = ({ isShowEditeImage = false }) => {
+const PageHeader = () => {
   const path = usePathname();
   const router = useRouter();
   const locale = useUserStore(state => state.locale);
@@ -26,7 +21,7 @@ const PageHeader: FC<Props> = ({ isShowEditeImage = false }) => {
     )[0][0];
   };
 
-  console.log(' path: ', path);
+  console.log(' - - - path: ', path);
 
   return (
     <div className="min-h-11 fixed left-4 right-4 z-40 flex justify-between items-center text-xl font-semibold pb-3 pt-8 pr-8 pl-[290px] bg-gray-100">
@@ -55,7 +50,7 @@ const PageHeader: FC<Props> = ({ isShowEditeImage = false }) => {
 
       <div className="flex gap-15">
         <LocaleSwitch checked={locale === 'ua'} />
-        {isShowEditeImage ? (
+        {renderPath.length === 1 ? (
           <Button
             type="button"
             title="Додати"

@@ -74,7 +74,7 @@ const ReportEditing: FC<Props> = ({ id }) => {
   const router = useRouter();
 
   return (
-    <div className="p-12 pt-[140px] ml-[20px]">
+    <div className="p-12 pt-[140px]">
       <form
         onSubmit={handleSubmit(handleEditing)}
         className="text-xl leading-6 flex flex-col gap-6 max-w-237 bg-zinc-50 shadow-accent rounded-lg p-6 pb-14 "

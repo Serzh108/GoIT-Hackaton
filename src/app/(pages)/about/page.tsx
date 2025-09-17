@@ -30,7 +30,7 @@ console.log('I try to delete You!!!');
   ];
 
   return (
-    <section className="ml-[256px]">
+    <section className="mt-[140px]">
       <h1>About</h1>
       <p className="mb-3">Page routing About</p>
 
