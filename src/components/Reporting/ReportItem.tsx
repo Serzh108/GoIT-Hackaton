@@ -13,9 +13,6 @@ type Props = {
 };
 
 const ReportItem: FC<Props> = ({ report, deleteHandler }) => {
-  const editHandler = async (id: string) => {
-    console.log(' edit: ', id);
-  };
 
   return (
     <li className="bg-white border-b border-black rounded-lg px-6 py-5  flex items-center justify-between gap-6">
@@ -34,7 +31,6 @@ const ReportItem: FC<Props> = ({ report, deleteHandler }) => {
         >
           <Edit
             className="w-8 h-8 cursor-pointer group-hover:text-gray-900"
-            onClick={() => editHandler(report._id)}
           />
         </Link>
         <Button

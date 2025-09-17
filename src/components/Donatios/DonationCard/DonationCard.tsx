@@ -4,8 +4,6 @@ import EditIcon from '@/icons/edit.svg';
 import DeleteIcon from '@/icons/delete.svg';
 import Link from 'next/link';
 import { INTERNAL_LINKS } from '@/constants/constants';
-import { updateServer } from '@/services/actions';
-import { deleteDonation } from '@/services/transferData';
 
 interface IDonationCard {
   path: string;
@@ -17,22 +15,13 @@ interface IDonationCard {
 
 type Props = {
   donation: IDonationCard;
+  deleteHandler: (id: string) => void;
 };
 
 const BASE_IMAGE_URL = process.env.NEXT_PUBLIC_BASE_IMAGE_URL;
 
-const DonationCard: FC<Props> = ({ donation }) => {
+const DonationCard: FC<Props> = ({ donation, deleteHandler }) => {
   const { path, alt, desc, title, _id } = donation;
-
-  const deleteHandler = async (id: string) => {
-    // !!! Insert Modal with delede confirmation
-    console.log(' delete: ', id);
-    const result = await deleteDonation(id);
-    console.log(' - result1 -> ', result);
-     setTimeout(() => {
-      updateServer(`/${INTERNAL_LINKS.DONATIONS}`);
-    }, 2000);
-  };
 
   return (
     <div className="border-2 w-[305px] h-[440px] rounded-2xl p-6 flex flex-col gap-6">
