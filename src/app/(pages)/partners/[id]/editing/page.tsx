@@ -1,4 +1,3 @@
-import PageHeader from "@/components/PageHeader/PageHeader";
 import PartnersEditing from "@/components/Partners/PartnersEditing";
 
 type Params = {
@@ -9,10 +8,7 @@ const PartnersEditingPage = async ({ params }: { params: Params }) => {
   const { id } = await params;
      
   return(
-    <section className="flex flex-col pl-[260px]">
-      <PageHeader />
-      <PartnersEditing id={id} />
-    </section>
+    <PartnersEditing id={id} />
   )  
 };
 

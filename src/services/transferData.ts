@@ -149,7 +149,7 @@ export const updateReport = async (updateData: IReportFormData, id: string) => {
 };
 // --- Partners --- -------
 export const partnersListData = async () => {
-  const url = `${ENDPOINTS.ALL_PARTNERS}?`;
+  const url = `${ENDPOINTS.ALL_PARTNERS}`;
   console.log(' partnersListData url ->', url);
   try {
     const { data }: AxiosResponse = await axios.get(url);
