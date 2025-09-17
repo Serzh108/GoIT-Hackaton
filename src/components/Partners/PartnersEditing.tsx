@@ -1,6 +1,6 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FC, useEffect, useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 // import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/store';
@@ -9,11 +9,13 @@ import { createPartner, updatePartner } from '@/services/transferData';
 import { redirectWithUpdateServer } from '@/services/actions';
 import { INTERNAL_LINKS } from '@/constants/constants';
 // import { partnerFormSchema } from "@/constants/validationSchemas/validationSchemas";
-import Button from '../Button/Button';
-import RadioGroup from '../RadioGroup/RadioGroup';
-import { BeatLoader } from 'react-spinners';
-import PhotoUploader from '../PhotoUploader/PhotoUploader';
-import InputField from '../InputField/InputField';
+import Button from "../Button/Button";
+// import { cn } from "@/services/cn";
+import RadioGroup from "../RadioGroup/RadioGroup";
+import { BeatLoader } from "react-spinners";
+// import PhotoUploader from "../PhotoUploader/PhotoUploader";
+import ImageUploader from "../ImageUploader/ImageUploader";
+import InputField from "../InputField/InputField";
 
 type Props = {
   id?: string;
@@ -32,6 +34,9 @@ const PartnersEditing: FC<Props> = ({ id }) => {
     handleSubmit,
     reset,
     control,
+    setValue,
+    trigger,
+    watch,
     formState: { errors, isValid },
   } = useForm<IPartnerFormData>({
     // resolver: yupResolver(partnerFormSchema),
@@ -42,28 +47,72 @@ const PartnersEditing: FC<Props> = ({ id }) => {
   useEffect(() => {
     if (partner) {
       const initialPartnerFormValues: IPartnerFormData = {
-        // image: partner?.image || '',
-        image: undefined,
-        logo: partner?.logo || '',
-        link: partner?.link || '',
-        language: partner?.language || '',
+      image: partner?.image[0].path || '', 
+      logo: partner?.logo || '',
+      link: partner?.link || '',
+      language: partner?.language || '',
+      imageFile: undefined,
       };
       reset(initialPartnerFormValues);
     }
   }, [partner, reset]);
 
-  const handleEditing = async (data: IPartnerFormData) => {
-    console.log('ReportEditing handler data -> ', data);
+  // -----------------------------------
+  const imageValue = watch('image');
+   console.log(" - imageValue -> ", imageValue);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+    const [uploadedImage, setUploadedImage] = useState<string | null>(
+    partner?.image[0].path || null
+  );
+
+  const handleAddImage = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+        setValue('imageFile', file, { shouldDirty: true });
+        trigger('image');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  // ----------------- / ---------------
+
+  const handleEditing = async (formData: IPartnerFormData) => {
+    console.log('ReportEditing handler data -> ', formData);
     if (isFetching) {
       return;
     }
     setIsFetching(true);
 
+    // --------------------------------
+    const requestObj = new FormData();
+    requestObj.append('logo', formData.logo);
+    requestObj.append('link', formData.link);
+    requestObj.append('language', formData.language);
+    requestObj.append('image', formData.imageFile ? formData.imageFile : '');
+
+    //  - - - - - - - -  --
+  // const requestObj: IPartnerFormData = {
+  //   image: formData.imageFile ? formData.imageFile.name : '',
+  //   logo: formData.logo,
+  //   link: formData.link,
+  //   language: formData.language,
+  //   imageFile: formData.imageFile,
+  // };
+
+    const isFileUpload = true;
+ // ----------------- / ---------------
     let result;
     if (partner) {
-      result = await updatePartner(data, partner._id);
+      result = await updatePartner(requestObj, partner._id, isFileUpload);
     } else {
-      result = await createPartner(data);
+      result = await createPartner(requestObj, isFileUpload);
     }
     console.log('createReport - result -> ', result);
     // reset();
@@ -87,25 +136,57 @@ const PartnersEditing: FC<Props> = ({ id }) => {
         onSubmit={handleSubmit(handleEditing)}
         className="flex flex-col gap-4 w-197 bg-zinc-50 shadow-accent rounded-2xl p-6 pb-12  text-xl leading-6 "
       >
-        <div className="flex justify-center items-end">
-          <PhotoUploader
-            id="image"
-            error={errors.image}
-            initialImagePath={partner?.image?.[0]?.path}
-            registration={register('image', { required: 'Фото обов’язкове' })}
-          />
-
-          <RadioGroup
-            label="Мова:"
-            name="language"
+        {/* <PhotoUploader
+          id="image"
+          error={errors.image}
+          initialImagePath={partner?.image?.[0]?.path}
+          registration={register('image', { required: 'Фото обов’язкове' })}
+        /> */}
+        {/* ------------------------------------------------ */}
+        <div className="flex justify-between items-end relative">
+           {/* <div className="flex justify-between items-end"> */}
+          <Controller
+            name="image"
             control={control}
-            rules={{ required: 'Оберить мову' }}
-            options={[
-              { label: 'Українська', value: 'ua' },
-              { label: 'English', value: 'en' },
-            ]}
+            render={({ }) => (
+              <>
+                <input
+                  type="file"
+                  {...register('image')}
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  accept="image/jpeg, image/jpg, image/png, image/webp"
+                  onChange={handleFileChange}
+                />
+                <ImageUploader
+                  image={uploadedImage || partner?.image[0].path}
+                  title={partner?.logo}
+                  width={408}
+                  height={210}
+                  handleAddImage={handleAddImage}
+                />
+                <span className="input-error block min-h-6 mt-2">
+                  {errors?.imageFile?.message && (
+                    <span className="mt-1">{errors.imageFile.message}</span>
+                  )}
+                </span>
+              </>
+            )}
           />
+          <div className="flex absolute left-[494px]">
+            <RadioGroup
+              label="Мова:"
+              name="language"
+              control={control}
+              rules={{ required: 'Оберить мову' }}
+              options={[
+                { label: 'Українська', value: 'ua' },
+                { label: 'English', value: 'en' },
+              ]}
+            />
         </div>
+        </div>
+
         <InputField
           id="logo"
           label="Назва партнера"
@@ -124,6 +205,45 @@ const PartnersEditing: FC<Props> = ({ id }) => {
           important
           autoComplete="Посилання"
         />
+        {/* ---------------------- / ----------------------- */}
+
+        {/* <label className="flex flex-col text-base leading-[30px] font-medium">
+            Назва партнера
+            <input
+            className="bordered-input"
+            placeholder="Введіть назву партнера"
+            autoFocus
+            {...register('logo', { required: true })}
+            autoComplete="Назва партнера" 
+            />
+            <span className={cn('input-error', 'h-4')}>
+            {errors?.logo?.message}
+            </span>
+        </label>
+
+        <label className="flex flex-col text-base leading-[30px] font-medium">
+            Посилання
+            <input
+            className="bordered-input"
+            placeholder="Введіть посилання"
+            {...register('link', { required: true })}
+            autoComplete="Посилання" 
+            />
+            <span className={cn('input-error', 'h-4')}>
+            {errors?.link?.message}
+            </span>
+        </label> */}
+
+        {/* <RadioGroup
+          label="Мова:"
+          name="language"
+          control={control}
+          rules={{ required: 'Оберить мову' }}
+          options={[
+            { label: 'Українська', value: 'ua' },
+            { label: 'English', value: 'en' },
+          ]}
+        /> */}
 
         <div className="flex justify-center gap-6 pt-6">
           <Button
