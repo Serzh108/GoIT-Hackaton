@@ -10,7 +10,7 @@ import { redirectWithUpdateServer } from '@/services/actions';
 import { INTERNAL_LINKS } from '@/constants/constants';
 // import { partnerFormSchema } from "@/constants/validationSchemas/validationSchemas";
 import Button from "../Button/Button";
-import { cn } from "@/services/cn";
+// import { cn } from "@/services/cn";
 import RadioGroup from "../RadioGroup/RadioGroup";
 import { BeatLoader } from "react-spinners";
 // import PhotoUploader from "../PhotoUploader/PhotoUploader";
