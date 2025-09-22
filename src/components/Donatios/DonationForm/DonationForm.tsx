@@ -19,9 +19,9 @@ import {
   transformLongDescToForm,
 } from '@/services/transformLongDesc';
 import { INTERNAL_LINKS } from '@/constants/constants';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import ImageUploader from '@/components/ImageUploader/ImageUploader';
-import { cn } from '@/services/cn';
+// import { cn } from '@/services/cn';
 import { BeatLoader } from 'react-spinners';
 
 // type DonationFormValues = {
@@ -187,13 +187,13 @@ const DonationForm: FC<Props> = ({ id }) => {
     }
   };
 
-   const path = usePathname();
+  //  const path = usePathname();
 
-  console.log(' - - - path: ', path);
-  const pathItems = path.split('/');
-  console.log(' - - - path.split("/"): ', pathItems,
-     ' - ', pathItems.length,
-      ' -> ', pathItems[pathItems.length - 1]);
+  // console.log(' - - - path: ', path);
+  // const pathItems = path.split('/');
+  // console.log(' - - - path.split("/"): ', pathItems,
+  //    ' - ', pathItems.length,
+  //     ' -> ', pathItems[pathItems.length - 1]);
   // ----------------- / ---------------  
 
   return (
