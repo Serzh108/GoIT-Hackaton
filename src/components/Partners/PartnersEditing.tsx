@@ -61,7 +61,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
   const imageValue = watch('image');
    console.log(" - imageValue -> ", imageValue);
   const fileInputRef = useRef<HTMLInputElement>(null);
-    const [uploadedImage, setUploadedImage] = useState<string | null>(
+  const [uploadedImage, setUploadedImage] = useState<string | null>(
     partner?.image[0].path || null
   );
 
@@ -144,7 +144,6 @@ const PartnersEditing: FC<Props> = ({ id }) => {
         /> */}
         {/* ------------------------------------------------ */}
         <div className="flex justify-between items-end relative">
-           {/* <div className="flex justify-between items-end"> */}
           <Controller
             name="image"
             control={control}
@@ -184,7 +183,7 @@ const PartnersEditing: FC<Props> = ({ id }) => {
                 { label: 'English', value: 'en' },
               ]}
             />
-        </div>
+          </div>
         </div>
 
         <InputField
