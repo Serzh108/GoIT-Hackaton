@@ -61,6 +61,25 @@ export interface ICollection {
   _id: string;
 };
 
+export type DonationFormValues = {
+  image?: FileList | string;
+  alt: string;
+  title: string;
+  desc: string;
+  collected: string;
+  target: string;
+  peopleDonate: string;
+  peopleDonate_title: string;
+  days: string;
+  quantity: string;
+  period: string;
+  status: string;
+  value: string;
+  importance: string;
+  long_desc: { text: string }[];
+  imageFile?: File | undefined;
+};
+
 // export interface IUpdateDonationData {
 //   alt: string;
 //   // closedAt: string | null;
@@ -92,33 +111,26 @@ export interface ICollection {
 // };
 
 export interface ICreateDonationData {
+  // image: TImage[]; // string($binary)
+  image?: FileList | string;
   alt: string;
-// closedAt: string | null;
+  title: string;
+  desc: string;
   collected: number;
-// collected_title: string;
-// comments: string | null;
-// createdAt: string | null;
-// currency: string | null;
-  days: string | null;
-  desc: string | null;
-  image: TImage[]; // string($binary)
-  importance: string;
-// language: string;
-  long_desc: LongDesc; //string[]
+  target: number;
   peopleDonate: number;
   peopleDonate_title: string;
-  period: string | null;
-  quantity: string | null; // number
+  days: number;
+  quantity: number; 
+  period: string;
   status: string;
-  target: number;
-// target_title: string;
-// term: string | null;
-  title: string;
-// translations: string;
-// type: string;
-  value: string;
-// __v: number;
-// _id: string;  
+  value: string;  
+  importance: string;
+  // long_desc: LongDesc; //string[]
+  // long_desc: string[]; 
+    // long_desc: { text: string }[];
+    long_desc: Record<string, string>;
+  imageFile?: File | undefined;
 }
 
 export interface IMerchUpdateData {

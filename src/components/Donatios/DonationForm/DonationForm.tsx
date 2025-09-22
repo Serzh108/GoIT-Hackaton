@@ -1,8 +1,8 @@
 'use client';
-import React, { FC, useEffect, useState } from 'react';
-import PhotoUploader from '../../PhotoUploader/PhotoUploader';
+import React, { FC, useEffect, useRef, useState } from 'react';
+// import PhotoUploader from '../../PhotoUploader/PhotoUploader';
 import InputField from '../../InputField/InputField';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import RadioGroup from '../../RadioGroup/RadioGroup';
 import Button from '../../Button/Button';
 import CrossIcon from '@/icons/cross.svg';
@@ -10,38 +10,42 @@ import EditPenIcon from '@/icons/edit_pen.svg';
 import { useUserStore } from '@/store/store';
 import {
   donationData,
-  // createDonation, updateDonation
+  createDonation, updateDonation
 } from '@/services/transferData';
 import { redirectWithUpdateServer } from '@/services/actions';
-import { ICollection } from '@/types/formDataTypes';
+import { DonationFormValues, ICollection, ICreateDonationData } from '@/types/formDataTypes';
 import {
   transformFormToLongDesc,
   transformLongDescToForm,
 } from '@/services/transformLongDesc';
 import { INTERNAL_LINKS } from '@/constants/constants';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import ImageUploader from '@/components/ImageUploader/ImageUploader';
+import { cn } from '@/services/cn';
+import { BeatLoader } from 'react-spinners';
 
-type DonationFormValues = {
-  // image: FileList;
-  image?: FileList | string;
-  alt: string;
-  title: string;
-  desc: string;
-  collected: string;
-  target: string;
-  peopleDonate: string;
-  // peopleDonate_title: 'донор' | 'донори' | 'донорів' | 'donors' | 'donor';
-  peopleDonate_title: string;
-  days: string;
-  quantity: string;
-  // period: 'день' | 'дні' | 'днів' | 'day' | 'days';
-  // status: 'active' | 'closed';
-  period: string;
-  status: string;
-  value: string;
-  importance: string;
-  long_desc: { text: string }[];
-};
+// type DonationFormValues = {
+//   // image: FileList;
+//   image?: FileList | string;
+//   alt: string;
+//   title: string;
+//   desc: string;
+//   collected: string;
+//   target: string;
+//   peopleDonate: string;
+//   // peopleDonate_title: 'донор' | 'донори' | 'донорів' | 'donors' | 'donor';
+//   peopleDonate_title: string;
+//   days: string;
+//   quantity: string;
+//   // period: 'день' | 'дні' | 'днів' | 'day' | 'days';
+//   // status: 'active' | 'closed';
+//   period: string;
+//   status: string;
+//   value: string;
+//   importance: string;
+//   long_desc: { text: string }[];
+//     imageFile?: File | undefined;
+// };
 
 type Props = {
   id?: string;
@@ -49,7 +53,9 @@ type Props = {
 
 const DonationForm: FC<Props> = ({ id }) => {
   const locale = useUserStore(state => state.locale);
+   const router = useRouter();
   const [donation, setDonation] = useState<ICollection>();
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   console.log('id: ', id, ', - locale: ', locale);
 
   useEffect(() => {
@@ -69,6 +75,9 @@ const DonationForm: FC<Props> = ({ id }) => {
     handleSubmit,
     control,
     reset,
+    setValue,
+    trigger,
+    watch,
     formState: { errors, isValid },
   } = useForm<DonationFormValues>({
     mode: 'onChange',
@@ -97,41 +106,52 @@ const DonationForm: FC<Props> = ({ id }) => {
         importance: donation?.importance || '',
         // transforming format from what we're gettig from backend to long_desc: { text: string }[];
         long_desc: transformLongDescToForm(donation.long_desc),
+        imageFile: undefined,
       };
       reset(initialDonationFormValues); //! updating form;
     }
   }, [donation, reset]);
 
   const onSubmit = async (data: DonationFormValues) => {
+       if (isFetching) {
+      return;
+    }
+    setIsFetching(true);
+    // --- --- ---
+    console.log('donation - data.long_desc -> ', data.long_desc, data.long_desc.map((item,idx) => `sectioon${idx + 1}: ${item.text}`));
+    console.log('donation - transformFormToLongDesc(data.long_desc) -> ', transformFormToLongDesc(data.long_desc));
+    // --- -/- ---
     //! поки просто консоль лог
-    const payload = {
+    const payload: ICreateDonationData = {
       ...data,
       // transforming format from  long_desc: { text: string }[] to what backend expects;
       long_desc: transformFormToLongDesc(data.long_desc),
+      // long_desc: data.long_desc,
+      // long_desc: data.long_desc.map(item => item.text),
       collected: +data.collected,
+      // ---
+      target: +data.target,
+      peopleDonate: +data.peopleDonate,
+      days: +data.days,
+      quantity: +data.quantity,
     };
 
     console.log('Donation Form values on submit:', payload);
 
     let result;
     if (donation) {
-      console.log('donation - result -> ', result);
-      // result = await updateDonation(payload, locale, donation._id);  // !!! check type payload
-    } else {
-      console.log('donation - result -> ', result);
-      // result = await createDonation(payload, locale);  // !!! check type payload
+      result = await updateDonation(payload, locale, donation._id);  // !!! check type payload
+     } else {
+      result = await createDonation(payload, locale);  // !!! check type payload
     }
     console.log('donation - result -> ', result);
     // reset();
 
     if (!result) {
       console.error('donation - ERROR!!');
-      //   setNotificationType(NOTIFICATION_TYPE.ERROR);
     }
 
-    // setShowNotification(true);
-
-    // setIsFetching(false);
+    setIsFetching(false);
 
     setTimeout(() => {
       redirectWithUpdateServer(`/${INTERNAL_LINKS.DONATIONS}`);
@@ -142,33 +162,101 @@ const DonationForm: FC<Props> = ({ id }) => {
     control,
     name: 'long_desc',
   });
+  // -----------------------------------
+  const imageValue = watch('image');
+   console.log(" - imageValue -> ", imageValue);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(
+    donation?.image[0].path || null
+  );
 
-  const router = useRouter();
+  const handleAddImage = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+        setValue('imageFile', file, { shouldDirty: true });
+        trigger('image');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+   const path = usePathname();
+
+  console.log(' - - - path: ', path);
+  const pathItems = path.split('/');
+  console.log(' - - - path.split("/"): ', pathItems,
+     ' - ', pathItems.length,
+      ' -> ', pathItems[pathItems.length - 1]);
+  // ----------------- / ---------------  
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8 max-w-237 bg-zinc-50 shadow-accent rounded-lg p-6 pb-14 my-[140px] "
+      className="flex flex-col gap-8 w-237 bg-zinc-50 shadow-accent rounded-lg p-6 pb-14 my-[140px] "
     >
-      <div className="flex flex-row items-end justify-center gap-12">
-        <PhotoUploader
+      {/* <div className="flex flex-row items-end justify-center gap-12"> */}
+        {/* ---------------------------------- */}
+        <div className="flex justify-between items-end relative">
+        {/* <div className={cn("relative", { "left-[166px]": pathItems[pathItems.length - 1] === 'editing', "left-0": pathItems[pathItems.length - 1] === 'new'})}> */}
+          <Controller
+            name="image"
+            control={control}
+            render={({ }) => (
+              <>
+                <input
+                  type="file"
+                  {...register('image')}
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  accept="image/jpeg, image/jpg, image/png, image/webp"
+                  onChange={handleFileChange}
+                />
+                <ImageUploader
+                  image={uploadedImage || donation?.image[0].path}
+                  title={donation?.title}
+                  width={408}
+                  height={210}
+                  handleAddImage={handleAddImage}
+                />
+                <span className="input-error block min-h-6 mt-2">
+                  {errors?.imageFile?.message && (
+                    <span className="mt-1">{errors.imageFile.message}</span>
+                  )}
+                </span>
+              </>
+            )}
+          />
+        {/* </div> */}
+        {/* -------------- / ----------------- */}
+        {/* <PhotoUploader
           id="image"
           error={errors.image}
           initialImagePath={donation?.image?.[0]?.path}
           registration={register('image', { required: 'Фото обов’язкове' })}
-        />
-        <InputField
-          important={true}
-          id="alt"
-          type="text"
-          placeholder="Текст має містити не більше 24 символів"
-          label="Alt текст для картинки"
-          className="w-[444px]"
-          error={errors.alt}
-          registration={register('alt', {
-            required: 'Опис фото обов’язковий',
-          })}
-        />
+        /> */}
+        {/* <div className={cn("relative bottom-8", { "right-[166px]": id, "right-0": !id})}> */}
+        
+        <div className="flex absolute left-[456px]">
+          <InputField
+            important={true}
+            id="alt"
+            type="text"
+            placeholder="Текст має містити не більше 24 символів"
+            label="Alt текст для картинки"
+            className="w-[444px]"
+            error={errors.alt}
+            registration={register('alt', {
+              required: 'Опис фото обов’язковий',
+            })}
+          />
+        </div>
       </div>
       <InputField
         important={true}
@@ -351,9 +439,16 @@ const DonationForm: FC<Props> = ({ id }) => {
         <Button
           type="submit"
           className="font-semibold text-2xl leading-[160%] rounded-3xl py-4 px-2 bg-black text-zinc-50 w-[280px]"
-          disabled={!isValid}
+          disabled={!isValid || isFetching}
         >
-          Зберегти
+          {isFetching ? (
+              <BeatLoader color="white" />
+          ) : donation ? (
+              'Зберегти'
+          ) : (
+              'Створити'
+          )}
+          {/* Зберегти */}
         </Button>
         <Button
           type="button"

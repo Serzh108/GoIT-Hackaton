@@ -24,7 +24,7 @@ function ModalCard({ title, buttons, variant, onClose }: ModalCardProps) {
         className="cursor-pointer absolute top-0 right-0 text-gray-500 hover:text-gray-700"
         onClick={onClose}
       />
-      {variant === 'success' && <CheckIcon className="w-10 h-10   " />}
+      {variant === 'success' && <CheckIcon className="w-10 h-10" />}
 
       <h2 className="font-semibold leading-normal font-body text-black text-2xl text-center">
         {title}
